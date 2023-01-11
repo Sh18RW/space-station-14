@@ -219,6 +219,7 @@
     - CanPilot
     - FootstepSound
     - DoorBumpOpener
+  - type: TTS # Corvax-TTS
 
 - type: entity
   save: false

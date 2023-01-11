@@ -1,4 +1,5 @@
 using Content.Server.Access.Systems;
+using Content.Server.Corvax.TTS;
 using Content.Server.DetailExaminable;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
