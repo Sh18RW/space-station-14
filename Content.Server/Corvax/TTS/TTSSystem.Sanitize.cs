@@ -12,11 +12,11 @@ public sealed partial class TTSSystem
         if (!_isEnabled) return;
         args.Message = args.Message.Replace("+", "");
     }
-    
+
     private string Sanitize(string text)
     {
         text = text.Trim();
-        text = Regex.Replace(text, @"[^a-zA-Zа-яА-ЯёЁ0-9,\-,+]", "");
+        text = Regex.Replace(text, @"[^a-zA-Zа-яА-ЯёЁ0-9,\-+?!. ]", "");
         text = Regex.Replace(text, @"[a-zA-Z]", ReplaceLat2Cyr, RegexOptions.Multiline | RegexOptions.IgnoreCase);
         text = Regex.Replace(text, @"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
         text = Regex.Replace(text, @"(?<=[1-90])(\.|,)(?=[1-90])", " целых ");
@@ -45,7 +45,7 @@ public sealed partial class TTSSystem
             return word.Value;
         return NumberConverter.NumberToText(number);
     }
-    
+
     private static readonly IReadOnlyDictionary<string, string> WordReplacement =
         new Dictionary<string, string>()
         {
@@ -268,7 +268,7 @@ public static class NumberConverter
 			+ " "
 			+ GetDeclension((int)(value % 10), valueDeclensionFor1, valueDeclensionFor2, valueDeclensionFor5);
 	}
-	
+
 	private static string GetDeclension(int val, string one, string two, string five)
 	{
 		var t = (val % 100 > 20) ? val % 10 : val % 20;
