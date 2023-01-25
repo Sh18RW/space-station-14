@@ -8,5 +8,5 @@ public sealed partial class VoiceMaskComponent : Component
     [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
 
     [ViewVariables(VVAccess.ReadWrite)] public string VoiceName = "Unknown";
-    [ViewVariables(VVAccess.ReadWrite)] public string VoiceId = SharedHumanoidSystem.DefaultVoice; // Corvax-TTS
+    [ViewVariables(VVAccess.ReadWrite)] public string VoiceId = SharedHumanoidAppearanceSystem.DefaultVoice; // Corvax-TTS
 }

@@ -110,7 +110,7 @@ namespace Content.Shared.Preferences
             "John Doe",
             "",
             SharedHumanoidAppearanceSystem.DefaultSpecies,
-            "",
+            SharedHumanoidAppearanceSystem.DefaultVoice,
             18,
             Sex.Male,
             Gender.Male,
@@ -138,7 +138,7 @@ namespace Content.Shared.Preferences
                 "John Doe",
                 "",
                 species,
-                "", // Corvax-TTS
+                SharedHumanoidAppearanceSystem.DefaultVoice, // Corvax-TTS
                 18,
                 Sex.Male,
                 Gender.Male,
@@ -522,7 +522,7 @@ namespace Content.Shared.Preferences
             // Corvax-TTS-Start
             prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
             if (voice is null || !CanHaveVoice(voice, Sex))
-                Voice = "";
+                Voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
             // Corvax-TTS-End
         }
 
