@@ -1849,10 +1849,10 @@ namespace Content.Shared.CCVar
         /// Auth token of the TTS server API.
         /// </summary>
         public static readonly CVarDef<string> TTSApiToken =
-            CVarDef.Create("tts.api_token", "", CVar.SERVERONLY);
+            CVarDef.Create("tts.api_token", "", CVar.SERVERONLY | CVar.CONFIDENTIAL);
 
         /// <summary>
-        /// Lobby / round end music volume.
+        /// Default volume setting of TTS sound
         /// </summary>
         public static readonly CVarDef<float> TTSVolume =
             CVarDef.Create("tts.volume", 0f, CVar.CLIENTONLY | CVar.ARCHIVE);
