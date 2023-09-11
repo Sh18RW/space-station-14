@@ -3,9 +3,14 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Ame.Components;
 using Content.Server.Chat.Managers;
+using Content.Server.CrewManifest;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
+using Content.Server.Station.Systems;
 using Content.Shared.Ame;
+using Content.Shared.Construction.Components;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.CrewManifest;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -14,6 +19,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
@@ -31,12 +37,15 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly AnchorableSystem _anchorableSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AmeControllerComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<AmeControllerComponent, MapInitEvent>(OnComponentMapInit);
         SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
@@ -83,7 +92,9 @@ public sealed class AmeControllerSystem : EntitySystem
                 var powerOutput = group.InjectFuel(availableInject, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
-                fuelJar.FuelAmount -= availableInject;
+
+                if (!controller.Autoworking)
+                    fuelJar.FuelAmount -= availableInject;
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
                     _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
@@ -271,6 +282,16 @@ public sealed class AmeControllerSystem : EntitySystem
         comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
     }
 
+    private void OnComponentMapInit(EntityUid uid, AmeControllerComponent component, MapInitEvent args)
+    {
+        var playerManager = IoCManager.Resolve<IPlayerManager>();
+
+        if (playerManager.PlayerCount <= 3) // TODO: Replace hardcode value
+        {
+            BuildAme(uid);
+        }
+    }
+
     private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
     {
         if (!HasComp<HandsComponent>(args.User))
@@ -359,5 +380,44 @@ public sealed class AmeControllerSystem : EntitySystem
             return false;
 
         return true;
+    }
+
+    /// <summary>
+    /// Automatically build AME.
+    /// </summary>
+    private void BuildAme(EntityUid controllerUid)
+    {
+        var shields
+            = AllEntityQuery<AmeShieldAutobuildComponent>();
+        var controllers
+            = AllEntityQuery<AmeControllerAutobuildComponent>();
+
+        int shieldsCount = 0;
+
+        while (shields.MoveNext(out var uid, out var comp))
+        {
+            Spawn("AmeShielding", EnsureComp<TransformComponent>(uid).MapPosition);
+
+            shieldsCount++;
+            EntityManager.DeleteEntity(uid);
+        }
+
+        if (controllers.MoveNext(out var entityUid, out _))
+        {
+            EnsureComp<TransformComponent>(controllerUid).Coordinates
+                = EnsureComp<TransformComponent>(entityUid).Coordinates;
+            EnsureComp<TransformComponent>(controllerUid).Anchored = true;
+
+            var ameControllerComp = EnsureComp<AmeControllerComponent>(controllerUid);
+            ameControllerComp.Autoworking = true;
+
+            var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(controllerUid).MapPosition);
+
+            ameControllerComp.JarSlot.Insert(jar);
+
+            ToggleInjecting(controllerUid);
+
+            EntityManager.DeleteEntity(entityUid);
+        }
     }
 }

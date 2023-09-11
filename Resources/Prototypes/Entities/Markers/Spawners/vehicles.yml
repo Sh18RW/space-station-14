@@ -53,3 +53,40 @@
   - type: ConditionalSpawner
     prototypes:
       - VehicleSkeletonMotorcycle
+
+- type: entity
+  id: AMEMarkerBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Transform
+      anchored: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Marker
+    - type: Sprite
+      drawdepth: Overdoors
+      sprite: Markers/cross.rsi
+
+- type: entity
+  name: AME Shield Spawner
+  id: SpawnAmeShield
+  parent: AMEMarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - state: ai
+    - type: AmeShieldAutobuild
+
+- type: entity
+  name: AME Controller Spawner
+  id: SpawnAmeController
+  parent: AMEMarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: green
+        - state: ai
+    - type: AmeControllerAutobuild

@@ -89,4 +89,11 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     /// </summary>
     [ViewVariables]
     public TimeSpan UpdateUIPeriod = TimeSpan.FromSeconds(3.0);
+
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField("autoworking")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool Autoworking = false;
 }
