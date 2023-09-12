@@ -288,12 +288,41 @@ public sealed class AmeControllerSystem : EntitySystem
 
     private void OnComponentMapInit(EntityUid uid, AmeControllerComponent component, MapInitEvent args)
     {
-        var playerManager = IoCManager.Resolve<IPlayerManager>();
+        var isReadyToBuild = IoCManager.Resolve<IPlayerManager>().PlayerCount
+            <= _configurationManager.GetCVar(CCVars.AmeAutobuildMaxPlayerCount);
 
-        if (playerManager.PlayerCount
-            <= _configurationManager.GetCVar(CCVars.AmeAutobuildMaxPlayerCount))
+        var shields
+            = AllEntityQuery<AmeShieldAutobuildComponent>();
+        var controllers
+            = AllEntityQuery<AmeControllerAutobuildComponent>();
+
+        while (shields.MoveNext(out var ent, out var comp))
         {
-            BuildAme(uid);
+            if (isReadyToBuild)
+                Spawn("AmeShielding", EnsureComp<TransformComponent>(ent).MapPosition);
+
+            EntityManager.DeleteEntity(ent);
+        }
+
+        if (controllers.MoveNext(out var entityUid, out _))
+        {
+            if (isReadyToBuild)
+            {
+                EnsureComp<TransformComponent>(uid).Coordinates
+                    = EnsureComp<TransformComponent>(entityUid).Coordinates;
+                EnsureComp<TransformComponent>(uid).Anchored = true;
+
+                var ameControllerComp = EnsureComp<AmeControllerComponent>(uid);
+                ameControllerComp.Autoworking = true;
+
+                var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(uid).MapPosition);
+
+                ameControllerComp.JarSlot.Insert(jar);
+
+                ToggleInjecting(uid);
+            }
+
+            EntityManager.DeleteEntity(entityUid);
         }
     }
 
@@ -385,42 +414,5 @@ public sealed class AmeControllerSystem : EntitySystem
             return false;
 
         return true;
-    }
-
-    /// <summary>
-    /// Automatically builds AME.
-    /// <param name="controllerUid">Current uid of the controller.</param>
-    /// </summary>
-    private void BuildAme(EntityUid controllerUid)
-    {
-        var shields
-            = AllEntityQuery<AmeShieldAutobuildComponent>();
-        var controllers
-            = AllEntityQuery<AmeControllerAutobuildComponent>();
-
-        while (shields.MoveNext(out var uid, out var comp))
-        {
-            Spawn("AmeShielding", EnsureComp<TransformComponent>(uid).MapPosition);
-
-            EntityManager.DeleteEntity(uid);
-        }
-
-        if (controllers.MoveNext(out var entityUid, out _))
-        {
-            EnsureComp<TransformComponent>(controllerUid).Coordinates
-                = EnsureComp<TransformComponent>(entityUid).Coordinates;
-            EnsureComp<TransformComponent>(controllerUid).Anchored = true;
-
-            var ameControllerComp = EnsureComp<AmeControllerComponent>(controllerUid);
-            ameControllerComp.Autoworking = true;
-
-            var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(controllerUid).MapPosition);
-
-            ameControllerComp.JarSlot.Insert(jar);
-
-            ToggleInjecting(controllerUid);
-
-            EntityManager.DeleteEntity(entityUid);
-        }
     }
 }
