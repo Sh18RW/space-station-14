@@ -8,6 +8,7 @@ using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Ame;
+using Content.Shared.CCVar;
 using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.CrewManifest;
@@ -17,10 +18,12 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
+using FastAccessors;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 
@@ -39,6 +42,7 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly AnchorableSystem _anchorableSystem = default!;
+    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
     public override void Initialize()
     {
@@ -286,7 +290,8 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         var playerManager = IoCManager.Resolve<IPlayerManager>();
 
-        if (playerManager.PlayerCount <= 3) // TODO: Replace hardcode value
+        if (playerManager.PlayerCount
+            <= _configurationManager.GetCVar(CCVars.AmeAutobuildMaxPlayerCount))
         {
             BuildAme(uid);
         }
@@ -383,7 +388,8 @@ public sealed class AmeControllerSystem : EntitySystem
     }
 
     /// <summary>
-    /// Automatically build AME.
+    /// Automatically builds AME.
+    /// <param name="controllerUid">Current uid of the controller.</param>
     /// </summary>
     private void BuildAme(EntityUid controllerUid)
     {
@@ -392,13 +398,10 @@ public sealed class AmeControllerSystem : EntitySystem
         var controllers
             = AllEntityQuery<AmeControllerAutobuildComponent>();
 
-        int shieldsCount = 0;
-
         while (shields.MoveNext(out var uid, out var comp))
         {
             Spawn("AmeShielding", EnsureComp<TransformComponent>(uid).MapPosition);
 
-            shieldsCount++;
             EntityManager.DeleteEntity(uid);
         }
 

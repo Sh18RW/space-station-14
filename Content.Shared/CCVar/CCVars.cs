@@ -338,6 +338,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> RoundRestartTime =
             CVarDef.Create("game.round_restart_time", 120f, CVar.SERVERONLY);
 
+        /// <summary>
+        /// AME builds if count of the player less or equals this value.
+        /// Defaults to 4 players.
+        /// </summary>
+        public static readonly CVarDef<int> AmeAutobuildMaxPlayerCount =
+            CVarDef.Create("game.ame_autobuild_max_player_count", 4, CVar.SERVERONLY);
+
         /*
          * Discord
          */
