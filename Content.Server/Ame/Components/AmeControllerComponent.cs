@@ -91,9 +91,9 @@ public sealed partial class AmeControllerComponent : SharedAmeControllerComponen
     public TimeSpan UpdateUIPeriod = TimeSpan.FromSeconds(3.0);
 
     /// <summary>
-    ///
+    /// It can't explode
     /// </summary>
-    [DataField("autoworking")]
+    [DataField("secureInjecting")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public bool Autoworking = false;
+    public bool SecureInjecting = false;
 }

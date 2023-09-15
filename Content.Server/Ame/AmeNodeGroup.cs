@@ -116,7 +116,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         }
     }
 
-    public float InjectFuel(int fuel, out bool overloading)
+    public float InjectFuel(int fuel, bool secureInjecting, out bool overloading)
     {
         overloading = false;
 
@@ -127,7 +127,7 @@ public sealed class AmeNodeGroup : BaseNodeGroup
         var safeFuelLimit = CoreCount * 2;
 
         var powerOutput = CalculatePower(fuel, CoreCount);
-        if (fuel <= safeFuelLimit)
+        if (secureInjecting || fuel <= safeFuelLimit)
             return powerOutput;
 
         // The AME is being overloaded.

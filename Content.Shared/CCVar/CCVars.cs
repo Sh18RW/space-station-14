@@ -345,6 +345,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AmeAutobuildMaxPlayerCount =
             CVarDef.Create("game.ame_autobuild_max_player_count", 4, CVar.SERVERONLY);
 
+        /// <summary>
+        /// AME after building starts injecting.
+        /// </summary>
+        public static readonly CVarDef<bool> AmeAutobuildAutostart =
+            CVarDef.Create("game.ame_autobuild_autostart", true, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If is true and AME autobuilds, fuel is unlimited.
+        /// </summary>
+        public static readonly CVarDef<bool> AmeAutostartUnlimitedFuel =
+            CVarDef.Create("game.ame_autobuild_unlimited_fuel", true, CVar.SERVERONLY);
+
         /*
          * Discord
          */

@@ -14,20 +14,24 @@ public sealed class AmeControllerBoundUserInterfaceState : BoundUserInterfaceSta
     public readonly bool IsMaster;
     public readonly bool Injecting;
     public readonly bool HasFuelJar;
+    public readonly bool IsSecureInjecting;
+    public readonly bool IsUnlimitedFuel;
     public readonly int FuelAmount;
     public readonly int InjectionAmount;
     public readonly int CoreCount;
     public readonly float CurrentPowerSupply;
     public readonly float TargetedPowerSupply;
 
-    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, int fuelAmount, int injectionAmount, int coreCount, float currentPowerSupply, float targetedPowerSupply)
+    public AmeControllerBoundUserInterfaceState(bool hasPower, bool isMaster, bool injecting, bool hasFuelJar, bool isSecureInjecting, bool isUnlimitedFuel, int fuelAmount, int injectionAmount, int coreCount, float currentPowerSupply, float targetedPowerSupply)
     {
         HasPower = hasPower;
         IsMaster = isMaster;
         Injecting = injecting;
         HasFuelJar = hasFuelJar;
+        IsSecureInjecting = isSecureInjecting;
+        IsUnlimitedFuel = isUnlimitedFuel;
         FuelAmount = fuelAmount;
-        InjectionAmount = injectionAmount;
+        InjectionAmount = isSecureInjecting ? coreCount * 2 : injectionAmount;
         CoreCount = coreCount;
         CurrentPowerSupply = currentPowerSupply;
         TargetedPowerSupply = targetedPowerSupply;

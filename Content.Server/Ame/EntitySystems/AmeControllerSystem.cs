@@ -93,11 +93,11 @@ public sealed class AmeControllerSystem : EntitySystem
             else
             {
                 var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-                var powerOutput = group.InjectFuel(availableInject, out var overloading);
+                var powerOutput = group.InjectFuel(availableInject, controller.SecureInjecting, out var overloading);
                 if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
                     powerOutlet.MaxSupply = powerOutput;
 
-                if (!controller.Autoworking)
+                if (!fuelJar.IsFuelUnlimited)
                     fuelJar.FuelAmount -= availableInject;
                 // only play audio if we actually had an injection
                 if (availableInject > 0)
@@ -133,6 +133,7 @@ public sealed class AmeControllerSystem : EntitySystem
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
         var coreCount = 0;
+        var isUnlimitedFuel = false;
         // how much power can be produced at the current settings, in kW
         // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
         float targetedPowerSupply = 0;
@@ -150,10 +151,16 @@ public sealed class AmeControllerSystem : EntitySystem
         }
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
-        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        if (hasJar)
+        {
+            isUnlimitedFuel =
+                EnsureComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity!.Value).IsFuelUnlimited;
+        }
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
+            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, controller.SecureInjecting, isUnlimitedFuel, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+
+        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, controller.SecureInjecting, isUnlimitedFuel, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
     }
 
     private bool IsMasterController(EntityUid uid)
@@ -312,14 +319,17 @@ public sealed class AmeControllerSystem : EntitySystem
                     = EnsureComp<TransformComponent>(entityUid).Coordinates;
                 EnsureComp<TransformComponent>(uid).Anchored = true;
 
-                var ameControllerComp = EnsureComp<AmeControllerComponent>(uid);
-                ameControllerComp.Autoworking = true;
-
+                // insert fuel jar
                 var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(uid).MapPosition);
+                EnsureComp<AmeFuelContainerComponent>(jar).IsFuelUnlimited =
+                    _configurationManager.GetCVar(CCVars.AmeAutostartUnlimitedFuel);
+                // TODO: maybe should rename fuel jar name
 
-                ameControllerComp.JarSlot.Insert(jar);
+                component.JarSlot.Insert(jar);
+                component.SecureInjecting = true;
 
-                ToggleInjecting(uid);
+                if (_configurationManager.GetCVar(CCVars.AmeAutobuildAutostart))
+                    ToggleInjecting(uid);
             }
 
             EntityManager.DeleteEntity(entityUid);

@@ -45,7 +45,9 @@ namespace Content.Client.Ame.UI
             {
                 EjectButton.Disabled = false;
                 ToggleInjection.Disabled = false;
-                FuelAmount.Text = $"{castState.FuelAmount}";
+                FuelAmount.Text = castState.IsUnlimitedFuel
+                        ? "\u221E"
+                        : $"{castState.FuelAmount}";
             }
 
             if (!castState.IsMaster)
@@ -67,6 +69,9 @@ namespace Content.Client.Ame.UI
             // format power statistics to pretty numbers
             CurrentPowerSupply.Text = $"{castState.CurrentPowerSupply.ToString("N1")}";
             TargetedPowerSupply.Text = $"{castState.TargetedPowerSupply.ToString("N1")}";
+
+            IncreaseFuelButton.Disabled = castState.IsSecureInjecting;
+            DecreaseFuelButton.Disabled = castState.IsSecureInjecting;
         }
     }
 }

@@ -20,4 +20,8 @@ public sealed partial class AmeFuelContainerComponent : Component
     [DataField("fuelCapacity")]
     [ViewVariables(VVAccess.ReadWrite)]
     public int FuelCapacity = 1000;
+
+    [DataField("isFuelUnlimited")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool IsFuelUnlimited = false;
 }
