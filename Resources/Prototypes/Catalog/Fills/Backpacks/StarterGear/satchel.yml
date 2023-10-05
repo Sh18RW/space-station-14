@@ -275,3 +275,23 @@
     contents:
       - id: BoxSurvival
       - id: RubberStampMime
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSatchelSecurity
+  id: ClothingBackpackSatchelBlueShieldOfficerFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalSecurity
+        - id: Flash
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: MagazineBoxMagnum
+        - id: SpeedLoaderMagnum

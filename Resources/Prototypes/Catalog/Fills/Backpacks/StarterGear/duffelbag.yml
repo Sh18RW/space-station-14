@@ -253,3 +253,23 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackDuffelSecurity
+  id: ClothingBackpackDuffelBlueShieldOfficerFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvivalSecurity
+        - id: Flash
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: TrackingImplanter
+        - id: MagazineBoxMagnum
+        - id: SpeedLoaderMagnum

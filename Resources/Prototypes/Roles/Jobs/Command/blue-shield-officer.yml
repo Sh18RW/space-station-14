@@ -1,0 +1,62 @@
+- type: job
+  id: BlueShieldOfficer
+  name: job-name-blue-shield-officer
+  description: job-description-blue-shield-officer
+  playTimeTracker: JobBlueShieldOfficer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Booster
+      time: 10000000
+  startingGear: BlueShieldOfficerGear
+  icon: "JobIconHeadOfPersonnel"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  weight: 15
+  access:
+  - Command
+  - HeadOfPersonnel
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Cargo
+  - Atmospherics
+  - Medical
+  - HeadOfSecurity
+  - ResearchDirector
+  - ChiefMedicalOfficer
+  - ChiefEngineer
+  - Quartermaster
+
+- type: startingGear
+  id: BlueShieldOfficerGear
+  equipment:
+    # TODO: blue shield officer gear
+    jumpsuit: ClothingUniformJumpsuitSec
+    back: ClothingBackpackBlueShieldOfficerFilled
+    shoes: ClothingShoesBootsJackSec # Corvax-Resprite
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatCapcap
+    outerClothing: ClothingOuterArmorCaptainCarapace # Corvax-Resprite
+    id: HoPPDA
+    ears: ClothingHeadsetAltCommand
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponRevolverMateba
+    pocket2: HandheldCrewMonitor
+    gloves: ClothingHandsGlovesCombat
+  innerclothingskirt: ClothingUniformJumpskirtSec
+  satchel: ClothingBackpackSatchelBlueShieldOfficerFilled
+  duffelbag: ClothingBackpackDuffelBlueShieldOfficerFilled
