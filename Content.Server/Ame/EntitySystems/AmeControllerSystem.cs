@@ -125,30 +125,13 @@ public sealed class AmeControllerSystem : EntitySystem
 
         var state = GetUiState(uid, controller);
         _userInterfaceSystem.SetUiState(bui, state);
-
-        controller.NextUIUpdate = _gameTiming.CurTime + controller.UpdateUIPeriod;
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
     {
         var powered = !TryComp<ApcPowerReceiverComponent>(uid, out var powerSource) || powerSource.Powered;
-        var coreCount = 0;
+        var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
         var isUnlimitedFuel = false;
-        // how much power can be produced at the current settings, in kW
-        // we don't use max. here since this is what is set in the Controller, not what the AME is actually producing
-        float targetedPowerSupply = 0;
-        if (TryGetAMENodeGroup(uid, out var group))
-        {
-            coreCount = group.CoreCount;
-            targetedPowerSupply = group.CalculatePower(controller.InjectionAmount, group.CoreCount) / 1000;
-        }
-
-        // set current power statistics in kW
-        float currentPowerSupply = 0;
-        if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet) && coreCount > 0)
-        {
-            currentPowerSupply = powerOutlet.CurrentSupply / 1000;
-        }
 
         var hasJar = Exists(controller.JarSlot.ContainedEntity);
         if (hasJar)
@@ -158,9 +141,29 @@ public sealed class AmeControllerSystem : EntitySystem
         }
 
         if (!hasJar || !TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var jar))
-            return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), false, hasJar, controller.SecureInjecting, isUnlimitedFuel, 0, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        {
+            return new AmeControllerBoundUserInterfaceState(
+                powered,
+                IsMasterController(uid),
+                false,
+                hasJar,
+                controller.SecureInjecting,
+                isUnlimitedFuel,
+                0,
+                controller.InjectionAmount,
+                coreCount);
+        }
 
-        return new AmeControllerBoundUserInterfaceState(powered, IsMasterController(uid), controller.Injecting, hasJar, controller.SecureInjecting, isUnlimitedFuel, jar.FuelAmount, controller.InjectionAmount, coreCount, currentPowerSupply, targetedPowerSupply);
+        return new AmeControllerBoundUserInterfaceState(
+            powered,
+            IsMasterController(uid),
+            controller.Injecting,
+            hasJar,
+            controller.SecureInjecting,
+            isUnlimitedFuel,
+            jar.FuelAmount,
+            controller.InjectionAmount,
+            coreCount);
     }
 
     private bool IsMasterController(EntityUid uid)
@@ -293,6 +296,7 @@ public sealed class AmeControllerSystem : EntitySystem
         comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
     }
 
+    [Obsolete("Obsolete")]
     private void OnComponentMapInit(EntityUid uid, AmeControllerComponent component, MapInitEvent args)
     {
         var isReadyToBuild = IoCManager.Resolve<IPlayerManager>().PlayerCount
