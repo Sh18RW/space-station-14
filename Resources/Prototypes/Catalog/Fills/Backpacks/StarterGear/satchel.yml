@@ -278,7 +278,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackSatchelSecurity
+  parent: ClothingBackpackMilitarySatchel
   id: ClothingBackpackSatchelBlueShieldOfficerFilled
   components:
     - type: StorageFill
