@@ -120,3 +120,5 @@ ent-ClothingHeadHatCapcap = cap cap
     .desc = A grand, stylish captain cap.
 ent-ClothingHeadHatGladiator = Gladiator helmet
     .desc = Protects the head from harsh ash winds and toy spears.
+ent-ClothingHeadHatBeretBso = blue shield officer's beret
+    .desc = Shortly, dangerously and beauty.

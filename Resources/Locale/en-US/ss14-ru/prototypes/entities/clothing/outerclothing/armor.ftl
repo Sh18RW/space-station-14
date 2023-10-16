@@ -29,3 +29,5 @@ ent-ClothingOuterArmorChangeling = chitinous armor
     .desc = Inflates the changeling's body into an all-consuming chitinous mass of armor.
 ent-ClothingOuterArmorBone = bone armor
     .desc = Sits on you like a second skin.
+ent-ClothingOuterArmorBSOCarapace = blue sheild officer's carapace
+    .desc = Everyone must know, the owner is so dangerous (and brutal).
