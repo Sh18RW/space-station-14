@@ -45,18 +45,17 @@
   id: BlueShieldOfficerGear
   equipment:
     # TODO: blue shield officer gear
-    jumpsuit: ClothingUniformJumpsuitSec
-    back: ClothingBackpackBlueShieldOfficerFilled
-    shoes: ClothingShoesBootsJackSec # Corvax-Resprite
-    eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatCapcap
-    outerClothing: ClothingOuterArmorCaptainCarapace # Corvax-Resprite
+    jumpsuit: ClothingUniformJumpsuitBSO
+    back: ClothingBackpackBlueShieldOfficerFilled # TODO
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSunglasses
+    head: ClothingHeadHatBeretBso
+    outerClothing: ClothingOuterArmorBSOCarapace
     id: HoPPDA
     ears: ClothingHeadsetAltCommand
     belt: ClothingBeltSecurityFilled
     pocket1: WeaponRevolverMateba
     pocket2: HandheldCrewMonitor
     gloves: ClothingHandsGlovesCombat
-  innerclothingskirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelBlueShieldOfficerFilled
   duffelbag: ClothingBackpackDuffelBlueShieldOfficerFilled
