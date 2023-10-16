@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitDeathSquad
-  name: death squad uniform
+  name: Death squad uniform
   description: Advanced armored jumpsuit used by special forces in special operations.
   components:
   - type: Sprite
@@ -1315,6 +1315,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/gladiator.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBSO
+  name: blue shield officer's blue jumpsuit
+  description: A blue jumpsuit of blue shield officer.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/bso.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/bso.rsi
 
 - type: entity
   parent: ClothingUniformBase
