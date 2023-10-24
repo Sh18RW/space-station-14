@@ -6,19 +6,18 @@ using Content.Server.Chat.Managers;
 using Content.Server.CrewManifest;
 using Content.Server.NodeContainer;
 using Content.Server.Power.Components;
+using Content.Server.Station.Events;
 using Content.Server.Station.Systems;
+using Content.Server.StationRecords.Systems;
 using Content.Shared.Ame;
 using Content.Shared.CCVar;
-using Content.Shared.Construction.Components;
 using Content.Shared.Construction.EntitySystems;
-using Content.Shared.CrewManifest;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
-using FastAccessors;
 using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -44,15 +43,59 @@ public sealed class AmeControllerSystem : EntitySystem
     [Dependency] private readonly AnchorableSystem _anchorableSystem = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
 
+    [Obsolete("Obsolete")]
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<AmeControllerComponent, ComponentStartup>(OnComponentStartup);
-        SubscribeLocalEvent<AmeControllerComponent, MapInitEvent>(OnComponentMapInit);
+        SubscribeLocalEvent<AmeControllerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AmeControllerComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<AmeControllerComponent, PowerChangedEvent>(OnPowerChanged);
         SubscribeLocalEvent<AmeControllerComponent, UiButtonPressedMessage>(OnUiButtonPressed);
+    }
+
+    private void OnMapInit(EntityUid uid, AmeControllerComponent component, MapInitEvent args)
+    {
+        var isReadyToBuild = IoCManager.Resolve<IPlayerManager>().PlayerCount
+                             <= _configurationManager.GetCVar(CCVars.AmeAutobuildMaxPlayerCount);
+
+        var shields
+            = AllEntityQuery<AmeShieldAutobuildComponent>();
+        var controllers
+            = AllEntityQuery<AmeControllerAutobuildComponent>();
+
+        while (shields.MoveNext(out var ent, out var comp))
+        {
+            if (isReadyToBuild)
+                Spawn("AmeShielding", EnsureComp<TransformComponent>(ent).MapPosition);
+
+            EntityManager.DeleteEntity(ent);
+        }
+
+        if (controllers.MoveNext(out var entityUid, out _))
+        {
+            if (isReadyToBuild)
+            {
+                EnsureComp<TransformComponent>(uid).Coordinates
+                    = EnsureComp<TransformComponent>(entityUid).Coordinates;
+                EnsureComp<TransformComponent>(uid).Anchored = true;
+
+                // insert fuel jar
+                var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(uid).MapPosition);
+                EnsureComp<AmeFuelContainerComponent>(jar).IsFuelUnlimited =
+                    _configurationManager.GetCVar(CCVars.AmeAutostartUnlimitedFuel);
+                // TODO: maybe should rename fuel jar
+
+                component.JarSlot.Insert(jar);
+                component.SecureInjecting = true;
+
+                if (_configurationManager.GetCVar(CCVars.AmeAutobuildAutostart))
+                    ToggleInjecting(uid);
+            }
+
+            EntityManager.DeleteEntity(entityUid);
+        }
     }
 
     public override void Update(float frameTime)
@@ -63,8 +106,6 @@ public sealed class AmeControllerSystem : EntitySystem
         {
             if (controller.NextUpdate <= curTime)
                 UpdateController(uid, curTime, controller, nodes);
-            else if (controller.NextUIUpdate <= curTime)
-                UpdateUi(uid, controller);
         }
     }
 
@@ -75,8 +116,6 @@ public sealed class AmeControllerSystem : EntitySystem
 
         controller.LastUpdate = curTime;
         controller.NextUpdate = curTime + controller.UpdatePeriod;
-        // update the UI regardless of other factors to update the power readings
-        UpdateUi(uid, controller);
 
         if (!controller.Injecting)
             return;
@@ -85,25 +124,19 @@ public sealed class AmeControllerSystem : EntitySystem
 
         if (TryComp<AmeFuelContainerComponent>(controller.JarSlot.ContainedEntity, out var fuelJar))
         {
-            // if the jar is empty shut down the AME
-            if (fuelJar.FuelAmount <= 0)
-            {
-                SetInjecting(uid, false, null, controller);
-            }
-            else
-            {
-                var availableInject = Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
-                var powerOutput = group.InjectFuel(availableInject, controller.SecureInjecting, out var overloading);
-                if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
-                    powerOutlet.MaxSupply = powerOutput;
-
-                if (!fuelJar.IsFuelUnlimited)
-                    fuelJar.FuelAmount -= availableInject;
-                // only play audio if we actually had an injection
-                if (availableInject > 0)
-                    _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
-                UpdateUi(uid, controller);
-            }
+            var availableInject = controller.SecureInjecting
+                    ? group.CoreCount * 2
+                    : Math.Min(controller.InjectionAmount, fuelJar.FuelAmount);
+            var powerOutput = group.InjectFuel(
+                availableInject,
+                controller.SecureInjecting,
+                out var overloading);
+            if (TryComp<PowerSupplierComponent>(uid, out var powerOutlet))
+                powerOutlet.MaxSupply = powerOutput;
+            if (!fuelJar.IsFuelUnlimited)
+                fuelJar.FuelAmount -= availableInject;
+            _audioSystem.PlayPvs(controller.InjectSound, uid, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            UpdateUi(uid, controller);
         }
 
         controller.Stability = group.GetTotalStability();
@@ -133,7 +166,7 @@ public sealed class AmeControllerSystem : EntitySystem
         var coreCount = TryGetAMENodeGroup(uid, out var group) ? group.CoreCount : 0;
         var isUnlimitedFuel = false;
 
-        var hasJar = Exists(controller.JarSlot.ContainedEntity);
+        var hasJar = controller.JarSlot.ContainedEntity != null && Exists(controller.JarSlot.ContainedEntity);
         if (hasJar)
         {
             isUnlimitedFuel =
@@ -290,54 +323,10 @@ public sealed class AmeControllerSystem : EntitySystem
         );
     }
 
-    private void OnComponentStartup(EntityUid uid, AmeControllerComponent comp, ComponentStartup args)
+    private void OnComponentStartup(EntityUid uid, AmeControllerComponent component, ComponentStartup args)
     {
         // TODO: Fix this bad name. I'd update maps but then people get mad.
-        comp.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
-    }
-
-    [Obsolete("Obsolete")]
-    private void OnComponentMapInit(EntityUid uid, AmeControllerComponent component, MapInitEvent args)
-    {
-        var isReadyToBuild = IoCManager.Resolve<IPlayerManager>().PlayerCount
-            <= _configurationManager.GetCVar(CCVars.AmeAutobuildMaxPlayerCount);
-
-        var shields
-            = AllEntityQuery<AmeShieldAutobuildComponent>();
-        var controllers
-            = AllEntityQuery<AmeControllerAutobuildComponent>();
-
-        while (shields.MoveNext(out var ent, out var comp))
-        {
-            if (isReadyToBuild)
-                Spawn("AmeShielding", EnsureComp<TransformComponent>(ent).MapPosition);
-
-            EntityManager.DeleteEntity(ent);
-        }
-
-        if (controllers.MoveNext(out var entityUid, out _))
-        {
-            if (isReadyToBuild)
-            {
-                EnsureComp<TransformComponent>(uid).Coordinates
-                    = EnsureComp<TransformComponent>(entityUid).Coordinates;
-                EnsureComp<TransformComponent>(uid).Anchored = true;
-
-                // insert fuel jar
-                var jar = Spawn("AmeJar", EnsureComp<TransformComponent>(uid).MapPosition);
-                EnsureComp<AmeFuelContainerComponent>(jar).IsFuelUnlimited =
-                    _configurationManager.GetCVar(CCVars.AmeAutostartUnlimitedFuel);
-                // TODO: maybe should rename fuel jar name
-
-                component.JarSlot.Insert(jar);
-                component.SecureInjecting = true;
-
-                if (_configurationManager.GetCVar(CCVars.AmeAutobuildAutostart))
-                    ToggleInjecting(uid);
-            }
-
-            EntityManager.DeleteEntity(entityUid);
-        }
+        component.JarSlot = _containerSystem.EnsureContainer<ContainerSlot>(uid, AmeControllerComponent.FuelContainerId);
     }
 
     private void OnInteractUsing(EntityUid uid, AmeControllerComponent comp, InteractUsingEvent args)
