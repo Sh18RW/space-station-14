@@ -24,7 +24,7 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci
@@ -40,3 +40,14 @@
     - ClothMade
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckPioneerTie
+  name: pioneer's tie
+  description: Do you want to restore pioneers? Yes, you want!
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/pioneer.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/pioneer.rsi

@@ -239,3 +239,5 @@ ent-ClothingUniformJumpsuitCasualRed = casual red jumpsuit
     .desc = A loose worn red shirt with a grey pants, perfect for someone looking to relax.
 ent-ClothingUniformJumpsuitBSO = blue shield officer's costume
     .desc = Strict appearance, smooth, without a single fold, shape. Oh, I wish I could look at him forever!!
+ent-ClothingUniformUssrGroundTroopOfficer = ground troop's officer uniform
+    .desc = We will never forgot USSR, Novikov...

@@ -4,3 +4,5 @@ ent-ClothingNeckTieDet = detective's tie
     .desc = A loosely tied necktie, a perfect accessory for the over-worked detective.
 ent-ClothingNeckTieSci = scientist's tie
     .desc = Why do we all have to wear these ridiculous ties?
+ent-ClothingNeckPioneerTie = pioneer's tie
+    .desc = Do you want to restore pioneers? Yes, you want!

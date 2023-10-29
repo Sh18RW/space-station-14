@@ -150,3 +150,5 @@ ent-ClothingUniformJumpskirtCasualPurple = casual purple jumpskirt
     .desc = A loose worn purple shirt with a grey skirt, perfect for someone looking to relax.
 ent-ClothingUniformJumpskirtCasualRed = casual red jumpskirt
     .desc = A loose worn red shirt with a grey skirt, perfect for someone looking to relax.
+ent-ClothingUniformJumpskirtUssrGroundTroopOfficer = ground troop's officer jumpskirt USSR
+    .desc = Yeah, there were women too! Glory to Novikov!

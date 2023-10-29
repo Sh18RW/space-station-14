@@ -1416,3 +1416,25 @@
       - state: equipped-INNERCLOTHING-jumpsuit
       - state: equipped-INNERCLOTHING-shirt
         color: "#b30000"
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitBSO
+  name: blue shield officer's blue jumpsuit
+  description: A blue jumpsuit of blue shield officer.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/bso.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/bso.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformUssrGroundTroopOfficer
+  name: ground troop's officer uniform
+  description: We will never forgot USSR, Novikov...
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ussr-officer-ground-troops.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ussr-officer-ground-troops.rsi

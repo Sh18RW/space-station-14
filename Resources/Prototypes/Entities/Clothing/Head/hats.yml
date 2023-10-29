@@ -790,3 +790,36 @@
     sprite: Clothing/Head/Hats/gladiator.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/gladiator.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatUssrOfficerCap
+  name: Ground Troop's officer cap
+  description: Glory to Revolution Conclusion! Glory to Novikov!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ussr_cap.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/ussr_cap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatUssrOfficerBeret
+  name: Ground Troop's officer beret
+  description: If you want to return USSR, it's your choice! Glory to Novikov!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ussr_beret.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/ussr_beret.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatUssrUshanka
+  name: typical Soviet ushanka
+  description: There's vodka here somewhere, you know that! The star reminds you of Novikov...
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/ussr_ushanka.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/ussr_ushanka.rsi
