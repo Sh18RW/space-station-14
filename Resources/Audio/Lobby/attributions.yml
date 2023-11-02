@@ -78,3 +78,8 @@
   license: "CC-BY-NC-SA-3.0"
   copyright: "every light is blinking at once by Alexander Divine."
   source: "https://soundcloud.com/alexanderdivine/every-light-is-blinking-at-once"
+
+- files: ["napoleon.ogg"]
+  license: "Custom"
+  copyright: "VIDEOCLUB"
+  source: "https://gospeljingle.com/foreign-music/videoclub-amour-plastique/"
