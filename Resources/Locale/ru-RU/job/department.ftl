@@ -6,3 +6,5 @@ department-Medical = Медицинский отдел
 department-Security = Служба безопасности
 department-Science = Научный отдел
 department-Specific = Для конкретной станции
+department-Specific = На определённых станциях
+department-Booster = Спец. службы
