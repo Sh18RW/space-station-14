@@ -49,4 +49,4 @@ ent-ClothingOuterCoatLabSeniorPhysician = лабораторный халат в
 ent-ClothingOuterCoatSpaceAsshole = пальто космического засранца
     .desc = А вот и он...
 ent-ClothingOuterUssrCoat = советская шинель
-    .desc = Лучшая защита от холодной погоды.
+    .desc = Лучшая защита от холодной погоды и врагов.
