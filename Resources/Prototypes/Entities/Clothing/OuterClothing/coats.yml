@@ -355,3 +355,14 @@
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/space_asshole.rsi
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterUssrCoat
+  name: ussr coat
+  description: Once it was supplied complete with a balalaika...
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Coats/ussr_overcoat.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Coats/ussr_overcoat.rsi
