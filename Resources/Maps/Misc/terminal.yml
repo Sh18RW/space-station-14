@@ -3683,6 +3683,26 @@ entities:
     - pos: 3.5,14.5
       parent: 2
       type: Transform
+  - uid: 2236
+    components:
+    - pos: -8.5,17.5
+      parent: 2
+      type: Transform
+  - uid: 2237
+    components:
+    - pos: -8.5,18.5
+      parent: 2
+      type: Transform
+  - uid: 2238
+    components:
+    - pos: -8.5,15.5
+      parent: 2
+      type: Transform
+  - uid: 2239
+    components:
+    - pos: -8.5,14.5
+      parent: 2
+      type: Transform
   - uid: 3719
     components:
     - pos: 32.5,0.5
@@ -9150,6 +9170,15 @@ entities:
       type: Transform
     - color: '#FF0000FF'
       type: AtmosPipeColor
+- proto: GeneratorBasic15kW
+  entities:
+  - uid: 1483
+    components:
+    - pos: 7.5,16.5
+      parent: 2
+      type: Transform
+    - supplyRate: 30000
+      type: PowerSupplier
 - proto: GeneratorRTG
   entities:
   - uid: 581
@@ -9175,11 +9204,6 @@ entities:
   - uid: 1107
     components:
     - pos: 21.5,-5.5
-      parent: 2
-      type: Transform
-  - uid: 1483
-    components:
-    - pos: 7.5,16.5
       parent: 2
       type: Transform
   - uid: 1795
@@ -10370,7 +10394,7 @@ entities:
     - pos: 20.5,-0.5
       parent: 2
       type: Transform
-    - secondsUntilStateChange: -2555.1357
+    - secondsUntilStateChange: -2661.1409
       state: Opening
       type: Door
   - uid: 256
