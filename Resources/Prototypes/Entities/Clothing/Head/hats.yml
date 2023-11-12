@@ -823,3 +823,14 @@
     sprite: Clothing/Head/Hats/ussr_ushanka.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/ussr_ushanka.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretBso
+  name: blue shield officer's beret
+  description: The best beret in the world. On the best personal on this station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_bso.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_bso.rsi
