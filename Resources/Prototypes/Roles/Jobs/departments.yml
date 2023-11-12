@@ -99,3 +99,10 @@
   - Reporter
   - Zookeeper
   - Psychologist
+
+- type: department
+  id: Booster
+  description: department-Booster-description
+  color: "#0011FF"
+  roles:
+  - BlueShieldOfficer
