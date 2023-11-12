@@ -247,7 +247,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelSalvage
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelSalvageFilled
   components:
     - type: StorageFill
@@ -256,7 +256,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpackDuffelMilitary
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelBlueShieldOfficerFilled
   components:
     - type: StorageFill

@@ -57,7 +57,7 @@
 - type: entity
   name: AME Shield Spawner
   id: SpawnAmeShield
-  parent: AMEMarkerBase
+  parent: MarkerBase
   components:
     - type: Sprite
       layers:
@@ -68,7 +68,7 @@
 - type: entity
   name: AME Controller Spawner
   id: SpawnAmeController
-  parent: AMEMarkerBase
+  parent: MarkerBase
   components:
     - type: Sprite
       layers:
