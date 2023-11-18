@@ -46,13 +46,13 @@ public sealed class TTSManager
     public void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _cfg.OnValueChanged(CCCVars.TTSMaxCache, val =>
+        _cfg.OnValueChanged(CCVars.TTSMaxCache, val =>
         {
             _maxCachedCount = val;
             ResetCache();
         }, true);
-        _cfg.OnValueChanged(CCCVars.TTSApiUrl, v => _apiUrl = v, true);
-        _cfg.OnValueChanged(CCCVars.TTSApiToken, v => _apiToken = v, true);
+        _cfg.OnValueChanged(CCVars.TTSApiUrl, v => _apiUrl = v, true);
+        _cfg.OnValueChanged(CCVars.TTSApiToken, v => _apiToken = v, true);
     }
 
     /// <summary>
@@ -84,7 +84,7 @@ public sealed class TTSManager
         var reqTime = DateTime.UtcNow;
         try
         {
-            var timeout = _cfg.GetCVar(CCVars.TTSApiTimeout);
+            var timeout = 5000f;
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(timeout));
             var response = await _httpClient.PostAsJsonAsync(_apiUrl, body, cts.Token);
             if (!response.IsSuccessStatusCode)
