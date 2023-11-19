@@ -23,7 +23,7 @@ public sealed class TTSSystem : EntitySystem
     private readonly MemoryContentRoot _contentRoot = new();
     private static readonly ResPath Prefix = ResPath.Root / "TTS";
 
-    private float _volume = 0.0f;
+    private float _volume = 100.0f;
     private int _fileIdx = 0;
 
     public override void Initialize()
@@ -55,9 +55,9 @@ public sealed class TTSSystem : EntitySystem
     {
         _sawmill.Debug($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
 
-        var volume = _volume;
+        var volume = _volume * 1.4f;
         if (ev.IsWhisper)
-            volume -= 4;
+            volume -= 8;
 
         var filePath = new ResPath($"{_fileIdx++}.ogg");
         _contentRoot.AddOrUpdateFile(filePath, ev.Data);
@@ -67,7 +67,7 @@ public sealed class TTSSystem : EntitySystem
         if (ev.SourceUid != null)
         {
             var sourceUid = GetEntity(ev.SourceUid.Value);
-            _audio.PlayEntity(soundPath, new EntityUid(), sourceUid); // recipient arg ignored on client
+            _audio.PlayEntity(soundPath, new EntityUid(), sourceUid, audioParams); // recipient arg ignored on client
         }
         else
         {

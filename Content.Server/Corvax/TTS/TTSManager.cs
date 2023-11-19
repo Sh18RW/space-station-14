@@ -79,7 +79,7 @@ public sealed class TTSManager
             ApiToken = _apiToken,
             Text = text,
             Speaker = speaker,
-            Effect = isAnnounce ? "Announce" : isRadio ? "Radio" : "",
+            Effect = isAnnounce ? "Announce" : (isRadio ? "Radio" : ""),
         };
 
         var reqTime = DateTime.UtcNow;

@@ -103,7 +103,7 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void HandleSay(EntityUid uid, string message, string speaker, bool isRadio)
     {
-        var soundData = await GenerateTTS(message, speaker, false, false, true);
+        var soundData = await GenerateTTS(message, speaker, false, false, false);
         if (soundData is null) return;
         RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), Filter.Pvs(uid));
     }
@@ -143,9 +143,9 @@ public sealed partial class TTSSystem : EntitySystem
         if (char.IsLetter(textSanitized[^1]))
             textSanitized += ".";
 
-        var ssmlTraits = SoundTraits.RateFast;
+        var ssmlTraits = SoundTraits.PitchVerylow;
         if (isWhisper)
-            ssmlTraits |= SoundTraits.PitchVerylow;
+            ssmlTraits = SoundTraits.PitchVerylow;
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);
 
         return await _ttsManager.ConvertTextToSpeech(speaker, textSsml, isAnnounce, isRadio);
