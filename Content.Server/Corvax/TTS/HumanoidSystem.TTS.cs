@@ -1,5 +1,5 @@
-﻿using Content.Shared.Humanoid;
-using TTSComponent = Content.Server.Corvax.TTS.TTSComponent;
+﻿using Content.Shared.Corvax.TTS;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Humanoid;
 
