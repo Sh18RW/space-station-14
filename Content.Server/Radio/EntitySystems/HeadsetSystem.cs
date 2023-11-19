@@ -1,6 +1,7 @@
 using Content.Server.Chat.Systems;
 using Content.Server.Emp;
 using Content.Server.Radio.Components;
+using Content.Shared.Corvax.TTS;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
@@ -100,7 +101,12 @@ public sealed class HeadsetSystem : SharedHeadsetSystem
     private void OnHeadsetReceive(EntityUid uid, HeadsetComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(Transform(uid).ParentUid, out ActorComponent? actor))
+        {
             _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+
+            var ttsRadio = new RequestRadioTTSEvent(args.Audio, actor.PlayerSession.ConnectedClient);
+            RaiseLocalEvent(ttsRadio);
+        }
     }
 
     private void OnEmpPulse(EntityUid uid, HeadsetComponent component, ref EmpPulseEvent args)

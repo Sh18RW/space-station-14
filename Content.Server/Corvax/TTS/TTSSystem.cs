@@ -29,6 +29,19 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
 
         SubscribeNetworkEvent<RequestGlobalTTSEvent>(OnRequestGlobalTTS);
+
+        SubscribeLocalEvent<RequestAnnounceTTSEvent>(OnRequestAnnounceTTS);
+        SubscribeLocalEvent<RequestRadioTTSEvent>(OnRequestRadioTTS);
+    }
+
+    private async void OnRequestRadioTTS(RequestRadioTTSEvent ev)
+    {
+        if (ev.Audio is null)
+            return;
+
+        RaiseNetworkEvent(new PlayTTSEvent(ev.Audio), ev.Receiver);
+
+        Console.WriteLine("Radio message");
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -50,6 +63,20 @@ public sealed partial class TTSSystem : EntitySystem
         RaiseNetworkEvent(new PlayTTSEvent(soundData), Filter.SinglePlayer(args.SenderSession));
     }
 
+    private async void OnRequestAnnounceTTS(RequestAnnounceTTSEvent ev)
+    {
+        if (!_isEnabled ||
+            ev.Text.Length > MaxMessageChars ||
+            !_prototypeManager.TryIndex<TTSVoicePrototype>(ev.VoiceId, out var protoVoice))
+            return;
+
+        var soundData = await GenerateTTS(ev.Text, protoVoice.Speaker, false, true);
+        if (soundData is null)
+            return;
+
+        RaiseNetworkEvent(new PlayTTSEvent(soundData));
+    }
+
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
         var voiceId = component.VoicePrototypeId;
@@ -65,18 +92,18 @@ public sealed partial class TTSSystem : EntitySystem
         if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
             return;
 
-        if (args.ObfuscatedMessage != null)
+        if (args.Channel == null && args.ObfuscatedMessage != null)
         {
             HandleWhisper(uid, args.Message, args.ObfuscatedMessage, protoVoice.Speaker);
             return;
         }
 
-        HandleSay(uid, args.Message, protoVoice.Speaker);
+        HandleSay(uid, args.Message, protoVoice.Speaker, args.Channel != null);
     }
 
-    private async void HandleSay(EntityUid uid, string message, string speaker)
+    private async void HandleSay(EntityUid uid, string message, string speaker, bool isRadio)
     {
-        var soundData = await GenerateTTS(message, speaker);
+        var soundData = await GenerateTTS(message, speaker, false, false, true);
         if (soundData is null) return;
         RaiseNetworkEvent(new PlayTTSEvent(soundData, GetNetEntity(uid)), Filter.Pvs(uid));
     }
@@ -109,7 +136,7 @@ public sealed partial class TTSSystem : EntitySystem
     }
 
     // ReSharper disable once InconsistentNaming
-    private async Task<byte[]?> GenerateTTS(string text, string speaker, bool isWhisper = false)
+    public async Task<byte[]?> GenerateTTS(string text, string speaker, bool isWhisper = false, bool isAnnounce = false, bool isRadio = false)
     {
         var textSanitized = Sanitize(text);
         if (textSanitized == "") return null;
@@ -121,7 +148,7 @@ public sealed partial class TTSSystem : EntitySystem
             ssmlTraits |= SoundTraits.PitchVerylow;
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);
 
-        return await _ttsManager.ConvertTextToSpeech(speaker, textSsml);
+        return await _ttsManager.ConvertTextToSpeech(speaker, textSsml, isAnnounce, isRadio);
     }
 }
 

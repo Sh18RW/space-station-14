@@ -1,9 +1,12 @@
+using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
+using Content.Server.Corvax.TTS;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
+using Content.Shared.Corvax.TTS;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
@@ -26,6 +29,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly TTSSystem _ttsSystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -57,7 +61,7 @@ public sealed class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
+    public async Task SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -80,6 +84,19 @@ public sealed class RadioSystem : EntitySystem
             ("name", name),
             ("message", FormattedMessage.EscapeText(message)));
 
+        var voiceId = "";
+        if (TryComp<TTSComponent>(messageSource, out var ttsComp))
+        {
+            voiceId = ttsComp.VoicePrototypeId;
+        }
+
+        if (string.IsNullOrEmpty(voiceId))
+        {
+            voiceId = "Aidar";
+        }
+
+        var audioBytes = await _ttsSystem.GenerateTTS(message, voiceId, false, false, true);
+
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
             ChatChannel.Radio,
@@ -88,7 +105,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, audioBytes);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);
@@ -101,6 +118,7 @@ public sealed class RadioSystem : EntitySystem
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
+
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedChannels.Contains(channel.ID)))

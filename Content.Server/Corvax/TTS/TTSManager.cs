@@ -61,7 +61,7 @@ public sealed class TTSManager
     /// <param name="speaker">Identifier of speaker</param>
     /// <param name="text">SSML formatted text</param>
     /// <returns>OGG audio bytes or null if failed</returns>
-    public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text)
+    public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text, bool isAnnounce = false, bool isRadio = false)
     {
         WantedCount.Inc();
         var cacheKey = GenerateCacheKey(speaker, text);
@@ -79,6 +79,7 @@ public sealed class TTSManager
             ApiToken = _apiToken,
             Text = text,
             Speaker = speaker,
+            Effect = isAnnounce ? "Announce" : isRadio ? "Radio" : "",
         };
 
         var reqTime = DateTime.UtcNow;
@@ -159,6 +160,9 @@ public sealed class TTSManager
 
         [JsonPropertyName("speaker")]
         public string Speaker { get; set; } = "";
+
+        [JsonPropertyName("effect")]
+        public string Effect { get; set; } = "";
 
         [JsonPropertyName("ssml")]
         public bool SSML { get; private set; } = true;

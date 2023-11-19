@@ -12,6 +12,7 @@ using Content.Server.Station.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Corvax.TTS;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
@@ -308,6 +309,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (playSound)
         {
             SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
+
+            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Aidar"));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -346,6 +349,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (playDefaultSound)
         {
             SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
+
+            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Aidar"));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");
