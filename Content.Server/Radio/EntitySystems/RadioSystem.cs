@@ -13,6 +13,7 @@ using Content.Shared.Radio.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
@@ -30,6 +31,7 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly TTSSystem _ttsSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -92,10 +94,13 @@ public sealed class RadioSystem : EntitySystem
 
         if (string.IsNullOrEmpty(voiceId))
         {
-            voiceId = "Aidar";
+            voiceId = "aidar";
         }
 
-        var audioBytes = await _ttsSystem.GenerateTTS(message, voiceId, false, false, true);
+        if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
+            return;
+
+        var audioBytes = await _ttsSystem.GenerateTTS(message, protoVoice.Speaker, false, false, true);
 
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
