@@ -310,7 +310,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, Filter.Broadcast(), AudioParams.Default.WithVolume(-2f));
 
-            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Aidar"));
+            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Myron"));
         }
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Global station announcement from {sender}: {message}");
     }
@@ -350,7 +350,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         {
             SoundSystem.Play(announcementSound?.GetSound() ?? DefaultAnnouncementSound, filter, AudioParams.Default.WithVolume(-2f));
 
-            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Aidar"));
+            RaiseLocalEvent(new RequestAnnounceTTSEvent(message, "Myron"));
         }
 
         _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Station Announcement on {station} from {sender}: {message}");

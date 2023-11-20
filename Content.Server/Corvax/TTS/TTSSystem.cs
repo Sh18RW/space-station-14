@@ -17,7 +17,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly TTSManager _ttsManager = default!;
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
 
-    private const int MaxMessageChars = 100 * 2; // same as SingleBubbleCharLimit * 2
+    private const int MaxMessageChars = 100 * 8; // same as SingleBubbleCharLimit * 2
     private bool _isEnabled = false;
 
     public override void Initialize()
@@ -40,8 +40,6 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         RaiseNetworkEvent(new PlayTTSEvent(ev.Audio), ev.Receiver);
-
-        Console.WriteLine("Radio message");
     }
 
     private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -74,6 +72,7 @@ public sealed partial class TTSSystem : EntitySystem
         if (soundData is null)
             return;
 
+        await Task.Delay(1000);
         RaiseNetworkEvent(new PlayTTSEvent(soundData));
     }
 
