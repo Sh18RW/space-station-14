@@ -60,6 +60,8 @@ public sealed class TTSManager
     /// </summary>
     /// <param name="speaker">Identifier of speaker</param>
     /// <param name="text">SSML formatted text</param>
+    /// <param name="isAnnounce"></param>
+    /// <param name="isRadio"></param>
     /// <returns>OGG audio bytes or null if failed</returns>
     public async Task<byte[]?> ConvertTextToSpeech(string speaker, string text, bool isAnnounce = false, bool isRadio = false)
     {
