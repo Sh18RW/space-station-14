@@ -23,14 +23,14 @@ namespace Content.Server.Nuke
         /// </summary>
         [DataField("timer")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Timer = 300;
+        public int Timer = 270;
 
         /// <summary>
         ///     How long until the bomb can arm again after deactivation.
         ///     Used to prevent announcements spam.
         /// </summary>
         [DataField("cooldown")]
-        public int Cooldown = 30;
+        public int Cooldown = 60;
 
         /// <summary>
         ///     The <see cref="ItemSlot"/> that stores the nuclear disk. The entity whitelist, sounds, and some other
