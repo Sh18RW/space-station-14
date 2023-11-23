@@ -22,3 +22,5 @@ reagent-name-mute-toxin = токсин немоты
 reagent-desc-mute-toxin = Лишает Вас возможности разговаривать пока в организме.
 reagent-name-norepinephric-acid = норадреналинованая кислота
 reagent-desc-norepinephric-acid = Делает Вас не способным видеть во время метаболизма
+reagent-name-bananadine = Бананадин
+reagent-desc-bananadine = Лёгкий наркотик, содержащийся в небольших дозах в банановых кожурках.
