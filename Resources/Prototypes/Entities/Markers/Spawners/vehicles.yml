@@ -55,6 +55,34 @@
       - VehicleSkeletonMotorcycle
 
 - type: entity
+  name: Wheelchair Spawner
+  id: SpawnVehicleWheelchair
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Vehicles/wheelchair.rsi
+        state: vehicle
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleWheelchair
+
+- type: entity
+  name: Wheelchair [Folded] Spawner
+  id: SpawnVehicleWheelchairFolded
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: green
+      - sprite: Objects/Vehicles/wheelchair.rsi
+        state: vehicle_folded
+  - type: ConditionalSpawner
+    prototypes:
+      - VehicleWheelchairFolded
+
+- type: entity
   name: AME Shield Spawner
   id: SpawnAmeShield
   parent: MarkerBase
