@@ -43,6 +43,7 @@ guide-entry-artifact-reports = Отчёты об артефактах
 guide-entry-traversal-distorter = Исказитель обхода
 guide-entry-ss14 = Space Station 14
 guide-entry-robotics = Робототехника
+guide-entry-cyborgs = Киборги
 guide-entry-security = Служба безопасности
 guide-entry-dna = ДНК
 guide-entry-defusal = Обезвреживание Больших Бомб
