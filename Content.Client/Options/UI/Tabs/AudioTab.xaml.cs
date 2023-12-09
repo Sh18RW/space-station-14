@@ -204,5 +204,18 @@ namespace Content.Client.Options.UI.Tabs
                 Loc.GetString("ui-options-volume-percent", ("volume", TtsVolumeSlider.Value / 100)); // Corvax-TTS
             AmbienceSoundsLabel.Text = ((int)AmbienceSoundsSlider.Value).ToString();
         }
+
+        private float DBToLV100(float db, float multiplier = 1f)
+        {
+            var beri = (float) (Math.Pow(10, db / 10) * 100 / multiplier);
+            return beri;
+        }
+
+        private float LV100ToDB(float lv100, float multiplier = 1f)
+        {
+            // Saving negative infinity doesn't work, so use -10000000 instead (MidiManager does it)
+            var weh = MathF.Max(-10000000, (float) (Math.Log(lv100 * multiplier / 100, 10) * 10));
+            return weh;
+        }
     }
 }
