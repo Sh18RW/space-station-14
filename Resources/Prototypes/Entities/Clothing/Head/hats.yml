@@ -863,3 +863,14 @@
     sprite: Clothing/Head/Hats/beret_bso.rsi
   - type: Clothing
     sprite: Clothing/Head/Hats/beret_bso.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatSanta
+  name: Santa's head
+  description: Hm... I thought Santa's beard was real.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/santa.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/santa.rsi

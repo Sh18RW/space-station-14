@@ -378,3 +378,16 @@
     damageCoefficient: 0.70
   - type: TemperatureProtection
     coefficient: 0.05
+
+- type: entity
+  parent: ClothingOuterStorageBase
+  id: ClothingOuterSantaCoat
+  name: Santa's coat
+  description: It's real, Santa exists!
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/santa.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/santa.rsi
+  - type: TemperatureProtection
+    coefficient: 0.05

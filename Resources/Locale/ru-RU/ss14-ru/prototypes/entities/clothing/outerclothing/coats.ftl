@@ -50,3 +50,5 @@ ent-ClothingOuterCoatSpaceAsshole = пальто космического зас
     .desc = А вот и он...
 ent-ClothingOuterUssrCoat = советская шинель
     .desc = Лучшая защита от холодной погоды и врагов.
+ent-ClothingOuterSantaCoat = Шуба Деда Мороза
+    .desc = Это правда, Дед Мороз существует!

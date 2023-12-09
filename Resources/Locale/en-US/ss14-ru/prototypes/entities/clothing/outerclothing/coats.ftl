@@ -50,3 +50,5 @@ ent-ClothingOuterCoatSpaceAsshole = the coat of space asshole
     .desc = And there he was...
 ent-ClothingOuterUssrCoat = Soviet overcoat
     .desc = The best protector from cold weather and enemies.
+ent-ClothingOuterSantaCoat = Santa's coat
+    .desc = It's real, Santa exists!

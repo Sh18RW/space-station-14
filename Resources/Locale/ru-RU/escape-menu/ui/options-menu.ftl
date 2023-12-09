@@ -28,9 +28,9 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ui-options-show-held-item = Показать удерживаемый элемент рядом с курсором?
 ui-options-show-combat-mode-indicators = Показывать индикаторы боевого режима курсором?
-ui-options-opaque-storage-window = Использовать инвентарь я йчейками
+ui-options-opaque-storage-window = Использовать инвентарь с ячейками
 ui-options-show-looc-on-head = Показывать LOOC речь над головой персонажев?
-ui-options-fancy-speech = Показывать имена в диалоговых окна
+ui-options-fancy-speech = Показывать имена в игре при диалоге
 ui-options-fancy-name-background = Добавить задний фон для имён
 ui-options-vsync = Вертикальная синхронизация
 ui-options-fullscreen = Полный экран

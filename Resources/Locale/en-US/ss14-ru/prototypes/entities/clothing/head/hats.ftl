@@ -128,3 +128,5 @@ ent-ClothingHeadHatUssrOfficerBeret = Ground Troop's officer beret
     .desc = If you want to return USSR, it's your choice! Glory to Novikov!
 ent-ClothingHeadHatUssrUshanka = typical Soviet ushanka
     .desc = There's vodka here somewhere, you know that! The star reminds you of Novikov...
+ent-ClothingHeadHatSanta = Santa's hat
+    .desc = Hm... I thought Santa's beard was real.
