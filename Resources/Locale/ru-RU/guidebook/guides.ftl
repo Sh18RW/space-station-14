@@ -30,6 +30,7 @@ guide-entry-medical = Медицинский
 guide-entry-medicaldoctor = Врач
 guide-entry-chemist = Химик
 guide-entry-medicine = Медицина
+guide-entry-brute = Усовершенствованное грубое лекарство
 guide-entry-botanicals = Ботанический
 guide-entry-cloning = Клонирование
 guide-entry-cryogenics = Криогеника
