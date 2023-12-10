@@ -1,108 +1,48 @@
 - type: department
-  id: Cargo
-  description: department-Cargo-description
+  id: Booster
+  description: Only for admins roles.
+  color: "#FFFFFF"
+  roles:
+  - LinerCaptain
+
+- type: department
+  id: LinerCommand
+  description: The liner command.
   color: "#A46106"
   roles:
-  - CargoTechnician
-  - Quartermaster
-  - SalvageSpecialist
+  - LinerCaptain
+  - LinerCaptainAssistant
+  - LinerBoatswain
+  - LinerSeniorTech
 
 - type: department
-  id: Civilian
-  description: department-Civilian-description
-  color: "#9FED58"
+  id: LinerSecurity
+  description: The liner security.
+  color: "#A46106"
   roles:
-  - Bartender
-  - Borg
-  - Botanist
-  - Boxer
-  - Chaplain
-  - Chef
-  - Clown
-  - HeadOfPersonnel
-  - Janitor
-  - Lawyer
-  - Librarian
-  - Mime
-  - Musician
-  - Passenger
-  - Reporter
-  - Zookeeper
-  - ServiceWorker
+  - LinerBoatswain
+  - LinerOfficer
 
 - type: department
-  id: Command
-  description: department-Command-description
-  color: "#334E6D"
+  id: LinerTech
+  description: The liner tech.
+  color: "#A46106"
   roles:
-  - Captain
-  - CentralCommandOfficial
-  - ChiefEngineer
-  - ChiefMedicalOfficer
-  - HeadOfPersonnel
-  - HeadOfSecurity
-  - ResearchDirector
-  - Quartermaster
+  - LinerSeniorTech
+  - LinerTech
 
 - type: department
-  id: Engineering
-  description: department-Engineering-description
-  color: "#EFB341"
+  id: LinerMedical
+  description: The liner medical.
+  color: "#A46106"
   roles:
-  - AtmosphericTechnician
-  - ChiefEngineer
-  - SeniorEngineer
-  - StationEngineer
-  - TechnicalAssistant
+  - LinerDoctor
 
 - type: department
-  id: Medical
-  description: department-Medical-description
-  color: "#52B4E9"
+  id: LinerMain
+  description: The liner main roles.
+  color: "#A46106"
   roles:
-  - Chemist
-  - ChiefMedicalOfficer
-  - MedicalDoctor
-  - MedicalIntern
-  - Psychologist
-  - Paramedic
-  - SeniorPhysician
-
-- type: department
-  id: Security
-  description: department-Security-description
-  color: "#DE3A3A"
-  roles:
-  - HeadOfSecurity
-  - SecurityCadet
-  - SecurityOfficer
-  - SeniorOfficer
-  - Detective
-  - Warden
-
-- type: department
-  id: Science
-  description: department-Science-description
-  color: "#D381C9"
-  roles:
-  - ResearchDirector
-  - SeniorResearcher
-  - Scientist
-  - ResearchAssistant
-
-- type: department
-  id: Specific
-  description: department-Specific-description
-  color: "#9FED58"
-  roles:
-  - Boxer
-  - Reporter
-  - Zookeeper
-  - Psychologist
-
-- type: department
-  id: Booster
-  description: department-Booster-description
-  color: "#0011FF"
-  roles:
-  - BlueShieldOfficer
+  - LinerSanta
+  - LinerGuest
+  - LinerServiceWorker

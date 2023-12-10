@@ -891,7 +891,7 @@
   conditions:
     - !type:BuyerJobCondition
       whitelist:
-        - Passenger
+        # - Passenger
         - Boxer
 
 - type: listing
