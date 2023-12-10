@@ -1,9 +1,0 @@
-- type: job
-  id: LinerGuest
-  name: guest
-  description: The guest.
-  playTimeTracker: JobLinerGuest
-  startingGear: DoctorGear
-  supervisors: job-supervisors-everyone
-  access:
-  - Maintenance
