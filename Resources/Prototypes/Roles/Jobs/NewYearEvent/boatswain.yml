@@ -1,0 +1,27 @@
+- type: job
+  id: LinerBoatswain
+  name: боцман
+  description: Строгий чувак, который следит за безопасностью, и чтобы без приколов! Очень любит анекдот про торпеду.
+  playTimeTracker: JobLinerBoatswain
+  weight: 10
+  startingGear: HoSGear
+  icon: "JobIconHeadOfSecurity"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - HeadOfSecurity
+  - Command
+  - Brig
+  - Security
+  - Armory
+  - Maintenance
+  - Service
+  - External
+  - Detective
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff

@@ -1,0 +1,16 @@
+- type: job
+  id: LinerSanta
+  name: Дед Мороз
+  description: Дед Мороз и Дед Мороз. К сожалению не известно, настоящая у него борода или нет.
+  playTimeTracker: JobLinerSanta
+  startingGear: ClownGear
+  icon: "JobIconClown"
+  supervisors: job-supervisors-service
+  canBeAntag: false
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  - Kitchen
+  extendedAccess:
+  - Hydroponics

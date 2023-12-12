@@ -1,0 +1,18 @@
+- type: job
+  id: LinerOfficer
+  name: офицер СБ
+  description: Здесь офицеры - бывшие жандармы. Может они здесь и не такие крутые, как раньше, но постоять за себя ещё могут. И за других. Наверное.
+  playTimeTracker: JobLinerOfficer
+  startingGear: SecurityOfficerGear
+  icon: "JobIconSecurityOfficer"
+  supervisors: job-supervisors-hos
+  canBeAntag: false
+  access:
+  - Security
+  - Brig
+  - Maintenance
+  - Service
+  - External
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]

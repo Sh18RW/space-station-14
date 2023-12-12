@@ -1,0 +1,40 @@
+- type: job
+  id: LinerCaptainAssistant
+  name: ассистент капитана
+  description: Вторая, и скорее всего первая, рука капитана. Следит за персоналом, чтоб никто не отлынивал!
+  playTimeTracker: JobLinerCaptainAssistant
+  weight: 20
+  startingGear: HoPGear
+  icon: "JobIconHeadOfPersonnel"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - Command
+  - HeadOfPersonnel
+  - Bar
+  - Service
+  - Maintenance
+  - Janitor
+  - Theatre
+  - Kitchen
+  - Chapel
+  - Hydroponics
+  - External
+  - Chemistry
+  - Engineering
+  - Research
+  - Detective
+  - Salvage
+  - Security
+  - Brig
+  - Lawyer
+  - Cargo
+  - Atmospherics
+  - Medical
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff

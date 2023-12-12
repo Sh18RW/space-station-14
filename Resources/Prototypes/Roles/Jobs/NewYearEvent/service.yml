@@ -1,0 +1,16 @@
+- type: job
+  id: LinerServiceWorker
+  name: работник Лайнера
+  description: Сегодня они работают на Вас.
+  playTimeTracker: JobLinerServiceWorker
+  startingGear: ServiceWorkerGear
+  icon: "JobIconServiceWorker"
+  supervisors: job-supervisors-service
+  canBeAntag: false
+  access:
+  - Service
+  - Maintenance
+  - Bar
+  - Kitchen
+  extendedAccess:
+  - Hydroponics

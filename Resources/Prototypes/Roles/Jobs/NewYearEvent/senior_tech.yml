@@ -1,0 +1,25 @@
+- type: job
+  id: LinerSeniorTech
+  name: главный техник
+  description: Залотает неожиданную дырку. Следите, чтоб он не выпил всю водку, а то Вам не достанется.
+  playTimeTracker: JobLinerSeniorTech
+  weight: 10
+  startingGear: ChiefEngineerGear
+  icon: "JobIconChiefEngineer"
+  requireAdminNotify: true
+  supervisors: job-supervisors-captain
+  canBeAntag: false
+  access:
+  - Maintenance
+  - Engineering
+  - Command
+  - External
+  - ChiefEngineer
+  - Atmospherics
+  - Brig
+  special:
+  - !type:AddImplantSpecial
+    implants: [ MindShieldImplant ]
+  - !type:AddComponentSpecial
+    components:
+      - type: CommandStaff

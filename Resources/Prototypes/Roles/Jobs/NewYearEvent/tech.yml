@@ -1,0 +1,14 @@
+- type: job
+  id: LinerTech
+  name: техник
+  description: Trust him, he is engineer.
+  playTimeTracker: JobLinerTech
+  startingGear: StationEngineerGear
+  icon: "JobIconStationEngineer"
+  supervisors: job-supervisors-ce
+  access:
+  - Maintenance
+  - Engineering
+  - External
+  extendedAccess:
+  - Atmospherics

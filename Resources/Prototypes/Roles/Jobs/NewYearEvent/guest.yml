@@ -1,0 +1,10 @@
+- type: job
+  id: LinerGuest
+  name: гость
+  description: Почётный гость. Не уверен, что Вы можете командовать персоналом, но Вы сегодня здесь очень важный гость.
+  playTimeTracker: JobLinerGuest
+  startingGear: PassengerGear
+  icon: "JobIconPassenger"
+  supervisors: job-supervisors-everyone
+  access:
+  - Maintenance
