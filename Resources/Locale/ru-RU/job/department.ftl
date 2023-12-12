@@ -8,3 +8,9 @@ department-Science = Научный отдел
 department-Specific = Для конкретной станции
 department-Specific = На определённых станциях
 department-Booster = Спец. службы
+# event
+department-LinerCommand = [Ивент] Командование Лайнера
+department-LinerSecurity = [Ивент] Служба Безопасности Лайнера
+department-LinerTech = [Ивент] Инженерный отдел Лайнера
+department-LinerMedical = [Ивент] Медецинский отдел Лайнера
+department-LinerMain = [Ивент] Основной персонал Лайнера

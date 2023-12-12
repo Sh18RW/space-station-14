@@ -1,0 +1,13 @@
+- type: job
+  id: LinerDoctor
+  name: доктор
+  description: Если вы поранились, можете не переживать, он сможет наложить вам пластырь.
+  playTimeTracker: JobLinerDoctor
+  startingGear: DoctorGear
+  supervisors: job-supervisors-cmo
+  icon: "JobIconMedicalDoctor"
+  access:
+  - Medical
+  - Maintenance
+  extendedAccess:
+  - Chemistry

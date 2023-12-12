@@ -106,3 +106,47 @@
   color: "#0011FF"
   roles:
   - BlueShieldOfficer
+  - LinerCaptain
+
+# event
+- type: department
+  id: LinerCommand
+  description: The liner command.
+  color: "#A46106"
+  roles:
+  - LinerCaptain
+  - LinerCaptainAssistant
+  - LinerBoatswain
+  - LinerSeniorTech
+
+- type: department
+  id: LinerSecurity
+  description: The liner security.
+  color: "#A46106"
+  roles:
+  - LinerBoatswain
+  - LinerOfficer
+
+- type: department
+  id: LinerTech
+  description: The liner tech.
+  color: "#A46106"
+  roles:
+  - LinerSeniorTech
+  - LinerTech
+
+- type: department
+  id: LinerMedical
+  description: The liner medical.
+  color: "#A46106"
+  roles:
+  - LinerDoctor
+
+- type: department
+  id: LinerMain
+  description: The liner main roles.
+  color: "#A46106"
+  roles:
+  - LinerSanta
+  - LinerGuest
+  - LinerServiceWorker

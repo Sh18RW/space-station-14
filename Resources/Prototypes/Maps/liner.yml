@@ -1,0 +1,36 @@
+- type: gameMap
+  id: Liner
+  mapName: 'Liner'
+  mapPath: /Maps/aspid.yml
+  minPlayers: 25
+  maxPlayers: 70
+  stations:
+    Aspid:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: 'UF Liner Cassiopeia-{1}'
+          nameGenerator:
+            !type:NanotrasenNameGenerator
+            prefixCreator: '14'
+        - type: StationEmergencyShuttle
+          emergencyShuttlePath: /Maps/Shuttles/emergency_courser.yml
+        - type: StationJobs
+          overflowJobs:
+            - LinerGuest
+          availableJobs:
+            # command
+            LinerCaptain: [ 1, 1 ]
+            LinerCaptainAssistant: [ 1, 1 ]
+            LinerBoatswain: [ 1, 1 ]
+            LinerSeniorTech: [ 1, 1 ]
+            # security
+            LinerOfficer: [ 2, 4 ]
+            # engineering
+            LinerTech: [ 1, 2 ]
+            # medical
+            LinerDoctor: [ 1, 2 ]
+            # main
+            LinerSanta: [ 1, 1 ]
+            LinerGuest: [ 2, -1 ]
+            LinerServiceWorker: [ 2, -1 ]
