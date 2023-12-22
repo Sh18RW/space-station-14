@@ -7,6 +7,7 @@
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
   weight: 10
+  canBeAntag: false
   access:
   - Maintenance
   - Engineering
