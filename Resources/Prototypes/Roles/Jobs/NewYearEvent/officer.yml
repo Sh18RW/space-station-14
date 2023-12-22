@@ -26,6 +26,7 @@
     eyes: ClothingEyesGlassesSecurity
     head: ClothingHeadHatBeretSecurity
     outerClothing: ClothingOuterArmorBasic
+    gloves: ClothingHandsGlovesCombat
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled

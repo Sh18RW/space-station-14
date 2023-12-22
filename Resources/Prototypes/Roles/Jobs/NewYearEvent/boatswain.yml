@@ -29,7 +29,7 @@
 - type: startingGear
   id: LinerBoatswainGear
   equipment:
-    jumpsuit: ClothingUniformJumpsuitHoSFormal
+    jumpsuit: ClothingUniformJumpsuitHosFormal
     back: ClothingBackpackHOSFilled
     shoes: ClothingShoesBootsCombatFilled
     outerClothing: ClothingOuterCoatHoSTrench

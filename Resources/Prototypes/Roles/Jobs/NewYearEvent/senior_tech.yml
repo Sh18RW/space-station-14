@@ -4,7 +4,7 @@
   description: Залотает неожиданную дырку. Следите, чтоб он не выпил всю водку, а то Вам не достанется.
   playTimeTracker: JobLinerSeniorTech
   weight: 10
-  startingGear: ChiefEngineerGear
+  startingGear: LinerSeniorTechGear
   icon: "JobIconChiefEngineer"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
@@ -25,7 +25,7 @@
       - type: CommandStaff
 
 - type: startingGear
-  id: LinerSeniorGear
+  id: LinerSeniorTechGear
   equipment:
     head: ClothingHeadHatHardhatWhite
     jumpsuit: ClothingUniformJumpsuitSeniorEngineer

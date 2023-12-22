@@ -3,7 +3,7 @@
   name: техник
   description: Trust him, he is engineer.
   playTimeTracker: JobLinerTech
-  startingGear: StationEngineerGear
+  startingGear: LinerTechGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
   access:
@@ -14,7 +14,7 @@
   - Atmospherics
 
 - type: startingGear
-  id: StationEngineerGear
+  id: LinerTechGear
   equipment:
     head: ClothingHeadHatBeretEngineering
     jumpsuit: ClothingUniformJumpsuitEngineering
