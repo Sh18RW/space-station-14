@@ -63,11 +63,11 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return null;
         }
 
-        if (!CanBeAssigned(uid, mindId, mind, comp))
-        {
-            Log.Warning($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
-            return null;
-        }
+        // if (!CanBeAssigned(uid, mindId, mind, comp))
+        // {
+        //     Log.Warning($"Objective {proto} did not match the requirements for {_mind.MindOwnerLoggingString(mind)}, deleted it");
+        //     return null;
+        // }
 
         var ev = new ObjectiveAssignedEvent(mindId, mind);
         RaiseLocalEvent(uid, ref ev);
