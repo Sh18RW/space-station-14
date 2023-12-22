@@ -4,7 +4,7 @@
   description: Строгий чувак, который следит за безопасностью, и чтобы без приколов! Очень любит анекдот про торпеду.
   playTimeTracker: JobLinerBoatswain
   weight: 10
-  startingGear: HoSGear
+  startingGear: LinerBoatswainGear
   icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
@@ -25,3 +25,21 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+
+- type: startingGear
+  id: LinerBoatswainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitHoSFormal
+    back: ClothingBackpackHOSFilled
+    shoes: ClothingShoesBootsCombatFilled
+    outerClothing: ClothingOuterCoatHoSTrench
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretHoS
+    id: HoSPDA
+    gloves: ClothingHandsGlovesCombat
+    ears: ClothingHeadsetAltSecurity
+    belt: ClothingBeltSheathFilled
+    pocket1: WeaponPistolMk58Nonlethal
+  innerClothingSkirt: ClothingUniformJumpskirtHoSFormal
+  satchel: ClothingBackpackSatchelHOSFilled
+  duffelbag: ClothingBackpackDuffelHOSFilled

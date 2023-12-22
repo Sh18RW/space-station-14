@@ -1,9 +1,9 @@
 - type: job
   id: LinerOfficer
   name: офицер СБ
-  description: Здесь офицеры - бывшие жандармы. Может они здесь и не такие крутые, как раньше, но постоять за себя ещё могут. И за других. Наверное.
+  description: Здесь офицеры - бывшие жандармы. Может они и не такие крутые, как раньше, но постоять за себя ещё могут. И за других. Наверное.
   playTimeTracker: JobLinerOfficer
-  startingGear: SecurityOfficerGear
+  startingGear: LinerOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
@@ -16,3 +16,20 @@
   special:
   - !type:AddImplantSpecial
     implants: [ MindShieldImplant ]
+
+- type: startingGear
+  id: LinerOfficerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorOfficer
+    back: ClothingBackpackSecurityFilled
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSecurity
+    head: ClothingHeadHatBeretSecurity
+    outerClothing: ClothingOuterArmorBasic
+    id: SecurityPDA
+    ears: ClothingHeadsetSecurity
+    belt: ClothingBeltSecurityFilled
+    pocket1: WeaponPistolMk58Nonlethal
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorOfficer
+  satchel: ClothingBackpackSatchelSecurityFilled
+  duffelbag: ClothingBackpackDuffelSecurityFilled

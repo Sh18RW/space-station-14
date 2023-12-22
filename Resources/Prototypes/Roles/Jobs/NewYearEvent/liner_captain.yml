@@ -9,7 +9,7 @@
       department: Booster
       time: 54000 # 15 hours
   weight: 20
-  startingGear: DoctorGear
+  startingGear: LinerCaptainGear
   requireAdminNotify: true
   joinNotifyCrew: true
   supervisors: job-supervisors-centcom
@@ -22,3 +22,19 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+
+- type: startingGear
+  id: LinerCaptainGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitCapFormal
+    back: ClothingBackpackCaptainFilled
+    shoes: ClothingShoesBootsLaceup
+    head: ClothingHeadHatCapcap
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCaptain
+    outerClothing: ClothingOuterArmorCaptainCarapace
+    id: CaptainPDA
+    ears: ClothingHeadsetAltCommand
+  innerClothingSkirt: ClothingUniformJumpskirtCapFormalDress
+  satchel: ClothingBackpackSatchelCaptainFilled
+  duffelbag: ClothingBackpackDuffelCaptainFilled

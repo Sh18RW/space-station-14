@@ -3,8 +3,20 @@
   name: гость
   description: Почётный гость. Не уверен, что Вы можете командовать персоналом, но Вы сегодня здесь очень важный гость.
   playTimeTracker: JobLinerGuest
-  startingGear: PassengerGear
+  startingGear: LinerGuestGear
   icon: "JobIconPassenger"
   supervisors: job-supervisors-everyone
   access:
   - Maintenance
+
+- type: startingGear
+  id: LinerGuestGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitLawyerBlue
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlack
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
+  innerClothingSkirt: ClothingUniformJumpskirtLawyerBlue
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

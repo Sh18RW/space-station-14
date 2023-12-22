@@ -23,3 +23,19 @@
   - !type:AddComponentSpecial
     components:
       - type: CommandStaff
+
+- type: startingGear
+  id: LinerSeniorGear
+  equipment:
+    head: ClothingHeadHatHardhatWhite
+    jumpsuit: ClothingUniformJumpsuitSeniorEngineer
+    back: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesBootsWork
+    id: SeniorEngineerPDA
+    gloves: ClothingHandsGlovesColorYellow
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltChiefEngineerFilled
+    ears: ClothingHeadsetEngineering
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorEngineer
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

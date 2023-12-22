@@ -3,7 +3,7 @@
   name: Дед Мороз
   description: Дед Мороз и Дед Мороз. К сожалению не известно, настоящая у него борода или нет.
   playTimeTracker: JobLinerSanta
-  startingGear: ClownGear
+  startingGear: SantaGear
   icon: "JobIconClown"
   supervisors: job-supervisors-service
   canBeAntag: false
@@ -14,3 +14,17 @@
   - Kitchen
   extendedAccess:
   - Hydroponics
+
+- type: startingGear
+  id: SantaGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorBlue
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesColorBlue
+    outerClothing: ClothingOuterSantaCoat
+    head: ClothingHeadHatSanta
+    id: PassengerPDA
+    ears: ClothingHeadsetGrey
+  innerClothingSkirt: ClothingUniformJumpskirtColorBlue
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

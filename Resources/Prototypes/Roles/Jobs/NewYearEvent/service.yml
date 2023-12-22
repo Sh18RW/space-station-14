@@ -14,3 +14,17 @@
   - Kitchen
   extendedAccess:
   - Hydroponics
+
+- type: startingGear
+  id: LinerServiceWorkerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitBartender
+    back: ClothingBackpackFilled
+    gloves: ClothingHandsGlovesColorWhite
+    shoes: ClothingShoesBootsLaceup
+    belt: BoxFolderClipboard
+    id: ServiceWorkerPDA
+    ears: ClothingHeadsetService
+  innerClothingSkirt: ClothingUniformJumpskirtBartender
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -3,7 +3,7 @@
   name: доктор
   description: Если вы поранились, можете не переживать, он сможет наложить вам пластырь.
   playTimeTracker: JobLinerDoctor
-  startingGear: DoctorGear
+  startingGear: LinerDoctorGear
   supervisors: job-supervisors-cmo
   icon: "JobIconMedicalDoctor"
   access:
@@ -11,3 +11,18 @@
   - Maintenance
   extendedAccess:
   - Chemistry
+
+- type: startingGear
+  id: LinerDoctorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+    back: ClothingBackpackMedicalFilled
+    shoes: ClothingShoesColorWhite
+    outerClothing: ClothingOuterCoatLabSeniorPhysician
+    head: ClothingHeadHatBeretBrigmedic
+    id: MedicalPDA
+    ears: ClothingHeadsetMedical
+    belt: ClothingBeltMedicalFilled
+  innerClothingSkirt: ClothingUniformJumpskirtSeniorPhysician
+  satchel: ClothingBackpackSatchelMedicalFilled
+  duffelbag: ClothingBackpackDuffelMedicalFilled
