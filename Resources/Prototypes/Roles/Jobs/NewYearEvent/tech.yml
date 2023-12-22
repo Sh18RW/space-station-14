@@ -6,6 +6,7 @@
   startingGear: LinerTechGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce
+  weight: 10
   access:
   - Maintenance
   - Engineering

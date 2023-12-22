@@ -7,6 +7,7 @@
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
+  weight: 15
   access:
   - Security
   - Brig

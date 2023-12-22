@@ -3,7 +3,7 @@
   name: главный техник
   description: Залотает неожиданную дырку. Следите, чтоб он не выпил всю водку, а то Вам не достанется.
   playTimeTracker: JobLinerSeniorTech
-  weight: 10
+  weight: 20
   startingGear: LinerSeniorTechGear
   icon: "JobIconChiefEngineer"
   requireAdminNotify: true

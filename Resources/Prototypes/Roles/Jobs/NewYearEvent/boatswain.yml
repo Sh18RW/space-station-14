@@ -3,7 +3,7 @@
   name: боцман
   description: Строгий чувак, который следит за безопасностью, и чтобы без приколов! Очень любит анекдот про торпеду.
   playTimeTracker: JobLinerBoatswain
-  weight: 10
+  weight: 20
   startingGear: LinerBoatswainGear
   icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
