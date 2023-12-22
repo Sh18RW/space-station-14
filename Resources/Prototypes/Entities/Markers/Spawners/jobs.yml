@@ -643,3 +643,116 @@
     layers:
       - state: green
       - state: zookeeper
+
+# Event
+
+- type: entity
+  id: SpawnPointLinerBoatswain
+  parent: SpawnPointJobBase
+  name: liner boatswain
+  components:
+  - type: SpawnPoint
+    job_id: LinerBoatswain
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerDoctor
+  parent: SpawnPointJobBase
+  name: liner doctor
+  components:
+  - type: SpawnPoint
+    job_id: LinerDoctor
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerCaptainAssistant
+  parent: SpawnPointJobBase
+  name: liner captain assistant
+  components:
+  - type: SpawnPoint
+    job_id: LinerCaptainAssistant
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerCaptain
+  parent: SpawnPointJobBase
+  name: liner captain
+  components:
+  - type: SpawnPoint
+    job_id: LinerCaptain
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerGuest
+  parent: SpawnPointJobBase
+  name: liner guest
+  components:
+  - type: SpawnPoint
+    job_id: LinerGuest
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerOfficer
+  parent: SpawnPointJobBase
+  name: liner officer
+  components:
+  - type: SpawnPoint
+    job_id: LinerOfficer
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerSanta
+  parent: SpawnPointJobBase
+  name: liner Santa
+  components:
+  - type: SpawnPoint
+    job_id: LinerSanta
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerSeniorTech
+  parent: SpawnPointJobBase
+  name: liner senior tech
+  components:
+  - type: SpawnPoint
+    job_id: LinerSeniorTech
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerServiceWorker
+  parent: SpawnPointJobBase
+  name: liner service worker
+  components:
+  - type: SpawnPoint
+    job_id: LinerServiceWorker
+  - type: Sprite
+    layers:
+    - state: green
+
+- type: entity
+  id: SpawnPointLinerTech
+  parent: SpawnPointJobBase
+  name: liner tech
+  components:
+  - type: SpawnPoint
+    job_id: LinerTech
+  - type: Sprite
+    layers:
+    - state: green
+
