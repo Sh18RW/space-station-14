@@ -7,6 +7,10 @@
   startingGear: LinerBoatswainGear
   icon: "JobIconHeadOfSecurity"
   requireAdminNotify: true
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Booster
+    time: 54000 # 15 hours
   supervisors: job-supervisors-captain
   canBeAntag: false
   access:

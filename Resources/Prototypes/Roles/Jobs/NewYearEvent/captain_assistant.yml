@@ -6,6 +6,10 @@
   weight: 20
   startingGear: LinerCaptainAssistantGear
   icon: "JobIconHeadOfPersonnel"
+  requirements:
+  - !type:DepartmentTimeRequirement
+    department: Booster
+    time: 54000 # 15 hours
   requireAdminNotify: true
   supervisors: job-supervisors-captain
   canBeAntag: false
