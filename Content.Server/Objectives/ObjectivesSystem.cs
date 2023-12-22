@@ -193,6 +193,12 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         return null;
     }
 
+    public EntityUid? GetObjective(EntityUid mindId, MindComponent mind, string proto)
+    {
+        var objective = TryCreateObjective(mindId, mind, proto);
+        return objective;
+    }
+
     /// <summary>
     /// Returns whether a target is considered 'in custody' (cuffed on the shuttle).
     /// </summary>
