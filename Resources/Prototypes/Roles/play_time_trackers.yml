@@ -150,3 +150,35 @@
 
 - type: playTimeTracker
   id: JobZookeeper
+
+# Event
+
+- type: playTimeTracker
+  id: JobLinerBoatswain
+
+- type: playTimeTracker
+  id: JobLinerCaptainAssistant
+
+- type: playTimeTracker
+  id: JobLinerDoctor
+
+- type: playTimeTracker
+  id: JobLinerGuest
+
+- type: playTimeTracker
+  id: JobLinerCaptain
+
+- type: playTimeTracker
+  id: JobLinerOfficer
+
+- type: playTimeTracker
+  id: JobLinerSanta
+
+- type: playTimeTracker
+  id: JobLinerSeniorTech
+
+- type: playTimeTracker
+  id: JobLinerTech
+
+- type: playTimeTracker
+  id: JobLinerServiceWorker
