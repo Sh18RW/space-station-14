@@ -1,11 +1,11 @@
 - type: gameMap
   id: Liner
   mapName: 'Liner'
-  mapPath: /Maps/aspid.yml
+  mapPath: /Maps/liner.yml
   minPlayers: 25
   maxPlayers: 70
   stations:
-    Aspid:
+    Liner:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
