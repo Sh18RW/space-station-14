@@ -13,6 +13,7 @@ public sealed partial class AssassinRuleComponent : Component
 {
     public readonly List<EntityUid> Assassins = new();
     public readonly List<ICommonSession> MakeTargetAssassins = new();
+
     public readonly string KillObjectivePrototypeId = "AssassinKillRandomHeadObjective";
     public readonly string EscapeObjectivePrototypeId = "AssassinEscapeShuttleObjective";
 
@@ -24,4 +25,6 @@ public sealed partial class AssassinRuleComponent : Component
 
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+    [DataField("newTargetSound")]
+    public SoundSpecifier NewTargetSound = new SoundPathSpecifier("/Audio/Ambience/Antag/assassin_new_target.ogg");
 }

@@ -54,7 +54,10 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
                     return;
                 }
 
-                AddTarget(mindId, mind, ref assassinRule, ref assassinRole);
+                if (AddTarget(mindId, mind, ref assassinRule, ref assassinRole))
+                {
+                    _roleSystem.MindPlaySound(mindId, assassinRule.NewTargetSound, mind);
+                }
 
                 if (assassinRole.targets.Count >= assassinRule.TargetsCount)
                     toDelete.Add(assassin);
