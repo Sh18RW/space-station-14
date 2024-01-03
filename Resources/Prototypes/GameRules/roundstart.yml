@@ -103,6 +103,13 @@
   components:
   - type: ZombieRule
 
+- type: entity
+  id: Assassin
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: AssassinRule
+
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
