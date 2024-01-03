@@ -18,6 +18,19 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<AssassinRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+    }
+
+    private void OnObjectivesTextGetInfo(EntityUid uid, AssassinRuleComponent component, ref ObjectivesTextGetInfoEvent args)
+    {
+        args.Minds = component.Assassins;
+        args.AgentName = Loc.GetString("assassin-round-end-agent-name");
+    }
+
     public void MakeAssassin(ICommonSession assassin)
     {
         var assassinRule = EntityQuery<AssassinRuleComponent>().FirstOrDefault();
