@@ -1,5 +1,6 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -11,6 +12,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class AssassinRuleComponent : Component
 {
     public readonly List<EntityUid> Assassins = new();
+    public readonly List<ICommonSession> MakeTargetAssassins = new();
     public readonly string KillObjectivePrototypeId = "AssassinKillRandomHeadObjective";
     public readonly string EscapeObjectivePrototypeId = "AssassinEscapeShuttleObjective";
 

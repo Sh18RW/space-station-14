@@ -90,13 +90,22 @@ public sealed class KillPersonConditionSystem : EntitySystem
         {
             // RequireAdminNotify used as a cheap way to check for command department
             if (_job.MindTryGetJob(mind, out _, out var prototype) && prototype.RequireAdminNotify)
-                allHeads.Add(mind);
+            {
+                if (args.except == null || !args.except.Contains(mind))
+                    allHeads.Add(mind);
+            }
         }
 
         if (allHeads.Count == 0)
-            allHeads = allHumans; // fallback to non-head target
+        {
+            args.Cancelled = true;
+            return;
+        }
 
-        _target.SetTarget(uid, _random.Pick(allHeads), target);
+        var targetHead = _random.Pick(allHeads);
+        args.except?.Add(targetHead);
+
+        _target.SetTarget(uid, targetHead, target);
     }
 
     private float GetProgress(EntityUid target, bool requireDead)

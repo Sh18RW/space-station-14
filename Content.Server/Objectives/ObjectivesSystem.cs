@@ -193,13 +193,13 @@ public sealed class ObjectivesSystem : SharedObjectivesSystem
         return null;
     }
 
-    public EntityUid? GetObjectiveByPrototypeId(EntityUid mindId, MindComponent mind, string objectiveId)
+    public EntityUid? GetObjectiveByPrototypeId(EntityUid mindId, MindComponent mind, string objectiveId, List<EntityUid>? except = null)
     {
         var tries = 5;
 
         while (tries > 0)
         {
-            var objective = TryCreateObjective(mindId, mind, objectiveId);
+            var objective = TryCreateObjective(mindId, mind, objectiveId, except);
             if (objective != null)
                 return objective;
 

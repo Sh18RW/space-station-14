@@ -8,4 +8,6 @@ namespace Content.Server.Roles;
 [RegisterComponent]
 public sealed partial class AssassinRoleComponent : AntagonistRoleComponent
 {
+    [DataField("targets")]
+    public List<EntityUid> targets = new();
 }
