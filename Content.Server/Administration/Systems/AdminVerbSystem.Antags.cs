@@ -124,9 +124,9 @@ public sealed partial class AdminVerbSystem
         // TODO: localization
         Verb assassin = new()
         {
-            Text = "Make as assassin",
+            Text = Loc.GetString("admin-verb-text-make-assassin"),
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi/base.png")),
             Act = () =>
             {
                 if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
@@ -135,7 +135,7 @@ public sealed partial class AdminVerbSystem
                 _assassinRule.MakeAssassin(session);
             },
             Impact = LogImpact.High,
-            Message = "Make an assassin #2",
+            Message = Loc.GetString("admin-verb-make-assassin"),
         };
         args.Verbs.Add(assassin);
     }
