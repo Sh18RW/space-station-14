@@ -25,7 +25,7 @@ public sealed partial class AssassinRuleComponent : Component
     public int TargetsCount = 2;
 
     [DataField("greetSoundNotification")]
-    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
+    public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/assassin_start.ogg");
     [DataField("newTargetSound")]
     public SoundSpecifier NewTargetSound = new SoundPathSpecifier("/Audio/Ambience/Antag/assassin_new_target.ogg");
 
