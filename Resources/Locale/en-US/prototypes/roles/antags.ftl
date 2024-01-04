@@ -27,3 +27,6 @@ roles-antag-subverted-silicon-objective = Follow your new laws and do bad unto t
 
 roles-antag-space-ninja-name = Space Ninja
 roles-antag-space-ninja-objective = Use your stealth to sabotage the station, nom on electrical wires.
+
+roles-antag-assassin-name = Assassin
+roles-antag-assassin-objectives = Eliminate some station heads.
