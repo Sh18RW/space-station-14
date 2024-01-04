@@ -5,9 +5,16 @@ using Content.Server.Mind;
 using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.Roles;
+using Content.Server.Shuttles.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Mind;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -18,14 +25,71 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private int PlayerPerAssassin => _cfg.GetCVar(CCVars.AssassinDifficulty);
+    private int MaxAssassins => _cfg.GetCVar(CCVars.AssassinMaxCount);
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
+        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
 
         SubscribeLocalEvent<AssassinRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+    }
+
+    private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
+    {
+        var query = EntityQueryEnumerator<AssassinRuleComponent, GameRuleComponent>();
+
+        while (query.MoveNext(out var uid, out var assassin, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
+
+            foreach (var player in ev.Players)
+            {
+                if (!ev.Profiles.ContainsKey(player.UserId))
+                    continue;
+
+                assassin.Candidates[player] = ev.Profiles[player.UserId];
+            }
+
+            TryMakeAssassin(assassin);
+        }
+    }
+
+    private void OnStartAttempt(RoundStartAttemptEvent ev)
+    {
+        var query = EntityQueryEnumerator<AssassinRuleComponent, GameRuleComponent>();
+
+        while (query.MoveNext(out var uid, out var assassin, out var gameRule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
+
+            var minPlayers = _cfg.GetCVar(CCVars.AssassinMinPlayerCount);
+
+            if (!ev.Forced && ev.Players.Length < minPlayers)
+            {
+                // TODO: localization
+                _chatManager.SendAdminAnnouncement("Min players count is not ready to start assassins!");
+                ev.Cancel();
+                continue;
+            }
+
+            if (ev.Players.Length == 0)
+            {
+                _chatManager.DispatchServerAnnouncement("No player is ready to start assassins!");
+                ev.Cancel();
+            }
+        }
     }
 
     private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
@@ -36,6 +100,22 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
+
+            // Try make new assassin
+
+            if (assassinRule.Assassins.Count < MaxAssassins)
+            {
+                if (ev.LateJoin
+                    && ev.Profile.AntagPreferences.Contains(assassinRule.AssassinPrototypeId)
+                    && ev.JobId != null
+                    && _prototypeManager.TryIndex<JobPrototype>(ev.JobId, out var job)
+                    && job.CanBeAntag)
+                {
+                    MakeAssassin(ev.Player);
+
+                    break;
+                }
+            }
 
             List<ICommonSession> toDelete = new();
 
@@ -74,6 +154,64 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
     {
         args.Minds = component.Assassins;
         args.AgentName = Loc.GetString("assassin-round-end-agent-name");
+    }
+
+    private List<ICommonSession> FindPotentialAssassin(
+        in Dictionary<ICommonSession, HumanoidCharacterProfile> candidates, AssassinRuleComponent component)
+    {
+        var list = new List<ICommonSession>();
+        var pendingQuery = GetEntityQuery<PendingClockInComponent>();
+
+        foreach (var player in candidates.Keys)
+        {
+            if (!_jobs.CanBeAntag(player))
+            {
+                continue;
+            }
+
+            if (player.AttachedEntity != null && pendingQuery.HasComponent(player.AttachedEntity.Value))
+            {
+                continue;
+            }
+
+            list.Add(player);
+        }
+        var prefList = new List<ICommonSession>();
+
+        foreach (var player in list)
+        {
+            var profile = candidates[player];
+            if (profile.AntagPreferences.Contains(component.AssassinPrototypeId))
+            {
+                prefList.Add(player);
+            }
+        }
+        if (prefList.Count == 0)
+        {
+            Log.Info("Insufficient preferred assassin, picking at random.");
+            prefList = list;
+        }
+        return prefList;
+    }
+
+    public void TryMakeAssassin(AssassinRuleComponent component)
+    {
+        if (component.Candidates.Any())
+        {
+            Log.Error("Nobody in Candidates dict to make assassin.");
+            return;
+        }
+
+        var assassinCount = MathHelper.Clamp(component.Candidates.Count / PlayerPerAssassin, 1, 2);
+        var assassinPool = FindPotentialAssassin(component.Candidates, component);
+
+        component.NextAssassinPlayerAmount = component.Candidates.Count - PlayerPerAssassin * assassinCount;
+
+        for (var i = 0; i < assassinCount; i++)
+        {
+            var player = _random.PickAndTake(assassinPool);
+            MakeAssassin(player);
+        }
     }
 
     public void MakeAssassin(ICommonSession assassin)

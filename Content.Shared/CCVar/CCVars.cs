@@ -1914,5 +1914,21 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> TTSMaxCache =
             CVarDef.Create("tts.max_cache", 250, CVar.SERVERONLY | CVar.ARCHIVE);
+
+        /**
+         * Assassin rule
+         */
+        public static readonly CVarDef<int> AssassinMinPlayerCount =
+            CVarDef.Create("assassin.min_player_count", 5, CVar.SERVERONLY | CVar.ARCHIVE);
+
+        /// <summary>
+        /// Player count / assassin
+        /// </summary>
+        /// <returns></returns>
+        public static readonly CVarDef<int> AssassinDifficulty =
+            CVarDef.Create("assassin.difficulty", 15, CVar.SERVER | CVar.ARCHIVE);
+
+        public static readonly CVarDef<int> AssassinMaxCount =
+            CVarDef.Create("assassin.max_count", 3, CVar.SERVERONLY | CVar.ARCHIVE);
     }
 }
