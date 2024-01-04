@@ -53,7 +53,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
     /// The objective is not added to the mind's objectives, mind system does that in TryAddObjective.
     /// If the objective could not be assigned the objective is deleted and null is returned.
     /// </summary>
-    public EntityUid? TryCreateObjective(EntityUid mindId, MindComponent mind, string proto)
+    public EntityUid? TryCreateObjective(EntityUid mindId, MindComponent mind, string proto, List<EntityUid>? except = null)
     {
         var uid = Spawn(proto);
         if (!TryComp<ObjectiveComponent>(uid, out var comp))
@@ -69,7 +69,7 @@ public abstract class SharedObjectivesSystem : EntitySystem
             return null;
         }
 
-        var ev = new ObjectiveAssignedEvent(mindId, mind);
+        var ev = new ObjectiveAssignedEvent(mindId, mind, except);
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
         {

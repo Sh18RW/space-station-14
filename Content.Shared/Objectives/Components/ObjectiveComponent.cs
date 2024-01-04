@@ -52,7 +52,7 @@ public record struct RequirementCheckEvent(EntityUid MindId, MindComponent Mind,
 /// Use this if the objective cannot be used, like a kill objective with no people alive.
 /// </summary>
 [ByRefEvent]
-public record struct ObjectiveAssignedEvent(EntityUid MindId, MindComponent Mind, bool Cancelled = false);
+public record struct ObjectiveAssignedEvent(EntityUid MindId, MindComponent Mind, List<EntityUid>? except = null, bool Cancelled = false);
 
 /// <summary>
 /// Event raised on an objective after everything has handled <see cref="ObjectiveAssignedEvent"/>.

@@ -19,6 +19,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
     [Dependency] private readonly RevolutionaryRuleSystem _revolutionaryRule = default!;
+    [Dependency] private readonly AssassinRuleSystem _assassinRule = default!;
     [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
@@ -119,5 +120,23 @@ public sealed partial class AdminVerbSystem
             Message = Loc.GetString("admin-verb-make-head-rev"),
         };
         args.Verbs.Add(headRev);
+
+        // TODO: localization
+        Verb assassin = new()
+        {
+            Text = Loc.GetString("admin-verb-text-make-assassin"),
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new ResPath("/Textures/Objects/Weapons/Guns/Snipers/heavy_sniper.rsi/base.png")),
+            Act = () =>
+            {
+                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
+                    return;
+
+                _assassinRule.MakeAssassin(session);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-assassin"),
+        };
+        args.Verbs.Add(assassin);
     }
 }

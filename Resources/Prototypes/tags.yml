@@ -988,6 +988,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: AssassinCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag
@@ -1115,3 +1118,6 @@
 
 - type: Tag
   id: MindShield
+
+- type: Tag
+  id: ShellShotgunFlare

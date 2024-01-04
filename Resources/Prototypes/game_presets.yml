@@ -114,3 +114,26 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: Assassin
+  alias:
+  - assassin
+  name: assassin-title
+  description: assassin-description
+  showInVote: true
+  rules:
+  - Assassin
+  - BasicStationEventScheduler
+
+- type: gamePreset
+  id: TraitorAssassin
+  alias:
+  - traitor
+  name: traitor-title
+  description: traitor-description
+  showInVote: false
+  rules:
+  - Traitor
+  - Assassin
+  - BasicStationEventScheduler

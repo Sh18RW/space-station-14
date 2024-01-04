@@ -1,0 +1,47 @@
+- type: construction
+  name: assassin shotgun double barreled
+  id: AssassinShotgunDoubleBarreled
+  graph: AssassinShotgunDoubleBarreledGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  description: "Nice double barreled shotgun. Classic!"
+  entityWhitelist:
+    tags:
+    - AssassinCraft
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/db_shotgun.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: assassin shotgun slug shell
+  id: AssassinShellShotgunSlug
+  graph: AssassinShellShotgunSlugGraph
+  startNode: start
+  targetNode: shell
+  category: construction-category-weapons
+  description: "Nice choice to kill someone!"
+  entityWhitelist:
+    tags:
+    - AssassinCraft
+  icon:
+    sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+    state: slug
+  objectType: Item
+
+- type: construction
+  name: assassin kukri knife
+  id: AssassinKukriKnife
+  graph: AssassinKukriKnifeGraph
+  startNode: start
+  targetNode: knife
+  category: construction-category-weapons
+  description: "Nice choice to kill someone!"
+  entityWhitelist:
+    tags:
+    - AssassinCraft
+  icon:
+    sprite: Objects/Weapons/Melee/kukri_knife.rsi
+    state: icon
+  objectType: Item

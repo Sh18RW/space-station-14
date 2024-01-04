@@ -1,0 +1,75 @@
+- type: constructionGraph
+  id: AssassinShotgunDoubleBarreledGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shotgun
+      steps:
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: Pipe
+        icon:
+          sprite: Structures/Piping/Atmospherics/pipe.rsi
+          state: pipeStraight
+        name: pipe
+      - tag: ModularReceiver
+        icon:
+          sprite: Objects/Misc/modular_receiver.rsi
+          state: icon
+        name: modular receiver
+      - tag: RifleStock
+        icon:
+          sprite: Objects/Misc/rifle_stock.rsi
+          state: icon
+        name: rifle stock
+      - material: Cloth
+        amount: 5
+        doAfter: 10
+      - material: MetalRod
+        amount: 4
+        doAfter: 10
+  - node: shotgun
+    entity: WeaponShotgunDoubleBarreled
+
+- type: constructionGraph
+  id: AssassinShellShotgunSlugGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: shell
+      steps:
+      - tag: ShellShotgunFlare
+        icon:
+          sprite: Objects/Weapons/Guns/Ammunition/Casings/shotgun_shell.rsi
+          state: flare
+        name: shotgun flare shell
+      - material: Steel
+        amount: 2
+        doAfter: 10
+      - material: Cloth
+        amount: 1
+        doAfter: 5
+  - node: shell
+    entity: ShellShotgunSlug
+
+- type: constructionGraph
+  id: AssassinKukriKnifeGraph
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: knife
+      steps:
+      - material: Steel
+        amount: 15
+        doAfter: 20
+      - material: Cloth
+        amount: 10
+        doAfter: 20
+  - node: knife
+    entity: KukriKnife
