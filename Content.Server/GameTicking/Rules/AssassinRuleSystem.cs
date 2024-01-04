@@ -59,7 +59,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
                     _roleSystem.MindPlaySound(mindId, assassinRule.NewTargetSound, mind);
                 }
 
-                if (assassinRole.targets.Count >= assassinRule.TargetsCount)
+                if (assassinRole.Targets.Count >= assassinRule.TargetsCount)
                     toDelete.Add(assassin);
             }
 
@@ -122,7 +122,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
             AddTarget(mindId, mind, ref assassinRule, ref assassinRole);
         }
 
-        if (assassinRole.targets.Count != assassinRule.TargetsCount)
+        if (assassinRole.Targets.Count != assassinRule.TargetsCount)
         {
             assassinRule.MakeTargetAssassins.Add(assassin);
         }
@@ -148,7 +148,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
         ref AssassinRuleComponent assassinRule,
         ref AssassinRoleComponent assassinRole)
     {
-        var objective = _objectives.GetObjectiveByPrototypeId(mindId, mind, assassinRule.KillObjectivePrototypeId, assassinRole.targets);
+        var objective = _objectives.GetObjectiveByPrototypeId(mindId, mind, assassinRule.KillObjectivePrototypeId, assassinRole.Targets);
         if (objective == null)
             return false;
 
