@@ -202,7 +202,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
             return;
         }
 
-        var assassinCount = MathHelper.Clamp(component.Candidates.Count / PlayerPerAssassin, 1, 2);
+        var assassinCount = MathHelper.Clamp(component.Candidates.Count / PlayerPerAssassin, 1, MaxAssassins);
         var assassinPool = FindPotentialAssassin(component.Candidates, component);
 
         component.NextAssassinPlayerAmount = component.Candidates.Count - PlayerPerAssassin * assassinCount;
