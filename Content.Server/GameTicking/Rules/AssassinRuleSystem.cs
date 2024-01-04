@@ -119,7 +119,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
 
             List<ICommonSession> toDelete = new();
 
-            foreach (var assassin in assassinRule.MakeTargetAssassins)
+            foreach (var assassin in  assassinRule.MakeTargetAssassins)
             {
                 if (!_mindSystem.TryGetMind(assassin, out var mindId, out var mind))
                 {
@@ -196,7 +196,7 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
 
     public void TryMakeAssassin(AssassinRuleComponent component)
     {
-        if (component.Candidates.Any())
+        if (!component.Candidates.Any())
         {
             Log.Error("Nobody in Candidates dict to make assassin.");
             return;
