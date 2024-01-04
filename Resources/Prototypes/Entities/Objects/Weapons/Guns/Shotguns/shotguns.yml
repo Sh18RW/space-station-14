@@ -111,10 +111,20 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
+    proto: null
   - type: Construction
     graph: ShotgunSawn
     node: start
     deconstructionTarget: null
+
+- type: entity
+  name: double-barreled shotgun
+  parent: WeaponShotgunDoubleBarreled
+  id: WeaponShotgunDoubleBarreledLoaded
+  description: An immortal classic. Uses .50 shotgun shells.
+  components:
+  - type: BallisticAmmoProvider
+    proto: ShellShotgun
 
 - type: entity
   name: double-barreled shotgun
