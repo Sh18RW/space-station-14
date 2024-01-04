@@ -18,6 +18,10 @@ public sealed partial class AssassinRuleComponent : Component
     public readonly string KillObjectivePrototypeId = "AssassinKillRandomHeadObjective";
     public readonly string EscapeObjectivePrototypeId = "AssassinEscapeShuttleObjective";
 
+    public readonly string AssassinCraftTag = "AssassinCraft";
+
+    public readonly HashSet<string> Implants = new() { "StorageImplant" };
+
     [DataField("assassinPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string AssassinPrototypeId = "Assassin";
 

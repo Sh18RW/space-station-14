@@ -7,10 +7,12 @@ using Content.Server.Objectives;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Implants;
 using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Roles.Jobs;
+using Content.Shared.Tag;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -29,6 +31,8 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
     [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private readonly EntityManager _ent = default!;
 
     private int PlayerPerAssassin => _cfg.GetCVar(CCVars.AssassinDifficulty);
     private int MaxAssassins => _cfg.GetCVar(CCVars.AssassinMaxCount);
@@ -254,6 +258,11 @@ public sealed class AssassinRuleSystem : GameRuleSystem<AssassinRuleComponent>
 
         _npcFaction.RemoveFaction(entity, "NanoTrasen");
         _npcFaction.AddFaction(entity, "Syndicate");
+
+        var implantSystem = _ent.System<SharedSubdermalImplantSystem>();
+        implantSystem.AddImplants(entity, assassinRule.Implants);
+
+        _tag.AddTag(entity, assassinRule.AssassinCraftTag);
 
         for (var picks = 0; picks < assassinRule.TargetsCount; picks++)
         {

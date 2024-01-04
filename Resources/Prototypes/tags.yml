@@ -988,6 +988,9 @@
   id: SpiderCraft
 
 - type: Tag
+  id: AssassinCraft
+
+- type: Tag
   id: SpreaderIgnore
 
 - type: Tag

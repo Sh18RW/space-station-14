@@ -1,0 +1,15 @@
+- type: construction
+  name: assassin shotgun
+  id: ShotgunDoubleBarreled
+  graph: AssassinImprovisedShotgunGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapon
+  description: "Nice."
+  entityWhitelist:
+    tags:
+    - AssassinCraft
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+    state: icon
+  objectType: Item
