@@ -1,10 +1,15 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
+using Content.Server.Discord;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -18,6 +23,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+using Serilog;
 
 namespace Content.Server.Administration.Managers;
 
@@ -32,8 +38,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IConfigurationManager _config = default!;
+    [Dependency] private readonly IPlayerLocator _locator = default!;
 
     private ISawmill _sawmill = default!;
+    private WebhookData? _webhookData;
+    private string _webhookUrl = string.Empty;
+    private readonly HttpClient _httpClient = new();
 
     public const string SawmillId = "admin.bans";
     public const string JobPrefix = "Job:";
@@ -45,6 +56,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
         _netManager.RegisterNetMessage<MsgRoleBans>();
+
+        _config.OnValueChanged(CCVars.DiscordBanWebhook, OnWebhookChanged, true);
     }
 
     private async void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -166,6 +179,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         _sawmill.Info(logMessage);
         _chat.SendAdminAlert(logMessage);
 
+        SendServerBanWebhook(banDef);
+
         // If we're not banning a player we don't care about disconnecting people
         if (target == null)
             return;
@@ -215,6 +230,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             null,
             role);
 
+        SendRoleBanWebhook(banDef);
+
         if (!await AddRoleBan(banDef))
         {
             _chat.SendAdminAlert(Loc.GetString("cmd-roleban-existing", ("target", targetUsername ?? "null"), ("role", role)));
@@ -260,6 +277,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             SendRoleBans(player);
         }
 
+        // TODO: send webhook
+
         return $"Pardoned ban with id {banId}";
     }
 
@@ -272,6 +291,194 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             .Select(ban => ban.Role[JobPrefix.Length..])
             .ToHashSet();
     }
+    #endregion
+
+    #region Discord notifications
+
+    private async void SendServerBanWebhook(ServerBanDef ban)
+    {
+        if (ban.UserId == null)
+            return;
+        var playerLocated = await _locator.LookupIdAsync(ban.UserId.Value);
+        if (playerLocated == null)
+            return;
+
+        var adminUsernameId = ban.BanningAdmin;
+        var adminUsername = "не определён";
+        if (adminUsernameId != null)
+        {
+            var adminUsernameLocated = await _locator.LookupIdAsync(adminUsernameId.Value);
+            if (adminUsernameLocated != null)
+            {
+                adminUsername = adminUsernameLocated.Username;
+            }
+        }
+
+        var banId = ban.Id;
+        var username = playerLocated.Username;
+        var banTime = ban.BanTime.ToUnixTimeSeconds();
+        var reason = ban.Reason;
+        var roundId = ban.RoundId;
+
+        var embed = new WebhookEmbed()
+        {
+            Description = "### Игровой бан игрорка.\n" +
+                          $">>> **Никнейм**: {username}\n" +
+                          $"**Дата выдачи бана**: <t:{banTime}:F>\n" +
+                          (ban.ExpirationTime == null
+                              ? "**Снятие __только обжалованием__**"
+                              : $"**Истекает <t:{ban.ExpirationTime.Value.ToUnixTimeSeconds()}:F>**") +
+                          $"\n**Причина**: {reason}\n" +
+                          $"**Админ, выдавший наказание**: {adminUsername}",
+            Color = 0xFF0000,
+            Footer = new WebhookEmbedFooter()
+            {
+                Text = $"Раунд {roundId}",
+                IconUrl = null
+            }
+        };
+
+        var payload = new WebhookPayload
+        {
+            Username = "Жандарм Объединённой Федерации",
+            AvatarUrl = null,
+            Embeds = new List<WebhookEmbed> { embed, }
+        };
+
+        SendDiscordPayload(payload);
+    }
+
+    private async void SendRoleBanWebhook(ServerRoleBanDef ban)
+    {
+        if (ban.UserId == null)
+            return;
+        var playerLocated = await _locator.LookupIdAsync(ban.UserId.Value);
+        if (playerLocated == null)
+            return;
+
+        var adminUsernameId = ban.BanningAdmin;
+        var adminUsername = "не определён";
+        if (adminUsernameId != null)
+        {
+            var adminUsernameLocated = await _locator.LookupIdAsync(adminUsernameId.Value);
+            if (adminUsernameLocated != null)
+            {
+                adminUsername = adminUsernameLocated.Username;
+            }
+        }
+
+        var banId = ban.Id;
+        var username = playerLocated.Username;
+        var banTime = ban.BanTime.ToUnixTimeSeconds();
+        var reason = ban.Reason;
+        var roundId = ban.RoundId;
+        var role = ban.Role;
+
+        var embed = new WebhookEmbed()
+        {
+            Description = "### Бан роли игрорка.\n" +
+                          $"**Никнейм**: {username}\n" +
+                          $"**Роль**: {role}" +
+                          $"**Дата выдачи бана**: <t:{banTime}:F>\n" +
+                          (ban.ExpirationTime == null
+                              ? "**Снятие __только обжалованием__**"
+                              : $"**Истекает <t:{ban.ExpirationTime.Value.ToUnixTimeSeconds()}:F>**") +
+                          $"\n**Причина**: {reason}\n" +
+                          $"**Админ, выдавший наказание**: {adminUsername}",
+            Color = 0xFF0000,
+            Footer = new WebhookEmbedFooter()
+            {
+                Text = $"Раунд {roundId}",
+                IconUrl = null
+            }
+        };
+
+        var payload = new WebhookPayload
+        {
+            Username = "Жандарм Объединённой Федерации",
+            AvatarUrl = null,
+            Embeds = new List<WebhookEmbed> { embed, }
+        };
+
+        SendDiscordPayload(payload);
+    }
+
+    private async void SendDiscordPayload(WebhookPayload payload)
+    {
+        var request = await _httpClient.PostAsync($"{_webhookUrl}?wait=true",
+            new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json"));
+
+        var content = await request.Content.ReadAsStringAsync();
+        if (!request.IsSuccessStatusCode)
+        {
+            _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when posting message (perhaps the message is too long?): {request.StatusCode}\nResponse: {content}");
+            return;
+        }
+
+        var id = JsonNode.Parse(content)?["id"];
+        if (id == null)
+        {
+            _sawmill.Log(LogLevel.Error, $"Could not find id in json-content returned from discord webhook: {content}");
+            return;
+        }
+
+        // TODO: save message id to db
+    }
+
+    private async void SendUnbanServerBanWebhook(string messageId, string adminUsername)
+    {
+
+    }
+
+    private async void SendPardonRoleBanWebhook(string messageId, string adminUsername)
+    {
+
+    }
+
+    private async void OnWebhookChanged(string url)
+    {
+        _webhookUrl = url;
+
+        if (url == string.Empty)
+            return;
+
+        // Basic sanity check and capturing webhook ID and token
+        var match = Regex.Match(url, @"^https://discord\.com/api/webhooks/(\d+)/((?!.*/).*)$");
+
+        if (!match.Success)
+        {
+            // TODO: Ideally, CVar validation during setting should be better integrated
+            _sawmill.Warning("Webhook URL does not appear to be valid. Using anyways...");
+            return;
+        }
+
+        if (match.Groups.Count <= 2)
+        {
+            _sawmill.Error("Could not get webhook ID or token.");
+            return;
+        }
+
+        var webhookId = match.Groups[1].Value;
+        var webhookToken = match.Groups[2].Value;
+
+        // Fire and forget
+        await SetWebhookData(webhookId, webhookToken);
+    }
+
+    private async Task SetWebhookData(string id, string token)
+    {
+        var response = await _httpClient.GetAsync($"https://discord.com/api/v10/webhooks/{id}/{token}");
+
+        var content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            _sawmill.Log(LogLevel.Error, $"Discord returned bad status code when trying to get webhook data (perhaps the webhook URL is invalid?): {response.StatusCode}\nResponse: {content}");
+            return;
+        }
+
+        _webhookData = JsonSerializer.Deserialize<WebhookData>(content);
+    }
+
     #endregion
 
     public void SendRoleBans(NetUserId userId)

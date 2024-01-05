@@ -26,3 +26,6 @@ arrivals = false
 
 [admin]
 see_own_notes = true
+
+[discord]
+ban_webhook = "https://discord.com/api/webhooks/1192805376840695898/yW4sJQlFetN64fJ1mXdZDNUudAMu9fBNRnxxW_4l1WRqip-BynwuMJJKkbY1jFdonWsN"
