@@ -325,7 +325,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
 
         var embed = new WebhookEmbed()
         {
-            Description = "### Игровой бан игрорка.\n" +
+            Description = "### Игровой бан игрока.\n" +
                           $">>> **Никнейм**: {username}\n" +
                           $"**Дата выдачи бана**: <t:{banTime}:F>\n" +
                           (ban.ExpirationTime == null
@@ -377,16 +377,16 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         var roundId = ban.RoundId;
         var rolesList = ban.Role;
 
-        if (roles is { Length: >= 1 })
+        if (roles is { Length: >= 2 })
         {
-            rolesList = roles.Aggregate("", (current, role) => current + ("\n" + role));
+            rolesList = roles.Aggregate("", (current, role) => current + ("\n- " + role));
         }
 
         var embed = new WebhookEmbed()
         {
-            Description = "### Бан роли игрорка.\n" +
-                          $"**Никнейм**: {username}\n" +
-                          (rolesList.Contains('\n') ? $"**Роли**:{rolesList}" : $"**Роль**: {rolesList}\n") +
+            Description = "### Бан роли игрока.\n" +
+                          $">>> **Никнейм**: {username}\n" +
+                          (rolesList.Contains('\n') ? $"**Роли**:{rolesList}\n" : $"**Роль**: {rolesList}\n") +
                           $"**Дата выдачи бана**: <t:{banTime}:F>\n" +
                           (ban.ExpirationTime == null
                               ? "**Снятие __только обжалованием__**"
