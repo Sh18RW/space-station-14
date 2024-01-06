@@ -197,7 +197,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
     #region Job Bans
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
-    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
+    public async Task<ServerRoleBanDef> CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan, bool sendWebhook = true)
     {
         if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
         {
@@ -230,12 +230,13 @@ public sealed class BanManager : IBanManager, IPostInjectInit
             null,
             role);
 
-        SendRoleBanWebhook(banDef);
+        if (sendWebhook)
+            SendRoleBanWebhook(banDef);
 
         if (!await AddRoleBan(banDef))
         {
             _chat.SendAdminAlert(Loc.GetString("cmd-roleban-existing", ("target", targetUsername ?? "null"), ("role", role)));
-            return;
+            return banDef;
         }
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
@@ -245,6 +246,8 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         {
             SendRoleBans(target.Value);
         }
+
+        return banDef;
     }
 
     public async Task<string> PardonRoleBan(int banId, NetUserId? unbanningAdmin, DateTimeOffset unbanTime)
@@ -348,7 +351,7 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         SendDiscordPayload(payload);
     }
 
-    private async void SendRoleBanWebhook(ServerRoleBanDef ban)
+    public async void SendRoleBanWebhook(ServerRoleBanDef ban, string[]? roles = null)
     {
         if (ban.UserId == null)
             return;
@@ -372,13 +375,18 @@ public sealed class BanManager : IBanManager, IPostInjectInit
         var banTime = ban.BanTime.ToUnixTimeSeconds();
         var reason = ban.Reason;
         var roundId = ban.RoundId;
-        var role = ban.Role;
+        var rolesList = ban.Role;
+
+        if (roles is { Length: >= 1 })
+        {
+            rolesList = roles.Aggregate("", (current, role) => current + ("\n" + role));
+        }
 
         var embed = new WebhookEmbed()
         {
             Description = "### Бан роли игрорка.\n" +
                           $"**Никнейм**: {username}\n" +
-                          $"**Роль**: {role}" +
+                          (rolesList.Contains('\n') ? $"**Роли**:{rolesList}" : $"**Роль**: {rolesList}\n") +
                           $"**Дата выдачи бана**: <t:{banTime}:F>\n" +
                           (ban.ExpirationTime == null
                               ? "**Снятие __только обжалованием__**"

@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
+using Content.Server.Database;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -95,9 +97,18 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         // If you are trying to remove the following variable, please don't. It's there because the note system groups role bans by time, reason and banning admin.
         // Without it the note list will get needlessly cluttered.
         var now = DateTimeOffset.UtcNow;
+
+        Task<ServerRoleBanDef>? lastTask = null;
         foreach (var job in departmentProto.Roles)
         {
-            _banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now);
+            lastTask = _banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now, false);
+        }
+
+        if (lastTask != null)
+        {
+            var roleBanDef = await lastTask;
+
+            _banManager.SendRoleBanWebhook(roleBanDef, departmentProto.Roles.ToArray());
         }
     }
 

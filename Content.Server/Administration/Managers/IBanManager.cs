@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Net;
 using System.Threading.Tasks;
+using Content.Server.Database;
 using Content.Shared.Database;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -35,7 +36,8 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
-    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
+    /// <param name="sendWebhook">If equals true, it sends role webhook.</param>
+    public Task<ServerRoleBanDef> CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableArray<byte>? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan, bool sendWebhook = true);
 
     /// <summary>
     /// Pardons a role ban for the specified target, username or GUID
@@ -56,4 +58,6 @@ public interface IBanManager
     /// </summary>
     /// <param name="pSession">Player's session</param>
     public void SendRoleBans(ICommonSession pSession);
+
+    public void SendRoleBanWebhook(ServerRoleBanDef ban, string[]? roles = null);
 }

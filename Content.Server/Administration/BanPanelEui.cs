@@ -1,9 +1,12 @@
 using System.Collections.Immutable;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
+using Content.Server.Database;
 using Content.Server.EUI;
 using Content.Shared.Administration;
 using Content.Shared.Database;
@@ -120,9 +123,18 @@ public sealed class BanPanelEui : BaseEui, IPostInjectInit
         if (roles?.Count > 0)
         {
             var now = DateTimeOffset.UtcNow;
+
+            Task<ServerRoleBanDef>? lastTask = null;
             foreach (var role in roles)
             {
-                _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
+                lastTask = _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now, false);
+            }
+
+            if (lastTask != null)
+            {
+                var roleBanDef = await lastTask;
+
+                _banManager.SendRoleBanWebhook(roleBanDef, roles.ToArray());
             }
 
             Close();
