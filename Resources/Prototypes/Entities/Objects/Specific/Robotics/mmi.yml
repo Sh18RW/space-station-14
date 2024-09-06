@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
   id: MMI
   name: man-machine interface
@@ -37,7 +37,7 @@
   - type: ItemSlots
     slots:
       brain_slot:
-        name: "Brain"
+        name: positronic-brain-slot-component-slot-name-brain
         whitelist:
           components:
           - Brain
@@ -84,6 +84,7 @@
       beginSearchingText: positronic-brain-searching
       roleName: positronic-brain-role-name
       roleDescription: positronic-brain-role-description
+      roleRules: ghost-role-information-silicon-rules
       wipeVerbText: positronic-brain-wipe-device-verb-text
       wipeVerbPopup: positronic-brain-wiped-device
       stopSearchVerbText: positronic-brain-stop-searching-verb-text

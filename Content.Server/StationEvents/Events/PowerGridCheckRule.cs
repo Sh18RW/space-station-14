@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.StationEvents.Components;
+using Content.Shared.GameTicking.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -23,6 +24,8 @@ namespace Content.Server.StationEvents.Events
 
             if (!TryGetRandomStation(out var chosenStation))
                 return;
+
+            component.AffectedStation = chosenStation.Value;
 
             var query = AllEntityQuery<ApcComponent, TransformComponent>();
             while (query.MoveNext(out var apcUid ,out var apc, out var transform))

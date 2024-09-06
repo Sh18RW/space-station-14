@@ -1,15 +1,13 @@
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
-using Content.Server.Corvax.TTS;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
 using Content.Server.VoiceMask;
 using Content.Shared.Chat;
-using Content.Shared.Corvax.TTS;
 using Content.Shared.Database;
 using Content.Shared.Radio;
 using Content.Shared.Radio.Components;
+using Content.Shared.Speech;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -31,8 +29,6 @@ public sealed class RadioSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly TTSSystem _ttsSystem = default!;
 
     // set used to prevent radio feedback loops.
     private readonly HashSet<string> _messages = new();
@@ -56,7 +52,7 @@ public sealed class RadioSystem : EntitySystem
     private void OnIntrinsicReceive(EntityUid uid, IntrinsicRadioReceiverComponent component, ref RadioReceiveEvent args)
     {
         if (TryComp(uid, out ActorComponent? actor))
-            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.ConnectedClient);
+            _netMan.ServerSendMessage(args.ChatMsg, actor.PlayerSession.Channel);
     }
 
     /// <summary>
@@ -72,7 +68,7 @@ public sealed class RadioSystem : EntitySystem
     /// </summary>
     /// <param name="messageSource">Entity that spoke the message</param>
     /// <param name="radioSource">Entity that picked up the message and will send it, e.g. headset</param>
-    public async Task SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
+    public void SendRadioMessage(EntityUid messageSource, string message, RadioChannelPrototype channel, EntityUid radioSource, bool escapeMarkup = true)
     {
         // TODO if radios ever garble / modify messages, feedback-prevention needs to be handled better than this.
         if (!_messages.Add(message))
@@ -84,7 +80,17 @@ public sealed class RadioSystem : EntitySystem
 
         name = FormattedMessage.EscapeText(name);
 
-        var speech = _chat.GetSpeechVerb(messageSource, message);
+        SpeechVerbPrototype speech;
+        if (mask != null
+            && mask.Enabled
+            && mask.SpeechVerb != null
+            && _prototype.TryIndex<SpeechVerbPrototype>(mask.SpeechVerb, out var proto))
+        {
+            speech = proto;
+        }
+        else
+            speech = _chat.GetSpeechVerb(messageSource, message);
+
         var content = escapeMarkup
             ? FormattedMessage.EscapeText(message)
             : message;
@@ -98,22 +104,6 @@ public sealed class RadioSystem : EntitySystem
             ("name", name),
             ("message", content));
 
-        var voiceId = "";
-        if (TryComp<TTSComponent>(messageSource, out var ttsComp))
-        {
-            voiceId = ttsComp.VoicePrototypeId;
-        }
-
-        if (string.IsNullOrEmpty(voiceId))
-        {
-            voiceId = "aidar";
-        }
-
-        if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voiceId, out var protoVoice))
-            return;
-
-        var audioBytes = await _ttsSystem.GenerateTTS(message, protoVoice.Speaker, false, false, true);
-
         // most radios are relayed to chat, so lets parse the chat message beforehand
         var chat = new ChatMessage(
             ChatChannel.Radio,
@@ -122,7 +112,7 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
-        var ev = new RadioReceiveEvent(message, messageSource, channel, chatMsg, audioBytes);
+        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);

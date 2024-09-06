@@ -40,7 +40,7 @@
       size: Huge
     - type: UserInterface
       interfaces:
-        - key: enum.SharedGasTankUiKey.Key
+        enum.SharedGasTankUiKey.Key:
           type: GasTankBoundUserInterface
     - type: Clothing
       sprite: Objects/Tanks/Jetpacks/blue.rsi
@@ -62,7 +62,6 @@
   id: ActionToggleJetpack
   name: Toggle jetpack
   description: Toggles the jetpack, giving you movement outside the station.
-  noSpawn: true
   components:
   - type: InstantAction
     icon:
@@ -151,12 +150,15 @@
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     slots:
       - Back
+      - SuitStorage
   - type: Item
     sprite: Objects/Tanks/Jetpacks/captain.rsi
     size: Normal
   - type: Tag
     tags:
     - HighRiskItem
+  - type: StealTarget
+    stealGroup: JetpackCaptainFilled
 
 # Filled captain
 - type: entity
@@ -191,6 +193,7 @@
       slots:
         - Back
         - suitStorage
+        - Belt
     - type: GasTank
       outputPressure: 42.6
       air:
@@ -262,6 +265,7 @@
     slots:
       - Back
       - suitStorage
+      - Belt
 
 # Filled void
 - type: entity

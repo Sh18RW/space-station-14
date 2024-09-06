@@ -1,74 +1,81 @@
 <Document>
-# Космический Ниндзя
+  # Space Ninja
 
-Космический Ниндзя - это роль призрака, случайным образом появляющаяся в середине и конце раунда. Выбрав её, вы получите снаряжение, цели и приветствие.
+  The [color=#66FF00]Space Ninja[/color] is a ghost role randomly available mid-late game. If you pick it you will be given your gear, your objectives, and the greeting.
 
-Вы - ниндзя, но в космосе. Клан Паука отправил вас на станцию, чтобы вы устроили там всевозможный хаос: от вскрытия оружейной и убийства всей станции до войны подскальзываний с клоуном и поединков в клетках ярости.
+  You are a ninja, but in space. [color=#66FF00]The Spider Clan[/color] has sent you to the station to wreak all kinds of havoc, and you are equipped to keep it silent-but-deadly.
 
-# Снаряжение
+  Whether you mercilessly pick off the station's crew one by one or assassinate the clown over and over, your discipline has taught you that [color=#66FF00]your objectives must be at least attempted[/color]. For honor!
 
-Вы начинаете с имплантатом микробомбы, так что если вы попадете в плен или совершите сеппуку, то оставите после себя красивый кратер, а всё ваше ценное снаряжение не попадет в руки врага.
+  # Equipment
 
-Ваша сумка наполнена инструментами для более тонкого саботажа, а также аварийным запасом на случай, если вам понадобится перекусить.
+  You begin implanted with a [color=#a4885c]death acidifier[/color], so if you are KIA or decide to commit seppuku you will leave behind one final gift to the janitor, and all your precious equipment is kept out of enemy hands.
 
-У вас есть джетпак и поисковой навигатор, который позволит вам найти станцию.
+  Your bag is full of tools for more subtle sabotage, along with a survival box if you need a snack.
 
-<GuideEntityEmbed Entity="PinpointerStation" Caption="навигатор станции"/>
+  You have a [color=#a4885c]jetpack[/color] and [color=#a4885c]pinpointer[/color] that will let you find the station.
 
-## Костюм Ниндзя
+  <GuideEntityEmbed Entity="PinpointerStation" Caption="station pinpointer"/>
 
-<GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja"/>
+  ## Ninja Suit
 
-Самым важным предметом является ваш костюм, без него ни одна из ваших способностей не будет работать.
-Для работы костюма требуется электроэнергия, его внутреннюю батарею можно заменить, кликнув по ней **с батареей получше**.
-Текущий заряд можно узнать, осмотрев костюм или в статусе заряда аккумулятора костюма в правом верхнем углу экрана.
+  <GuideEntityEmbed Entity="ClothingOuterSuitSpaceNinja" Captain="ninja suit"/>
 
-Если у вас закончилась энергия и вам нужно подзарядить аккумулятор, просто используйте перчатки, чтобы поглотить электроэнергию с ЛКП, подстанции или СМЭС.
+  Your single most important item is [color=#66FF00]your suit[/color], without it none of your abilities would work.
+  Your suit requires power to function. Its [color=#a4885c]internal battery[/color] can be replaced by clicking on it with another one, and [color=#a4885c]higher capacity batteries[/color] mean a [color=#a4885c]highly effective ninja[/color].
+  You can see the current charge by examining the suit or in a sweet battery alert at the top right of your screen.
 
-## Перчатки Ниндзя
+  If you run out of power and need to recharge your battery, just use your gloves to drain an APC, substation, or SMES.
 
-<GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja"/>
+  ## Ninja Gloves
 
-Эти плохиши - ваш хлеб с маслом.
+  <GuideEntityEmbed Entity="ClothingHandsGlovesSpaceNinja" Caption="ninja gloves"/>
 
-Они изолированы, поэтому можете спокойно работать с проводкой. Очевидно, что они предотвращают появление отпечатков пальцев на предметах, к которым вы прикасаетесь..
+  [color=#66FF00]These bad boys are your bread and butter.[/color]
 
-У вас есть действие переключения перчаток. Когда перчатки включены, они позволяют использовать специальные способности, которые срабатывают при взаимодействии с предметами с пустой рукой и не в боевом режиме.
+  They are made from [color=#a4885c]insulated nanomachines[/color] to assist you in gracefully breaking into destinations without leaving behind fingerprints.
 
-Способности ваших перчаток включают:
-- Взлом неограниченного количества дверей.
-- Поглощение электроэнергии из трансформаторов, таких как ЛКП, подстанций или СМЭС. Чем выше напряжение, тем эффективнее поглощение энергии.
-- Вы можете шокировать любое существо, оглушая и нанося ему небольшой урон.
-- Вы можете загрузить технологии с сервера РнД для выполнения одной из ваших целей.
-- Вы можете взломать коммуникационной консоли для вызова угрозы.
+  You have an action to toggle gloves. When the gloves are turned on, they allow you to use [color=#a4885c]special abilities[/color], which are triggered by interacting with things with an empty hand and with combat mode disabled.
 
-## Энергетическая Катана
+  Your glove abilities include:
+  - Emagging an unlimited number of doors.
+  - Draining power from transformers such as APCs, substations, or SMESes. The higher the voltage, the more efficient the draining is.
+  - You can shock any mob, stunning and slightly damaging them.
+  - You can download technologies from an R&D server for one of your objectives.
+  - You can hack a communications console to call in a [textlink="threat" link="MinorAntagonists"].
 
-<GuideEntityEmbed Entity="EnergyKatana"/>
+  ## Energy Katana
 
-Наносит большой урон и может быть вызвана по желанию, затрачивая энергию костюма пропорционально расстоянию телепортации.
-Находясь в руке, вы можете телепортироваться в любое место, которое можете видеть, то есть через большинство дверей и окон, но не через сплошные стены.
-Она имеет ограниченное количество зарядов, которые медленно восстанавливаются, поэтому имейте в запасе пару зарядов на случай необходимости быстрого отступления.
+  <GuideEntityEmbed Entity="EnergyKatana" Captain="energy katana"/>
 
-## Заряд Клана Паука
+  You have sworn yourself to the [color=#66FF00]sword[/color] and refuse to use firearms.
+  Deals a lot of damage and can be recalled at will, costing suit power proportional to the distance teleported.
+  
+  While in hand you can [color=#a4885c]teleport[/color] to anywhere that you can see, meaning most doors and windows, but not past solid walls.
+  This has a limited number of charges which regenerate slowly, so keep a charge or two spare in case you need a quick getaway.
 
-<GuideEntityEmbed Entity="SpiderCharge"/>
+  ## Spider Clan Charge
 
-Модифицированная взрывчатка C-4, вы начинаете с ним в кармане. Создаёт сильный взрыв, но должен быть установлен в зоне вашей цели.
-Для взрыва выбирается случайная область на карте, которая является одной из ваших целей. Его нельзя активировать вручную, достаточно просто прикрепить его к стене или чему-либо еще.
-После прикрепления не может быть откреплён.
+  <GuideEntityEmbed Entity="SpiderCharge" Caption="spider clan charge"/>
 
-## Ботинки Ниндзя
+  [color=#66FF00]A modified C-4 explosive[/color], you start with this in your pocket. Creates a large explosion but must be armed in your target area.
+  A random area on the map is selected for you to blow up, which is one of your [color=#a4885c]objectives[/color].
 
-Специальная нескользящая обувь, позволяющая передвигаться очень быстро.
-Энергия не требуется.
+  It can't be activated manually, simply plant it on a wall or a particularly ugly piece of furniture.
+  Can't be unstuck once planted.
 
-# Цели
+  ## Ninja Shoes
 
-- Загрузить X исследовательских нод: Используйте свои перчатки на сервере РнД с количеством разблокированных технологий
-- Взломать X дверей на станции: Используйте свои перчатки, чтобы взломать указанное количество дверей.
-- Детонировать заряд клана паука: Установите заряд клана паука в случайном месте и наблюдайте за его взрывом.
-- Вызвать угрозу: Используйте перчатки на коммуникационной консоли.
-- Выжить: Не умереть.
+  Special [color=#a4885c]noslips[/color] that keep you agile, swift and upright.
+  Energy not required.
+
+  # Objectives
+
+  - Download \[9-13\] research nodes: Use your gloves on an R&D server with a number of unlocked technologies
+  - Doorjack \[15-40\] doors on the station: Use your gloves to emag a number of doors.
+  - Detonate the spider clan charge: Plant your spider clan charge at the specified location and watch it go boom!
+  - Call in a [textlink="threat" link="MinorAntagonists"]: Use your gloves on a communications console.
+  - Set everyone to wanted: Use your gloves on a criminal records console.
+  - Survive: Don't die.
 
 </Document>
