@@ -1,34 +1,29 @@
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
-Space Station 14 это ремейк SS13, который работает на собственном движке [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), написанном на C#.
+Space Station 14 is the cultural heir of the Space Station 13 game, recreated based on the [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) using the C# language.
 
-Это репозиторий первого русскоязычного сервера по Space Station 14, целью которого является полный перевод игры на русский язык, поддержка актуальных изменений из основного репозитория, а так же добавление собственных изменений по необходимости.
+This is a repository of the Space Station 14 build, called Corvinella Station 14, created by the Corvinella Project.
 
-## Ссылки
+We will always be glad to see you on our project!
 
-[Наш Discord](https://discord.station14.ru) | [Наша Вики](https://wiki.station14.ru) | [Steam](https://store.steampowered.com/app/1255460/Space_Station_14/) | [Клиент без Steam](https://spacestation14.io/about/nightlies/) | [Основной репозиторий](https://github.com/space-wizards/space-station-14)
+## Links
 
-## Документация
+*Hmm, it's strange, there's nothing here...*
 
-На официальном сайте с [документацией](https://docs.spacestation14.io/) имеется вся необходимая информация о контенте SS14, движке, дизайне игры и многом другом. Также имеется много информации для начинающих разработчиков.
+## Documentation
 
-## Контрибьют
+[Documentation](https://docs.spacestation14.io/), written by the Space Wizards team, will help you understand the technical aspect of Space Station 14.
 
-Мы рады принять вклад от любого человека. Заходите в Discord, если хотите помочь. У нас есть [список проблем](https://github.com/space-syndicate/space-station-14-content/issues), которые нужно решить, и любой может за них взяться. Не бойтесь просить о помощи!
-Только убедитесь, что ваши изменения и PRы соответствуют [руководству по контрибьюту](https://docs.spacestation14.com/en/general-development/codebase-info/pull-request-guidelines.html).
+## Contributing
 
-## Сборка
+We will also always be glad to see you among the creators of a great build! It's not as hard as it sounds. To get help, follow the links provided.
 
-1. Склонируйте этот репозиторий локально
-2. Запустите `RUN_THIS.py` для инициализации подмодулей и скачивания движка.
-3. Скомпилируйте проект.
+## Licensing
 
-[Более подробная инструкция по запуску проекта.](https://docs.spacestation14.com/en/general-development/setup.html)
+The content of the project before the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/corvinella-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) licensed under [MIT](https://github.com/Corvinella-Project/corvinella-station-14/blob/master/LICENSE.TXT ), unless otherwise specified.
 
-## Лицензия
+The content of the project after the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/corvinella-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) is licensed under [AGPL-3.0](https://github.com/Corvinella-Project/corvinella-station-14/blob/master/LICENSE-AGPLv3.0.TXT) unless otherwise specified.
 
-Весь код репозитория лицензирован под [MIT](https://github.com/space-syndicate/space-station-14/blob/master/LICENSE.TXT).
+Some of the assets are distributed under the [CC-BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/), unless otherwise specified.
 
-Большинство ассетов лицензированы под [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное. Ассеты имеют свою лицензию и авторские права в файле метаданных. [Пример](https://github.com/space-syndicate/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json).
-
-Обратите внимание, что некоторые ассеты лицензированы на некоммерческой основе [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) или аналогичной некоммерческой лицензией, и их необходимо удалить, если вы хотите использовать этот проект в коммерческих целях.
+Please note that some of the assets are distributed under the [CC-BY-NC-SA 3.0](http://creativecommons.org/licenses/by-nc-sa/3.0/) and similar, which does not allow it to be used for commercial purposes.
