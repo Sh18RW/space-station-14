@@ -1,3 +1,5 @@
+[[English version]](https://github.com/Sh18RW/corvinella-station-14/blob/master/README.md)
+
 <p align="center"> <img alt="Space Station 14" width="880" height="300" src="https://raw.githubusercontent.com/space-wizards/asset-dump/de329a7898bb716b9d5ba9a0cd07f38e61f1ed05/github-logo.svg" /></p>
 
 Space Station 14 - это культурный наследник игры Space Station 13, воссозданный на базе движка [Robust Toolbox](https://github.com/space-wizards/RobustToolbox) при помощи языка C#.
