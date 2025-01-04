@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        // Universal configurations
         {
             "name": "Client",
             "type": "coreclr",
@@ -40,7 +41,53 @@
             "cwd": "${workspaceFolder}/Content.YAMLLinter",
             "console": "internalConsole",
             "stopAtEntry": false
-        }
+        },
+        // Arm MacOS x64 configurations
+        {
+            "name": "Mac x64 Client",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Client/Content.Client.dll"],
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64",
+        },
+        {
+            "name": "Mac x64 Client (Compatibility renderer)",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": [
+                "--cvar display.compat=true",
+                "${workspaceFolder}/bin/Content.Client/Content.Client.dll",
+            ],
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64",
+        },
+        {
+            "name": "Mac x64 Server",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.Server/Content.Server.dll"],
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64",
+        },
+        {
+            "name": "Mac x64 YAML Linter",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-yaml-linter",
+            "program": "/usr/local/share/dotnet/x64/dotnet",
+            "args": ["${workspaceFolder}/bin/Content.YAMLLinter/Content.YAMLLinter.dll"],
+            "cwd": "${workspaceFolder}/Content.YAMLLinter",
+            "console": "internalConsole",
+            "stopAtEntry": false,
+            "targetArchitecture": "x86_64",
+        },
     ],
     "compounds": [
         {
@@ -50,6 +97,14 @@
                 "Client"
             ],
             "preLaunchTask": "build"
-        }
+        },
+        {
+            "name": "Mac x64 Server/Client",
+            "configurations": [
+                "Mac x64 Client",
+                "Mac x64 Server",
+            ],
+            "preLaunchTask": "build",
+        },
     ]
 }
