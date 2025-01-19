@@ -1,1 +1,1 @@
-credits-window-bf-contributors-section-title = Breaking Faciliry build
+credits-window-bf-contributors-section-title = Breaking Facility build
