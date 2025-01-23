@@ -13,7 +13,7 @@ public sealed class FrontalLispSystem : EntitySystem
     private static readonly Regex RegexLowerEcks = new(@"[e]+[x]+[c]*|[x]+");
     // @formatter:on
 
-    [Dependency] private readonly IRobustRandom _random = default!; // Corvax-Localization
+    [Dependency] private readonly IRobustRandom _random = default!; // BF-localisation
 
     public override void Initialize()
     {
