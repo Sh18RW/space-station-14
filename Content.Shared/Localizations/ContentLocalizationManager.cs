@@ -10,8 +10,8 @@ namespace Content.Shared.Localizations
         [Dependency] private readonly ILocalizationManager _loc = default!;
 
         // If you want to change your codebase's language, do it here.
-        private const string Culture = "ru-RU"; // Corvax-Localization
-        private const string FallbackCulture = "en-US"; // Corvax-Localization
+        private const string Culture = "ru-RU"; // BF-localisation
+        private const string FallbackCulture = "en-US"; // BF-localisation
 
         /// <summary>
         /// Custom format strings used for parsing and displaying minutes:seconds timespans.
