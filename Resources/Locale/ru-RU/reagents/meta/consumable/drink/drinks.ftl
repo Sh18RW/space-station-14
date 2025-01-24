@@ -43,10 +43,10 @@ reagent-desc-milk = Как давно вы пробовали натуральн
 reagent-name-milk-goat = козье молоко
 reagent-desc-milk-goat = Чертовски вонючее, но не менее вкусное.
 
-reagent-name-milk-oat = овясное молоко
+reagent-name-milk-oat = овсяное молоко
 reagent-desc-milk-oat = Удивительно вкусно.
 
-reagent-name-milk-soy = совевое молоко
+reagent-name-milk-soy = соевое молоко
 reagent-desc-milk-soy = Разве это молоко?
 
 reagent-name-milk-spoiled = кипячёное молоко
@@ -58,7 +58,7 @@ reagent-desc-nothing = Абсолютное ничего. Вообще ниче�
 reagent-name-nuclear-cola = ядерная кола
 reagent-desc-nuclear-cola = Ядерный оперативник в подарок!
 
-reagent-name-hot-cocoa = горячий какао
+reagent-name-hot-cocoa = горячее какао
 reagent-desc-hot-cocoa = Сесть бы у камина, взять книжку и пить этот замечательный напиток.
 
 reagent-name-soda-water = сода
