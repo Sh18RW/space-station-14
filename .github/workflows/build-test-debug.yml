@@ -2,15 +2,15 @@ name: Build & Test Debug
 
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master-en, master-ru ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
-    branches: [ master, staging, stable ]
+    branches: [ master-en, master-ru ]
 
 jobs:
   build:
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'CorvinellaBot' && github.event.pull_request.draft == false
     strategy:
       matrix:
         os: [ubuntu-latest]

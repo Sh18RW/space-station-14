@@ -1,0 +1,43 @@
+name: "Automatic upstream for master-ru"
+
+on:
+  push:
+    branches:
+    - master-en
+
+
+jobs:
+  check-upstraem-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Try to find upstream PR
+        id: upstream-pr
+        run: |
+          curl \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/Breaking-Facility/space-station-14/issues?labels=Ru+Branch+Upstream&state=open" jq '.[] | select(.pull_request != null)' > pr_list.json |
+
+      - name: Check if any PR found
+        id: check-pr-found
+        run: |
+            echo "PRs results: $(((jq length pr_list.json) / 2))"
+          if [[ $(jq length pr_list.json) == 0 ]]; then
+            echo "::set-output name=found::false"
+          else
+            echo "::set-output name=found::true"
+          fi
+
+      - name: Create new PR if not found
+        if: steps.check-pr-found.outputs.found == 'false'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: Automatic upstream.
+          title: Automatic upstream
+          body: This is an automated Pull Request. This PR updates the master-ru but it should be translated.
+          author: CorvinellaBot <corvinella-project@yandex.ru>
+          branch: automated/ru-upstream-${{env.NOW}}
+          labels: "Ru Branch Upstream"
