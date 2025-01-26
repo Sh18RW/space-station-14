@@ -51,5 +51,5 @@ jobs:
           title: Update Credits
           body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
           author: CorvinellaBot <corvinella-project@yandex.ru>
-          branch: automated/credits-${{env.NOW}}
+          branch: automated/credits-${{ steps.date.outputs.date }}
           labels: "S: Credits"
