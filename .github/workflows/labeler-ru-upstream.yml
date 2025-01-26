@@ -1,16 +1,17 @@
-name: "Labels: Branch staging"
+name: Check Ru Upstream
 
 on:
   pull_request_target:
     types:
-      - opened
+    - opened
     branches:
-      - 'staging'
+      - master-ru
 
 jobs:
-  add_label:
+  Label:
     runs-on: ubuntu-latest
+    if: ${{github.head_ref == 'master-en' }}
     steps:
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: "Branch: Staging"
+        labels: "S: Ru Branch Upstream"

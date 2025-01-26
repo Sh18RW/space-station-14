@@ -1,7 +1,7 @@
 name: Map file schema validator
 on:
   push:
-    branches: [ master, staging, stable ]
+    branches: [ master-en, master-ru ]
   merge_group:
   pull_request:
     types: [ opened, reopened, synchronize, ready_for_review ]
@@ -9,7 +9,7 @@ on:
 jobs:
   yaml-schema-validation:
     name: YAML map schema validator
-    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    if: github.actor != 'CorvinellaBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.6.0
