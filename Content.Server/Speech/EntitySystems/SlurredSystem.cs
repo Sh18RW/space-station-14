@@ -71,6 +71,12 @@ public sealed class SlurredSystem : SharedSlurredSystem
                     'a' => "ah",
                     'u' => "oo",
                     'c' => "k",
+                    // BF-ru-localisation-start
+                    'о' => "а",
+                    'к' => "кх",
+                    'щ' => "шч",
+                    'ц' => "тс",
+                    // BF-ru-localisation-end.
                     _ => $"{character}",
                 };
 
