@@ -1,0 +1,17 @@
+name: Check Ru Upstream
+
+on:
+  pull_request_target:
+    types:
+    - opened
+    branches:
+      - master-ru
+
+jobs:
+  Label:
+    runs-on: ubuntu-latest
+    if: ${{github.head_ref == 'master-en' }}
+    steps:
+    - uses: actions-ecosystem/action-add-labels@v1
+      with:
+        labels: "S: Ru Branch Upstream"
