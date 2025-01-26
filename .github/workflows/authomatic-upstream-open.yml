@@ -25,7 +25,8 @@ jobs:
         id: check-pr-found
         run: |
             echo "PRs results: $(((jq length pr_list.json) / 2))" \
-            if [[ $(jq length pr_list.json) == 0 ]]; then \
+            if [[ $(jq length pr_list.json) == 0 ]] \
+            then \
               echo "::set-output name=found::false" \
             else \
               echo "::set-output name=found::true" \
