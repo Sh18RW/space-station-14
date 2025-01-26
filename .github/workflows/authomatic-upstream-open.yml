@@ -27,13 +27,13 @@ jobs:
             echo "PRs results: $(jq length pr_list.json)"
             if [[ $(jq length pr_list.json) == 0 ]]
             then
-              echo "::set-output name=found::false"
+              echo "FOUND=false" >> "$GITHUB_ENV"
             else
-              echo "::set-output name=found::true"
+              echo "FOUND=true" >> "$GITHUB_ENV"
             fi
 
       - name: Create new PR if not found
-        if: steps.check-pr-found.outputs.found == 'false'
+        if: env.FOUND == 'true'
         uses: peter-evans/create-pull-request@v5
         with:
           commit-message: Automatic upstream.
