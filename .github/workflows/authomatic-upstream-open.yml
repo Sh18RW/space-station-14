@@ -19,7 +19,7 @@ jobs:
           curl \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/Breaking-Facility/space-station-14/issues?labels=Ru+Branch+Upstream&state=open" jq '.[] | select(.pull_request != null)' > pr_list.json |
+            "https://api.github.com/repos/Breaking-Facility/space-station-14/issues?labels=Ru+Branch+Upstream&state=open" jq '.[] | select(.pull_request != null)' > pr_list.json
 
       - name: Check if any PR found
         id: check-pr-found
