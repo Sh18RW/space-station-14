@@ -1,3 +1,5 @@
+using Content.Shared._BF.TTS;
+using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;
@@ -38,4 +40,14 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
+
+    // BF-TTS-start
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public string VoiceId = SharedHumanoidAppearanceSystem.DefaultVoice;
+
+    [DataField]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TTSEffects TTSEffects = TTSEffects.Default;
+    // BF-TTS-end.
 }

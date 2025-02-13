@@ -1,0 +1,17 @@
+- type: ttsVoice
+  id: Gustaw
+  name: tts-voice-name-gustaw
+  sex: Male
+  speaker: en_1
+
+- type: ttsVoice
+  id: Jenya
+  name: tts-voice-name-baya
+  sex: Unsexed
+  speaker: en_2
+
+- type: ttsVoice
+  id: Kseniya
+  name: tts-voice-name-kseniya
+  sex: Female
+  speaker: en_3

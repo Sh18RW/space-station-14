@@ -1,3 +1,4 @@
+using Content.Server._BF.TTS;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
@@ -75,6 +76,11 @@ namespace Content.Server.IoC
             IoCManager.Register<MappingManager>();
             IoCManager.Register<IWatchlistWebhookManager, WatchlistWebhookManager>();
             IoCManager.Register<ConnectionManager>();
+            IoCManager.Register<MultiServerKickManager>();
+
+            // BF-IoC-start
+            IoCManager.Register<TTSManager>();
+            // BF-IoC-end.
         }
     }
 }

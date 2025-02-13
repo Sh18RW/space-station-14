@@ -40,6 +40,15 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
     [ValidatePrototypeId<SpeciesPrototype>]
     public const string DefaultSpecies = "Human";
+    // BF-TTS-start
+    public const string DefaultVoice = "Jenya";
+    public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
+    {
+        {Sex.Male, "Gustaw"},
+        {Sex.Female, "Kseniya"},
+        {Sex.Unsexed, "Jenya"},
+    };
+    // BF-TTS-end.
 
     public override void Initialize()
     {
