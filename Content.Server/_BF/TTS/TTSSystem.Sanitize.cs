@@ -18,18 +18,13 @@ public sealed partial class TTSSystem
     private string Sanitize(string text)
     {
         text = text.Trim();
-        text = Regex.Replace(text, @"[^a-zA-Zа-яА-ЯёЁ0-9,\-+?!. ]", "");
+        text = Regex.Replace(text, @"[^a-zA-Z0-9,\-+?!. ]", "");
         // text = Regex.Replace(text, @"[a-zA-Z]", ReplaceLat2Cyr, RegexOptions.Multiline | RegexOptions.IgnoreCase);
-        text = Regex.Replace(text, @"(?<![a-zA-Zа-яёА-ЯЁ])[a-zA-Zа-яёА-ЯЁ]+?(?![a-zA-Zа-яёА-ЯЁ])", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
-        text = Regex.Replace(text, @"(?<=[1-90])(\.|,)(?=[1-90])", " целых ");
+        text = Regex.Replace(text, @"(?<![a-zA-Z])[a-zA-Zа]+?(?![a-zA-Z])", ReplaceMatchedWord, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+        text = Regex.Replace(text, @"(?<=[1-90])(\.|,)(?=[1-90])", " point ");
         text = Regex.Replace(text, @"\d+", ReplaceWord2Num);
         text = text.Trim();
         return text;
-    }
-
-    private string ReplaceLat2Cyr(Match oneChar)
-    {
-        return ReverseTranslit.TryGetValue(oneChar.Value.ToLower(), out var replace) ? replace : oneChar.Value;
     }
 
     private string ReplaceMatchedWord(Match word)
@@ -45,136 +40,7 @@ public sealed partial class TTSSystem
     private static readonly IReadOnlyDictionary<string, string> WordReplacement =
         new Dictionary<string, string>()
         {
-            {"нт", "Эн Тэ"},
-            {"смо", "Эс Мэ О"},
-            {"гп", "Гэ Пэ"},
-            {"рд", "Эр Дэ"},
-            {"гсб", "Гэ Эс Бэ"},
-            {"гв", "Гэ Вэ"},
-            {"нр", "Эн Эр"},
-            {"нра", "Эн Эра"},
-            {"нру", "Эн Эру"},
-            {"км", "Кэ Эм"},
-            {"кма", "Кэ Эма"},
-            {"кму", "Кэ Эму"},
-            {"си", "Эс И"},
-            {"срп", "Эс Эр Пэ"},
-            {"цк", "Цэ Каа"},
-            {"сцк", "Эс Цэ Каа"},
-            {"пцк", "Пэ Цэ Каа"},
-            {"оцк", "О Цэ Каа"},
-            {"шцк", "Эш Цэ Каа"},
-            {"ншцк", "Эн Эш Цэ Каа"},
-            {"дсо", "Дэ Эс О"},
-            {"рнд", "Эр Эн Дэ"},
-            {"сб", "Эс Бэ"},
-            {"рцд", "Эр Цэ Дэ"},
-            {"брпд", "Бэ Эр Пэ Дэ"},
-            {"рпд", "Эр Пэ Дэ"},
-            {"рпед", "Эр Пед"},
-            {"тсф", "Тэ Эс Эф"},
-            {"срт", "Эс Эр Тэ"},
-            {"обр", "О Бэ Эр"},
-            {"кпк", "Кэ Пэ Каа"},
-            {"пда", "Пэ Дэ А"},
-            {"id", "Ай Ди"},
-            {"мщ", "Эм Ще"},
-            {"вт", "Вэ Тэ"},
-            {"wt", "Вэ Тэ"},
-            {"ерп", "Йе Эр Пэ"},
-            {"се", "Эс Йе"},
-            {"апц", "А Пэ Цэ"},
-            {"лкп", "Эл Ка Пэ"},
-            {"см", "Эс Эм"},
-            {"ека", "Йе Ка"},
-            {"ка", "Кэ А"},
-            {"бса", "Бэ Эс Аа"},
-            {"тк", "Тэ Ка"},
-            {"бфл", "Бэ Эф Эл"},
-            {"бщ", "Бэ Щэ"},
-            {"кк", "Кэ Ка"},
-            {"ск", "Эс Ка"},
-            {"зк", "Зэ Ка"},
-            {"ерт", "Йе Эр Тэ"},
-            {"вкд", "Вэ Ка Дэ"},
-            {"нтр", "Эн Тэ Эр"},
-            {"пнт", "Пэ Эн Тэ"},
-            {"авд", "А Вэ Дэ"},
-            {"пнв", "Пэ Эн Вэ"},
-            {"ссд", "Эс Эс Дэ"},
-            {"крс", "Ка Эр Эс"},
-            {"кпб", "Кэ Пэ Бэ"},
-            {"сссп", "Эс Эс Эс Пэ"},
-            {"крб", "Ка Эр Бэ"},
-            {"бд", "Бэ Дэ"},
-            {"сст", "Эс Эс Тэ"},
-            {"скс", "Эс Ка Эс"},
-            {"икн", "И Ка Эн"},
-            {"нсс", "Эн Эс Эс"},
-            {"емп", "Йе Эм Пэ"},
-            {"бс", "Бэ Эс"},
-            {"цкс", "Цэ Ка Эс"},
-            {"срд", "Эс Эр Дэ"},
-            {"жпс", "Джи Пи Эс"},
-            {"gps", "Джи Пи Эс"},
-            {"ннксс", "Эн Эн Ка Эс Эс"},
-            {"ss", "Эс Эс"},
-            {"тесла", "тэсла"},
-            {"трейзен", "трэйзэн"},
-            {"нанотрейзен", "нанотрэйзэн"},
-            {"рпзд", "Эр Пэ Зэ Дэ"},
-            {"кз", "Кэ Зэ"},
-            {"рхбз", "Эр Хэ Бэ Зэ"},
-            {"рхбзз", "Эр Хэ Бэ Зэ Зэ"},
-            {"днк", "Дэ Эн Ка"},
-            {"мк", "Эм Ка"},
-            {"mk", "Эм Ка"},
-            {"рпг", "Эр Пэ Гэ"},
-            {"с4", "Си 4"}, // cyrillic
-            {"c4", "Си 4"}, // latinic
-            {"бсс", "Бэ Эс Эс"},
-            {"сии", "Эс И И"},
-            {"ии", "И И"},
-            {"опз", "О Пэ Зэ"},
-        };
-
-    private static readonly IReadOnlyDictionary<string, string> ReverseTranslit =
-        new Dictionary<string, string>()
-        {
-            {"a", "а"},
-            {"b", "б"},
-            {"v", "в"},
-            {"g", "г"},
-            {"d", "д"},
-            {"e", "е"},
-            {"je", "ё"},
-            {"zh", "ж"},
-            {"z", "з"},
-            {"i", "и"},
-            {"y", "й"},
-            {"k", "к"},
-            {"l", "л"},
-            {"m", "м"},
-            {"n", "н"},
-            {"o", "о"},
-            {"p", "п"},
-            {"r", "р"},
-            {"s", "с"},
-            {"t", "т"},
-            {"u", "у"},
-            {"f", "ф"},
-            {"h", "х"},
-            {"c", "ц"},
-            {"x", "кс"},
-            {"ch", "ч"},
-            {"sh", "ш"},
-            {"jsh", "щ"},
-            {"hh", "ъ"},
-            {"ih", "ы"},
-            {"jh", "ь"},
-            {"eh", "э"},
-            {"ju", "ю"},
-            {"ja", "я"},
+            { "sw", "StarWark" }
         };
 }
 
@@ -183,30 +49,30 @@ public static class NumberConverter
 {
     private static readonly string[] Frac20Male =
     [
-        "", "один", "два", "три", "четыре", "пять", "шесть",
-        "семь", "восемь", "девять", "десять", "одиннадцать",
-        "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
-        "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать",
+        "", "one", "two", "three", "four", "five", "six",
+        "seven", "eight", "nine", "ten", "eleven",
+        "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen",
     ];
 
     private static readonly string[] Frac20Female =
     [
-        "", "одна", "две", "три", "четыре", "пять", "шесть",
-        "семь", "восемь", "девять", "десять", "одиннадцать",
-        "двенадцать", "тринадцать", "четырнадцать", "пятнадцать",
-        "шестнадцать", "семнадцать", "восемнадцать", "девятнадцать",
+        "", "one", "two", "three", "four", "five", "six",
+        "seven", "eight", "nine", "ten", "eleven",
+        "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen",
     ];
 
 	private static readonly string[] Hunds =
     [
-        "", "сто", "двести", "триста", "четыреста",
-		"пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот",
+        "", "hundred", "two hundred", "three hundred", "four hundred",
+		"five hundred", "six hundred", "seven hundred", "eight hundred", "nine hundred",
     ];
 
 	private static readonly string[] Tens =
     [
-        "", "десять", "двадцать", "тридцать", "сорок", "пятьдесят",
-		"шестьдесят", "семьдесят", "восемьдесят", "девяносто",
+        "", "ten", "twenty", "thirty", "forty", "fifty",
+		"sixty", "seventy", "eighty", "ninety",
     ];
 
 	public static string NumberToText(long value, bool male = true)
@@ -229,10 +95,10 @@ public static class NumberConverter
 			value = -value;
 		}
 
-        value = AppendPeriod(value, 1000000000000, str, "триллион", "триллиона", "триллионов", true);
-        value = AppendPeriod(value, 1000000000, str, "миллиард", "миллиарда", "миллиардов", true);
-        value = AppendPeriod(value, 1000000, str, "миллион", "миллиона", "миллионов", true);
-        value = AppendPeriod(value, 1000, str, "тысяча", "тысячи", "тысяч", false);
+        value = AppendPeriod(value, 1000000000000, str, "trillion", "trillion", "trillion", true);
+        value = AppendPeriod(value, 1000000000, str, "billion", "billion", "billion", true);
+        value = AppendPeriod(value, 1000000, str, "million", "million", "million", true);
+        value = AppendPeriod(value, 1000, str, "thousand", "thousand", "thousand", false);
 
 		var hundreds = (int)(value / 100);
 		if (hundreds != 0)
