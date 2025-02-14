@@ -6,12 +6,6 @@ namespace Content.Server.VoiceMask;
 
 public partial class VoiceMaskSystem
 {
-    private void InitializeTTS()
-    {
-        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerVoiceEvent>(OnSpeakerVoiceTransform);
-        SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice);
-    }
-
     private void OnSpeakerVoiceTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerVoiceEvent args)
     {
         args.VoiceId = component.VoiceId;

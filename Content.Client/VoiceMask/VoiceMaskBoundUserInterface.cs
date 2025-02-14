@@ -1,20 +1,15 @@
 using Content.Shared.VoiceMask;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.VoiceMask;
 
-public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
+public sealed class VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : BoundUserInterface(owner, uiKey)
 {
     [Dependency] private readonly IPrototypeManager _protomanager = default!;
 
     [ViewVariables]
     private VoiceMaskNameChangeWindow? _window;
-
-    public VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
-    {
-    }
 
     protected override void Open()
     {
@@ -26,6 +21,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
 
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
+        _window.OnVoiceChange += voice => SendMessage(new VoiceMaskChangeVoiceMessage(voice)); // Corvax-TTS
     }
 
     private void OnNameSelected(string name)
@@ -40,7 +36,7 @@ public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Verb);
+        _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // Corvax-TTS
     }
 
     protected override void Dispose(bool disposing)
