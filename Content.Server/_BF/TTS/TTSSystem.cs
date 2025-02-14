@@ -26,6 +26,8 @@ public sealed partial class TTSSystem : EntitySystem
     [
         "Eat this beauty piece of the cake and drink a cup of tea!",
         "What a beautiful sunset!",
+        "That’s a good question. Let me think.",
+        "Help me! There is a strange clown telling the funniest joke! I'm dying of laughter.",
     ];
 
     private int _maxMessageLength;
@@ -172,6 +174,7 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
+    // ReSharper disable once InconsistentNaming
     private async Task<byte[]?> GenerateTTS(string text, string speaker, TTSEffects effects)
     {
         var textSanitized = Sanitize(text);
