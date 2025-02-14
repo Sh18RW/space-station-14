@@ -75,6 +75,8 @@
   - type: Anchorable
   - type: TypingIndicator
     proto: robot
+  - type: TTS
+    voice: VendingMachine
   - type: Speech
     speechVerb: Robotic
     speechSounds: Vending
