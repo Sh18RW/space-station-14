@@ -174,7 +174,7 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
-            receivers.Add(receiver);// BF-TTS
+            receivers.Add(receiver); // BF-TTS
         }
 
         if (voiceId != null)

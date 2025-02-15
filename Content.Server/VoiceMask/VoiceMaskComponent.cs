@@ -48,6 +48,7 @@ public sealed partial class VoiceMaskComponent : Component
 
     [DataField]
     [ViewVariables(VVAccess.ReadWrite)]
+    // ReSharper disable InconsistentNaming
     public TTSEffects TTSEffects = TTSEffects.Default;
     // BF-TTS-end.
 }
