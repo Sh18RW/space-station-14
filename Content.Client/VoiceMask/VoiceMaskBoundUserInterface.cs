@@ -21,7 +21,7 @@ public sealed class VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : B
 
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
-        _window.OnVoiceChange += voice => SendMessage(new VoiceMaskChangeVoiceMessage(voice)); // Corvax-TTS
+        _window.OnVoiceChange += voice => SendMessage(new VoiceMaskChangeVoiceMessage(voice)); // BF-TTS
     }
 
     private void OnNameSelected(string name)
@@ -36,7 +36,7 @@ public sealed class VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : B
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // Corvax-TTS
+        _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // BF-TTS
     }
 
     protected override void Dispose(bool disposing)

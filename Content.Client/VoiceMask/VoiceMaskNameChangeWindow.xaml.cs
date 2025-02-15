@@ -100,7 +100,7 @@ public sealed partial class VoiceMaskNameChangeWindow : FancyWindow
     }
     // BF-TTS-end.
 
-    public void UpdateState(string name, string voice, string? verb) // Corvax-TTS
+    public void UpdateState(string name, string voice, string? verb) // BF-TTS
     {
         NameSelector.Text = name;
         _verb = verb;
