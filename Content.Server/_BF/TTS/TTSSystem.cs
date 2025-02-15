@@ -4,6 +4,7 @@ using Content.Shared._BF.CCVars;
 using Content.Shared._BF.TTS;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
+using Content.Shared.Inventory;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
@@ -249,10 +250,4 @@ public sealed partial class TTSSystem : EntitySystem
 
         return await _ttsManager.ConvertTextToSpeech(speaker, textSsml, effects);
     }
-}
-
-public sealed class TransformSpeakerVoiceEvent(string? voiceId, TTSEffects effects) : EntityEventArgs
-{
-    public string? VoiceId = voiceId;
-    public TTSEffects Effects = effects;
 }

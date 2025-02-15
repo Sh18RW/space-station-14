@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using Content.Corvax.Interfaces.Shared;
+using Content.Shared._BF.TTS;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -388,6 +389,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         EnsureDefaultMarkings(uid, humanoid);
+        SetTTSVoice(uid, profile.Voice, humanoid); // BF-TTS
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -466,6 +468,18 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         if (sync)
             Dirty(uid, humanoid);
     }
+
+    // BF-TTS-start
+    // ReSharper disable once InconsistentNaming
+    public void SetTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent humanoid)
+    {
+        if (!TryComp<TTSComponent>(uid, out var comp))
+            return;
+
+        humanoid.Voice = voiceId;
+        comp.VoicePrototypeId = voiceId;
+    }
+    // BF-TTS-end.
 
     /// <summary>
     /// Takes ID of the species prototype, returns UI-friendly name of the species.
