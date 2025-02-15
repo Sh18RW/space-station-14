@@ -111,3 +111,24 @@
   name: tts-voice-name-maya
   sex: Female
   speaker: en_18
+
+# Hidden
+- type: ttsVoice
+  id: Announcer
+  name: tts-voice-name-announcer
+  roundStart: false
+  sex: Male
+  speaker: en_10
+  effects:
+  - Robotic
+  - Announce
+  - Echo
+
+- type: ttsVoice
+  id: VendingMachine
+  name: tts-voice-name-vending-machine
+  roundStart: false
+  sex: Male
+  speaker: en_17
+  effects:
+  - Robotic
