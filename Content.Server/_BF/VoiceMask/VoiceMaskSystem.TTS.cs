@@ -1,15 +1,16 @@
 ﻿using Content.Server._BF.TTS;
 using Content.Shared._BF.TTS;
+using Content.Shared.Inventory;
 using Content.Shared.VoiceMask;
 
 namespace Content.Server.VoiceMask;
 
 public partial class VoiceMaskSystem
 {
-    private void OnSpeakerVoiceTransform(EntityUid uid, VoiceMaskComponent component, TransformSpeakerVoiceEvent args)
+    private void OnSpeakerVoiceTransform(EntityUid uid, VoiceMaskComponent component, ref InventoryRelayedEvent<TransformSpeakerVoiceEvent> args)
     {
-        args.VoiceId = component.VoiceId;
-        args.Effects = component.TTSEffects;
+        args.Args.VoiceId = component.VoiceId;
+        args.Args.Effects = component.TTSEffects;
     }
 
     private void OnChangeVoice(Entity<VoiceMaskComponent> entity, ref VoiceMaskChangeVoiceMessage msg)

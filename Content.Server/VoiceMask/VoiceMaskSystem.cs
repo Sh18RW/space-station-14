@@ -1,4 +1,4 @@
-using Content.Server._BF.TTS;
+using Content.Shared._BF.TTS;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
@@ -31,7 +31,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
 
         // BF-TTS-start
-        SubscribeLocalEvent<VoiceMaskComponent, TransformSpeakerVoiceEvent>(OnSpeakerVoiceTransform);
+        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerVoiceEvent>>(OnSpeakerVoiceTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice);
         // BF-TTS-end.
     }

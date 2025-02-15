@@ -1,3 +1,4 @@
+using Content.Shared._BF.TTS;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.Enums;
@@ -45,6 +46,14 @@ public sealed partial class HumanoidAppearanceComponent : Component
     /// </summary>
     [DataField(required: true), AutoNetworkedField]
     public ProtoId<SpeciesPrototype> Species { get; set; }
+
+    // BF-TTS-start
+    /// <summary>
+    ///     Current voice. Used for correct cloning.
+    /// </summary>
+    [DataField("voice")]
+    public ProtoId<TTSVoicePrototype> Voice { get; set; } = SharedHumanoidAppearanceSystem.DefaultVoice;
+    // BF-TTS-end.
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
