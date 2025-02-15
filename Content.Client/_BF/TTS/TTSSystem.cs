@@ -36,20 +36,27 @@ public sealed class TTSSystem : EntitySystem
     private const float MinimalVolume = -10f;
 
     private float _volume;
+    private bool _isEnabled;
     private int _fileIdx;
 
     public override void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
         _res.AddRoot(Prefix, _contentRoot);
-        _cfg.OnValueChanged(BFCCVars.TTSVolume, OnTtsVolumeChanged, true);
+
+        _cfg.OnValueChanged(BFCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
+        _cfg.OnValueChanged(BFCCVars.TTSVolume, OnTTSVolumeChanged, true);
+
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _cfg.UnsubValueChanged(BFCCVars.TTSVolume, OnTtsVolumeChanged);
+
+        _cfg.UnsubValueChanged(BFCCVars.TTSClientEnabled, OnTTSEnabledChanged);
+        _cfg.UnsubValueChanged(BFCCVars.TTSVolume, OnTTSVolumeChanged);
+
         _contentRoot.Dispose();
     }
 
@@ -58,13 +65,23 @@ public sealed class TTSSystem : EntitySystem
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId, TTSEffects.Default));
     }
 
-    private void OnTtsVolumeChanged(float volume)
+    private void OnTTSEnabledChanged(bool value)
+    {
+        _isEnabled = value;
+    }
+
+    private void OnTTSVolumeChanged(float volume)
     {
         _volume = volume;
     }
 
     private void OnPlayTTS(PlayTTSEvent ev)
     {
+        if (!_isEnabled)
+        {
+            return;
+        }
+
         _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
 
         var filePath = new ResPath($"{_fileIdx++}.ogg");
