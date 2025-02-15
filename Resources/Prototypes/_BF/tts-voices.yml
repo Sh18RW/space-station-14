@@ -118,7 +118,7 @@
   name: tts-voice-name-announcer
   roundStart: false
   sex: Male
-  speaker: en_15
+  speaker: en_10
   effects:
   - Robotic
   - Announce

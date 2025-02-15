@@ -9,5 +9,5 @@ public enum TTSEffects : uint
     Radio = 1 << 1,
     Echo = 1 << 2,
     Announce = 1 << 3,
-    Robotic,
+    Robotic = 1 << 4,
 }
