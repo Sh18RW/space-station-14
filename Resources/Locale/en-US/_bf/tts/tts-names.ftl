@@ -19,3 +19,8 @@ tts-voice-name-steven = Steven
 tts-voice-name-maya = Maya
 tts-voice-name-alan = Alan
 tts-voice-name-alex = Alex
+
+tts-voice-name-announcer = Announcer (you should not see this voice)
+tts-voice-name-announcer-security-announcer = Security System Announcer (you should not see this voice)
+tts-voice-name-vending-machine = Vending Machine (you should not see this voice)
+tts-voice-name-announcer-security-announcer = Security System Announcer (you should not see this voice)
