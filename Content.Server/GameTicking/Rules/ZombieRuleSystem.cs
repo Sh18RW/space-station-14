@@ -119,7 +119,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             foreach (var station in _station.GetStations())
             {
-                _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson);
+                _chat.DispatchStationAnnouncement(station, Loc.GetString("zombie-shuttle-call"), colorOverride: Color.Crimson, announcerVoice: "JandarmaAnnouncer");
             }
             _roundEnd.RequestRoundEnd(null, false);
         }

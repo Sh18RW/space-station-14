@@ -118,11 +118,31 @@
   name: tts-voice-name-announcer
   roundStart: false
   sex: Male
-  speaker: en_10
+  speaker: en_14
   effects:
-  - Robotic
   - Announce
   - Echo
+
+- type: ttsVoice
+  id: JandarmaAnnouncer
+  name: tts-voice-name-announcer-jandarma
+  roundStart: false
+  sex: Male
+  speaker: en_17
+  effects:
+  - Announce
+  - Echo
+
+- type: ttsVoice
+  id: SecuritySystemAnnouncer
+  name: tts-voice-name-announcer-security-announcer
+  roundStart: false
+  sex: Male
+  speaker: en_17
+  effects:
+  - Announce
+  - Echo
+  - Robotic
 
 - type: ttsVoice
   id: VendingMachine

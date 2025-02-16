@@ -317,6 +317,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchGlobalAnnouncement(
         string message,
+        string announcerVoice = "Announcer",
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
@@ -327,7 +328,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
-        SendAnnounceTTS(message, Filter.Broadcast()); // BF-TTS
+        SendAnnounceTTS(message, Filter.Broadcast(), announcerVoice); // BF-TTS
         if (playSound)
         {
             _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
@@ -340,6 +341,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     /// <param name="filter">Filter to select players who will recieve the announcement</param>
     /// <param name="message">The contents of the message</param>
+    /// <param name="announcerVoice"></param>
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
@@ -348,6 +350,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void DispatchFilteredAnnouncement(
         Filter filter,
         string message,
+        string announcerVoice = "Announcer",
         EntityUid? source = null,
         string? sender = null,
         bool playSound = true,
@@ -358,7 +361,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
-        SendAnnounceTTS(message, filter); // BF-TTS
+        SendAnnounceTTS(message, filter, announcerVoice); // BF-TTS
         if (playSound)
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
@@ -371,12 +374,15 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
     /// <param name="message">The contents of the message</param>
+    /// <param name="announcerVoice"></param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
+    /// <param name="announcementSound"></param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchStationAnnouncement(
         EntityUid source,
         string message,
+        string announcerVoice = "Announcer",
         string? sender = null,
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
@@ -398,7 +404,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var filter = _stationSystem.GetInStation(stationDataComp);
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
-        SendAnnounceTTS(message, filter); // BF-TTS
+        SendAnnounceTTS(message, filter, announcerVoice); // BF-TTS
 
         if (playDefaultSound)
         {
