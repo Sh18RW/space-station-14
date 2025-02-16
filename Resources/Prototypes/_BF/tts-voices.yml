@@ -125,7 +125,7 @@
 
 - type: ttsVoice
   id: JandarmaAnnouncer
-  name: tts-voice-name-announcer-jandarma
+  name: tts-voice-name-jandarma-announcer
   roundStart: false
   sex: Male
   speaker: en_17
@@ -142,7 +142,6 @@
   effects:
   - Announce
   - Echo
-  - Robotic
 
 - type: ttsVoice
   id: VendingMachine
