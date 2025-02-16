@@ -11,6 +11,9 @@
     slots: [mask]
   - type: StaticPrice
     price: 25
+  - type: TransformsSpeakerVoice
+    effects:
+    - Mask
 
 - type: entity
   abstract: true

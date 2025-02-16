@@ -39,6 +39,7 @@
           type: ChameleonBoundUserInterface
         enum.VoiceMaskUIKey.Key:
           type: VoiceMaskBoundUserInterface
+    - type: TransformsSpeakerVoice
 
 - type: entity
   parent: ClothingMaskBase

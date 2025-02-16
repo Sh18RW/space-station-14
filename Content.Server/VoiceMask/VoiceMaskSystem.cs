@@ -1,9 +1,11 @@
+using Content.Server._BF.TTS.Components;
 using Content.Shared._BF.TTS;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
 using Content.Shared.Clothing;
 using Content.Shared.Database;
+using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Content.Shared.Preferences;
@@ -31,7 +33,6 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
 
         // BF-TTS-start
-        SubscribeLocalEvent<VoiceMaskComponent, InventoryRelayedEvent<TransformSpeakerVoiceEvent>>(OnSpeakerVoiceTransform);
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice);
         // BF-TTS-end.
     }
@@ -95,8 +96,13 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 
     private void UpdateUI(Entity<VoiceMaskComponent> entity)
     {
+        ProtoId<TTSVoicePrototype> voiceProto = SharedHumanoidAppearanceSystem.DefaultVoice;
+        if (TryComp<TransformsSpeakerVoiceComponent>(entity.Owner, out var comp))
+        {
+            voiceProto = comp.Voice ?? voiceProto;
+        }
         if (_uiSystem.HasUi(entity, VoiceMaskUIKey.Key))
-            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), entity.Comp.VoiceId, entity.Comp.VoiceMaskSpeechVerb));
+            _uiSystem.SetUiState(entity.Owner, VoiceMaskUIKey.Key, new VoiceMaskBuiState(GetCurrentVoiceName(entity), voiceProto, entity.Comp.VoiceMaskSpeechVerb));
     }
     #endregion
 
