@@ -10,4 +10,5 @@ public enum TTSEffects : uint
     Echo = 1 << 2,
     Announce = 1 << 3,
     Robotic = 1 << 4,
+    Mask = 1 << 5,
 }

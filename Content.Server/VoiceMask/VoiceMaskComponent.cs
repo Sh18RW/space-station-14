@@ -40,15 +40,4 @@ public sealed partial class VoiceMaskComponent : Component
     /// </summary>
     [DataField]
     public EntityUid? ActionEntity;
-
-    // BF-TTS-start
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public string VoiceId = SharedHumanoidAppearanceSystem.DefaultVoice;
-
-    [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    // ReSharper disable InconsistentNaming
-    public TTSEffects TTSEffects = TTSEffects.Default;
-    // BF-TTS-end.
 }

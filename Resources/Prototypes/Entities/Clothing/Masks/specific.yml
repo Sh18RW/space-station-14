@@ -54,6 +54,7 @@
           type: ChameleonBoundUserInterface
         enum.VoiceMaskUIKey.Key:
           type: VoiceMaskBoundUserInterface
+    - type: TransformsSpeakerVoice
 # Corvax-HiddenDesc-Start
     - type: HiddenDescription
       entries:
