@@ -8,11 +8,9 @@ namespace Content.Server.Chat.Systems;
 public sealed partial class ChatSystem
 {
 
-    public readonly ProtoId<TTSVoicePrototype> _announcerVoice = "Announcer";
-
     // ReSharper disable InconsistentNaming
-    private async void SendAnnounceTTS(string message, Filter filter)
+    private async void SendAnnounceTTS(string message, Filter filter, ProtoId<TTSVoicePrototype> announcerVoice)
     {
-        RaiseLocalEvent(new PlayTTSRequestEvent(message, _announcerVoice, filter));
+        RaiseLocalEvent(new PlayTTSRequestEvent(message, announcerVoice, filter));
     }
 }

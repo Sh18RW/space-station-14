@@ -46,6 +46,7 @@
       color: PaleVioletRed
       emergencyLightColor: PaleVioletRed
       forceEnableEmergencyLights: true
+      announcerVoice: JandarmaAnnouncer
     delta:
       announcement: alert-level-delta-announcement
       selectable: false
@@ -58,6 +59,7 @@
       emergencyLightColor: Orange
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+      announcerVoice: JandarmaAnnouncer
     epsilon:
       announcement: alert-level-epsilon-announcement
       selectable: false
@@ -70,3 +72,4 @@
       emergencyLightColor: DarkViolet
       forceEnableEmergencyLights: true
       shuttleTime: 1200
+      announcerVoice: JandarmaAnnouncer
