@@ -130,7 +130,8 @@ namespace Content.Server.PowerSink
                 station.Value,
                 Loc.GetString("powersink-immiment-explosion-announcement"),
                 playDefaultSound: true,
-                colorOverride: Color.Yellow
+                colorOverride: Color.Yellow,
+                announcerVoice: ChatSystem.SecuritySystemAnnouncer
             );
         }
     }

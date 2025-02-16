@@ -68,6 +68,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const string DefaultAnnouncementSound = "/Audio/Corvax/Announcements/announce.ogg"; // Corvax-Announcements
     public const string CentComAnnouncementSound = "/Audio/Corvax/Announcements/centcomm.ogg"; // Corvax-Announcements
 
+    public const string AnnounceVoice = "Announcer";
+    public const string JandarmaAnnouncerVoice = "JandarmaAnnouncer";
+    public const string SecuritySystemAnnouncer = "SecuritySystemAnnouncer";
+
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
@@ -318,12 +322,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchGlobalAnnouncement(
         string message,
-        string announcerVoice = "Announcer",
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
-        )
+        Color? colorOverride = null,
+        string announcerVoice = "Announcer")
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -384,11 +387,11 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void DispatchStationAnnouncement(
         EntityUid source,
         string message,
-        string announcerVoice = "Announcer",
         string? sender = null,
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        string announcerVoice = "Announcer")
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
