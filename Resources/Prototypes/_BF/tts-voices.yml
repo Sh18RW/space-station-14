@@ -142,6 +142,7 @@
   effects:
   - Announce
   - Echo
+  - Robotic
 
 - type: ttsVoice
   id: VendingMachine

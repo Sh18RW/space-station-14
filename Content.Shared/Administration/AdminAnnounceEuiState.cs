@@ -1,4 +1,6 @@
+using Content.Shared._BF.TTS;
 using Content.Shared.Eui;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
@@ -23,6 +25,7 @@ namespace Content.Shared.Administration
             public string Announcer = default!;
             public string Announcement = default!;
             public AdminAnnounceType AnnounceType;
+            public ProtoId<TTSVoicePrototype> Voice = default!;
         }
     }
 }
