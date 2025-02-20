@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Serialization;
 
-namespace Content.Shared._BF.TTS;
+namespace Content.Shared._BF.TTS.Events;
 
 [Serializable, NetSerializable]
 // ReSharper disable once InconsistentNaming

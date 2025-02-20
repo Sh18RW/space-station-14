@@ -1,5 +1,6 @@
 using Content.Server._BF.TTS.Components;
 using Content.Shared._BF.TTS;
+using Content.Shared._BF.TTS.Events;
 using Content.Shared.Inventory;
 
 namespace Content.Server._BF.TTS.Systems;

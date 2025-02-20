@@ -2,6 +2,7 @@
 using Content.Server.Chat.Systems;
 using Content.Shared._BF.CCVars;
 using Content.Shared._BF.TTS;
+using Content.Shared._BF.TTS.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Inventory;
@@ -10,7 +11,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using TTSComponent = Content.Shared._BF.TTS.TTSComponent;
+using TTSComponent = Content.Shared._BF.TTS.Components.TTSComponent;
 
 namespace Content.Server._BF.TTS;
 

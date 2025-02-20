@@ -1,7 +1,7 @@
 ﻿using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared._BF.TTS;
+namespace Content.Shared._BF.TTS.Components;
 
 /// <summary>
 /// Apply TTS for entity chat say messages
@@ -23,4 +23,14 @@ public sealed partial class TTSComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("effects")]
     public TTSEffects Effects { get; set; } = TTSEffects.Default;
+
+    [DataField]
+    public TimeSpan EndTime { get; set; } = TimeSpan.Zero;
+
+    /// <summary>
+    /// Used on client to play audio queued on one entity.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadOnly)]
+    [DataField]
+    public Queue<PlayTTSAudioData> Queue { get; set; } = new();
 }

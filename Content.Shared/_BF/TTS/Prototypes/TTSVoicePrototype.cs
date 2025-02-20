@@ -7,6 +7,7 @@ namespace Content.Shared._BF.TTS;
 /// Prototype represent available TTS voices
 /// </summary>
 [Prototype("ttsVoice")]
+// ReSharper disable once InconsistentNaming
 public sealed class TTSVoicePrototype : IPrototype
 {
     [IdDataField]
