@@ -1,5 +1,7 @@
 ﻿using Content.Shared._BF.CCVars;
 using Content.Shared._BF.TTS;
+using Content.Shared._BF.TTS.Components;
+using Content.Shared._BF.TTS.Events;
 using Content.Shared.Chat;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
@@ -15,7 +17,7 @@ namespace Content.Client._BF.TTS;
 /// Plays TTS audio in world
 /// </summary>
 // ReSharper disable once InconsistentNaming
-public sealed class TTSSystem : EntitySystem
+public sealed partial class TTSSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IResourceManager _res = default!;
@@ -60,6 +62,8 @@ public sealed class TTSSystem : EntitySystem
         _contentRoot.Dispose();
     }
 
+
+    // ReSharper disable once InconsistentNaming
     public void RequestPreviewTTS(string voiceId)
     {
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId, TTSEffects.Default));
@@ -82,29 +86,26 @@ public sealed class TTSSystem : EntitySystem
             return;
         }
 
-        _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
-
         var filePath = new ResPath($"{_fileIdx++}.ogg");
         _contentRoot.AddOrUpdateFile(filePath, ev.Data);
 
         var audioResource = new AudioResource();
         audioResource.Load(IoCManager.Instance!, Prefix / filePath);
 
-        var audioParams = AudioParams.Default
-            .WithVolume(AdjustVolume(ev.Effects.HasFlag(TTSEffects.Whisper)))
-            .WithMaxDistance(AdjustDistance(ev.Effects.HasFlag(TTSEffects.Whisper)));
 
         if (ev.SourceUid != null)
         {
             var sourceUid = GetEntity(ev.SourceUid.Value);
-            _audio.PlayEntity(audioResource.AudioStream, sourceUid, audioParams);
+            QueueAudio(sourceUid, new PlayTTSAudioData(filePath, ev.Effects));
         }
         else
         {
+            var audioParams = AudioParams.Default
+                .WithVolume(AdjustVolume(ev.Effects.HasFlag(TTSEffects.Whisper)))
+                .WithMaxDistance(AdjustDistance(ev.Effects.HasFlag(TTSEffects.Whisper)));
             _audio.PlayGlobal(audioResource.AudioStream, audioParams);
+            _contentRoot.RemoveFile(filePath);
         }
-
-        _contentRoot.RemoveFile(filePath);
     }
 
     private float AdjustVolume(bool isWhisper)

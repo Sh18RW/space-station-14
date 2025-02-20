@@ -1,4 +1,5 @@
 using Content.Shared._BF.TTS;
+using Content.Shared._BF.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Hypospray.Events;
