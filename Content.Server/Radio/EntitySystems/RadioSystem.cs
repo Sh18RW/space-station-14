@@ -1,4 +1,5 @@
 using Content.Server._BF.TTS;
+using Content.Server._BF.TTS.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
@@ -17,7 +18,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
-using TTSComponent = Content.Shared._BF.TTS.Components.TTSComponent;
+using Content.Shared._BF.TTS.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 

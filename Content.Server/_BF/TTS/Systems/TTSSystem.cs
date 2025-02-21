@@ -2,18 +2,17 @@
 using Content.Server.Chat.Systems;
 using Content.Shared._BF.CCVars;
 using Content.Shared._BF.TTS;
+using Content.Shared._BF.TTS.Components;
 using Content.Shared._BF.TTS.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
-using Content.Shared.Inventory;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
-using TTSComponent = Content.Shared._BF.TTS.Components.TTSComponent;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._BF.TTS.Systems;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem : EntitySystem
@@ -172,21 +171,6 @@ public sealed partial class TTSSystem : EntitySystem
     {
         effects |= TTSEffects.Whisper;
 
-        // var fullSoundData = await GenerateTTS(message, speaker, effects);
-        // if (fullSoundData is null)
-        // {
-        //     return;
-        // }
-        //
-        // var obfSoundData = await GenerateTTS(obfMessage, speaker, effects);
-        // if (obfSoundData is null)
-        // {
-        //     return;
-        // }
-
-        // var fullTtsEvent = new Shared._BF.TTS.PlayTTSEvent(fullSoundData, effects, GetNetEntity(uid));
-        // var obfTtsEvent = new Shared._BF.TTS.PlayTTSEvent(obfSoundData, effects, GetNetEntity(uid));
-
         // ReSharper disable once InconsistentNaming
         var fullTTSEventRequest = new PlayTTSRequestEvent(message, speaker, Filter.Empty(), effects, uid);
         // ReSharper disable once InconsistentNaming
@@ -240,11 +224,11 @@ public sealed partial class TTSSystem : EntitySystem
             textSanitized += ".";
         }
 
-        var ssmlTraits = SoundTraits.RateFast;
+        var ssmlTraits = TTSSystem.SoundTraits.RateFast;
 
         if (effects.HasFlag(TTSEffects.Whisper))
         {
-            ssmlTraits = SoundTraits.PitchVeryLow;
+            ssmlTraits = TTSSystem.SoundTraits.PitchVeryLow;
         }
 
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);

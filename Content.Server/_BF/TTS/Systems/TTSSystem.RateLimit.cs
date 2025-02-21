@@ -4,7 +4,7 @@ using Content.Shared._BF.CCVars;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Player;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._BF.TTS.Systems;
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {

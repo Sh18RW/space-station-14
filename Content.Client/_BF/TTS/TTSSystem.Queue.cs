@@ -31,7 +31,7 @@ public partial class TTSSystem
         }
     }
 
-    public void QueueAudio(EntityUid source, PlayTTSAudioData data)
+    private void QueueAudio(EntityUid source, PlayTTSAudioData data)
     {
         if (!TryComp<TTSComponent>(source, out var ttsComponent))
         {
@@ -45,7 +45,7 @@ public partial class TTSSystem
 
 
     // ReSharper disable once InconsistentNaming
-    public void PlayTTSAudio(EntityUid source, TTSComponent component, PlayTTSAudioData data)
+    private void PlayTTSAudio(EntityUid source, TTSComponent component, PlayTTSAudioData data)
     {
         var audioResource = new AudioResource();
         audioResource.Load(IoCManager.Instance!, Prefix / data.Path);

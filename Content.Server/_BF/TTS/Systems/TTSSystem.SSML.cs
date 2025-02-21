@@ -1,4 +1,4 @@
-﻿namespace Content.Server._BF.TTS;
+﻿namespace Content.Server._BF.TTS.Systems;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
