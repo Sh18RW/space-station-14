@@ -93,19 +93,8 @@ public sealed partial class TTSSystem : EntitySystem
         audioResource.Load(IoCManager.Instance!, Prefix / filePath);
 
 
-        if (ev.SourceUid != null)
-        {
-            var sourceUid = GetEntity(ev.SourceUid.Value);
-            QueueAudio(sourceUid, new PlayTTSAudioData(filePath, ev.Effects));
-        }
-        else
-        {
-            var audioParams = AudioParams.Default
-                .WithVolume(AdjustVolume(ev.Effects.HasFlag(TTSEffects.Whisper)))
-                .WithMaxDistance(AdjustDistance(ev.Effects.HasFlag(TTSEffects.Whisper)));
-            _audio.PlayGlobal(audioResource.AudioStream, audioParams);
-            _contentRoot.RemoveFile(filePath);
-        }
+        var sourceUid = GetEntity(ev.SourceUid);
+        QueueAudio(sourceUid, new PlayTTSAudioData(filePath, ev.Effects));
     }
 
     private float AdjustVolume(bool isWhisper)
