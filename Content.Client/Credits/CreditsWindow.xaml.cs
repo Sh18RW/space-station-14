@@ -160,6 +160,7 @@ namespace Content.Client.Credits
             // BF End
             AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
             AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
+            AddSection(Loc.GetString("credits-window-tts-title"), "TTS.txt"); // BF-TTS
             AddSection(Loc.GetString("credits-window-original-remake-team-section-title"), "OriginalRemake.txt");
             AddSection(Loc.GetString("credits-window-special-thanks-section-title"), "SpecialThanks.txt", true);
 
