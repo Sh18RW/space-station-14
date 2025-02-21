@@ -19,7 +19,7 @@ public partial class TTSSystem
     {
         base.Update(frameTime);
 
-        if (_endTime > _timing.CurTime)
+        if (_endTime < _timing.CurTime)
         {
             if (_publicAudioQueue.TryDequeue(out var audioData))
             {
