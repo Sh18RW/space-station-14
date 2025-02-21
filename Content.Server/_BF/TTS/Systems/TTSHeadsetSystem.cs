@@ -1,10 +1,8 @@
-using Content.Server.Chat.Systems;
 using Content.Server.Radio.Components;
 using Content.Shared._BF.TTS;
-using Robust.Server.Player;
 using Robust.Shared.Player;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._BF.TTS.Systems;
 
 /// <summary>
 /// Uses for radio tts.
@@ -13,7 +11,7 @@ namespace Content.Server._BF.TTS;
 public sealed class TTSHeadsetSystem : EntitySystem
 {
     /// <inheritdoc cref="Robust.Shared.GameObjects.EntitySystem" />
-    [Dependency] private readonly TTSSystem _ttsSystem = default!;
+    [Dependency] private readonly Systems.TTSSystem _ttsSystem = default!;
 
     private ISawmill _sawmill = default!;
 

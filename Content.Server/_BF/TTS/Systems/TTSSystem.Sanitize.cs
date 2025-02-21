@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Content.Server.Chat.Systems;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._BF.TTS.Systems;
 
 public sealed partial class TTSSystem
 {
