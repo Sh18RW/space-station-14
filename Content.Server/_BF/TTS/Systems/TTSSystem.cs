@@ -26,10 +26,26 @@ public sealed partial class TTSSystem : EntitySystem
 
     private readonly List<string> _sampleText =
     [
-        "Eat this beauty piece of the cake and drink a cup of tea!",
-        "What a beautiful sunset!",
-        "That’s a good question. Let me think.",
-        "Help me! There is a strange clown telling the funniest joke! I'm dying of laughter.",
+        "Eat this delicious piece of cake and enjoy a warm cup of tea!",
+        "What a breathtaking sunset! The sky is painted in hues of orange and pink.",
+        "That’s an interesting question. Let me take a moment to think about it.",
+        "Help me! There’s a strange clown telling the funniest joke, and I can’t stop laughing!",
+        "The weather today is perfect for a walk in the park.",
+        "I can’t believe how fast time flies when you’re having fun.",
+        "Could you please pass me the salt?",
+        "The sound of the ocean waves is so calming and peaceful.",
+        "I’m really looking forward to the weekend. Any plans?",
+        "This book is absolutely fascinating! I can’t put it down.",
+        "The aroma of freshly baked bread fills the air.",
+        "I’m so grateful for all the support I’ve received.",
+        "The stars tonight are incredibly bright and beautiful.",
+        "I think we should take a different approach to solve this problem.",
+        "The laughter of children playing is such a joyful sound.",
+        "I’m feeling a bit tired today. Maybe I should get some rest.",
+        "The city lights at night are truly mesmerizing.",
+        "I’ve never seen such a stunning view before!",
+        "Let’s make the most of this wonderful day.",
+        "The smell of coffee in the morning is the best way to start the day.",
     ];
 
     private int _maxMessageLength;
