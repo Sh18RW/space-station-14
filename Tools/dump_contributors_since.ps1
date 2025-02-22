@@ -13,9 +13,9 @@ $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 $engine = & "$PSScriptRoot\dump_commits_since.ps1" -repo space-wizards/RobustToolbox -since $since -until $until
 $content = & "$PSScriptRoot\dump_commits_since.ps1" -repo space-wizards/space-station-14 -since $since -until $until
-$contentBF = & "$PSScriptRoot\dump_commits_since.ps1" -repo Corvinella-Project/space-station-14 -since $since -until $until
+$contentCP = & "$PSScriptRoot\dump_commits_since.ps1" -repo Corvinella-Project/space-station-14 -since $since -until $until
 
-$contribs = ($content + $engine + $contentBF) `
+$contribs = ($content + $engine + $contentCP) `
     | Select-Object -ExpandProperty author `
     | Select-Object -ExpandProperty login -Unique `
     | Where-Object { -not $ignore[$_] }`
