@@ -11,7 +11,7 @@ We will always be glad to see you on our project!
 
 ## Links
 
-<a href="https://discord.gg/Ygy4hbCB8x"><img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" /></a>
+<a href="https://discord.gg/nBhKnAGFf8"><img src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white" /></a>
 
 ## Documentation
 
