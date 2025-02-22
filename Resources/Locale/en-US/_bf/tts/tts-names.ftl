@@ -20,6 +20,9 @@ tts-voice-name-maya = Maya
 tts-voice-name-alan = Alan
 tts-voice-name-alex = Alex
 
+tts-voice-name-borg = Borg
+tts-voice-name-pai = pAI
+
 tts-voice-name-announcer = Announcer
 tts-voice-name-jandarma-announcer = Jandarma Announcer
 tts-voice-name-announcer-security-announcer = Security System Announcer
