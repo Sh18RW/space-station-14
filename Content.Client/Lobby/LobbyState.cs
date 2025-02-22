@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.Client.Audio;
+using Content.Client.Changelog;
 using Content.Client.GameTicking.Managers;
 using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
@@ -26,6 +28,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private readonly ChangelogManager _changelog = default!; // CP-Changelog
 
         private ClientGameTicker _gameTicker = default!;
         private ContentAudioSystem _contentAudioSystem = default!;
@@ -33,7 +36,7 @@ namespace Content.Client.Lobby
         protected override Type? LinkedScreenType { get; } = typeof(LobbyGui);
         public LobbyGui? Lobby;
 
-        protected override void Startup()
+        protected override async void Startup()
         {
             if (_userInterfaceManager.ActiveScreen == null)
             {
@@ -61,6 +64,11 @@ namespace Content.Client.Lobby
 
             var width = _cfg.GetCVar(CCVars.ServerLobbyRightPanelWidth);
             Lobby.RightSide.SetWidth = width;
+
+            // CP-Changelog-Start
+            var changelogs = await _changelog.LoadChangelog([ "CorvinellaProject" ]);
+            Lobby.LobbyChangelogBody.PopulateChangelog(changelogs.First());
+            // CP-Changelog-End
 
             UpdateLobbyUi();
 

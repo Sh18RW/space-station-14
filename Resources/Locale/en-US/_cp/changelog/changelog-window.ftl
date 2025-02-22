@@ -1,1 +1,1 @@
-changelog-tab-title-corvinella-project = Corvinella Project
+changelog-tab-title-CorvinellaProject = Corvinella Project

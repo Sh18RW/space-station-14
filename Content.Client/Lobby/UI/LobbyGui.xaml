@@ -8,7 +8,8 @@
     xmlns:style="clr-namespace:Content.Client.Stylesheets"
     xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
     xmlns:info="clr-namespace:Content.Client.Info"
-    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets">
+    xmlns:widgets="clr-namespace:Content.Client.UserInterface.Systems.Chat.Widgets"
+    xmlns:changelog="clr-namespace:Content.Client.Changelog">
     <!-- Background -->
     <TextureRect Access="Public" VerticalExpand="True" HorizontalExpand="True" Name="Background"
                  Stretch="KeepAspectCovered" />
@@ -50,11 +51,40 @@
                     <!-- Vertical Padding-->
                     <Control VerticalExpand="True" />
                     <!-- Left Bot Panel -->
-                    <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                        <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
-                        <PanelContainer StyleClasses="AngleRect">
-                            <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                    <!-- Lobby Changelog -->
+                    <BoxContainer VerticalAlignment="Bottom" VerticalExpand="True" Orientation="Vertical">
+                        <PanelContainer Name="LeftBottomPanel" StyleClasses="AngleRect" VerticalExpand="True"
+                                        MinWidth="480"
+                                        HorizontalExpand="True" HorizontalAlignment="Left"
+                                        MaxWidth="580">
+                            <BoxContainer Orientation="Vertical" HorizontalAlignment="Stretch"
+                                          VerticalAlignment="Bottom"
+                                          HorizontalExpand="True">
+                                <BoxContainer Orientation="Vertical" VerticalExpand="True"
+                                              HorizontalAlignment="Stretch" MaxWidth="580" VerticalAlignment="Top">
+                                    <controls:StripeBack VerticalAlignment="Top">
+                                        <BoxContainer Orientation="Horizontal" Name="ChangelogHeader"
+                                                      MouseFilter="Pass">
+                                            <Label HorizontalExpand="True" Text="{Loc 'changelog-tab-title-CorvinellaProject'}"
+                                                   VAlign="Center" StyleClasses="LabelHeading" Align="Center" />
+                                        </BoxContainer>
+                                    </controls:StripeBack>
+                                    <BoxContainer Orientation="Vertical" Name="ChangelogContent"
+                                                  HorizontalAlignment="Stretch" VerticalAlignment="Top" MinHeight="200">
+                                        <changelog:ChangelogTab Name="LobbyChangelogBody" RectClipContent="True"
+                                                                Access="Public" VerticalExpand="True" />
+                                    </BoxContainer>
+                                </BoxContainer>
+                            </BoxContainer>
                         </PanelContainer>
+                        <!-- Vertical Padding-->
+                        <controls:HSpacer Spacing="5" />
+                        <BoxContainer Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                            <info:DevInfoBanner Name="DevInfoBanner" VerticalExpand="false" Margin="3 3 3 3" />
+                            <PanelContainer StyleClasses="AngleRect">
+                                <RichTextLabel Name="LobbySong" Access="Public" HorizontalAlignment="Center" />
+                            </PanelContainer>
+                        </BoxContainer>
                     </BoxContainer>
                 </Control>
                 <!-- Character setup state -->
@@ -62,7 +92,8 @@
                 <Control Access="Public" Visible="False" Name="CharacterSetupState" VerticalExpand="True" />
             </BoxContainer>
             <!-- Right Panel -->
-            <PanelContainer Name="RightSide" Access="Public" StyleClasses="AngleRect" HorizontalAlignment="Right" VerticalExpand="True"
+            <PanelContainer Name="RightSide" Access="Public" StyleClasses="AngleRect" HorizontalAlignment="Right"
+                            VerticalExpand="True"
                             VerticalAlignment="Stretch">
                 <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <!-- Top row -->
