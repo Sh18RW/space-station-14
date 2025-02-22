@@ -1,6 +1,6 @@
 ### ChangelogWindow.xaml.cs
 
-changelog-window-title = Wizards Federation
+changelog-window-title = Changelog
 changelog-author-changed = [color=#EEE]{ $author }[/color] changed:
 changelog-today = Today
 changelog-yesterday = Yesterday
@@ -10,5 +10,5 @@ changelog-version-tag = version v{ $version }
 changelog-button = Changelog
 changelog-button-new-entries = Changelog (new!)
 
-changelog-tab-title-Changelog = Changelog
+changelog-tab-title-Changelog = Wizards Federation
 changelog-tab-title-Admin = Admin
