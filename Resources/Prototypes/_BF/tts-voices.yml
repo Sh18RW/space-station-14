@@ -114,6 +114,22 @@
 
 # Hidden
 - type: ttsVoice
+  id: Borg
+  name: tts-voice-name-borg
+  roundStart: false
+  sex: Unsexed
+  speaker: en_1
+  effects:
+  - Robotic
+
+- type: ttsVoice
+  id: PAI
+  name: tts-voice-name-pai
+  roundStart: false
+  sex: Unsexed
+  speaker: en_19
+
+- type: ttsVoice
   id: Announcer
   name: tts-voice-name-announcer
   roundStart: false
