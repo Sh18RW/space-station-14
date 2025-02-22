@@ -23,7 +23,7 @@ Space Station 14 - это культурный наследник игры Space
 ## Лицензия
 Содержание проекта до коммита [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) лицензируется под [MIT](https://github.com/Corvinella-Project/space-station-14/blob/master/LICENSE-MIT.TXT), если не было указано иное.
 
-Содержание проекта после коммита [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Breaking-Facility/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) лицензируется под [AGPL-3.0](https://github.com/Corvinella-Project/space-station-14/blob/master/LICENSE-AGPLv3.TXT), если не было указано иное.
+Содержание проекта после коммита [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) лицензируется под [AGPL-3.0](https://github.com/Corvinella-Project/space-station-14/blob/master/LICENSE-AGPLv3.TXT), если не было указано иное.
 
 Часть ассетов распространяется под лицензией [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное.
 

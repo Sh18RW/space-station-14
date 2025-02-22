@@ -23,9 +23,9 @@ We will also always be glad to see you among the creators of a great build! It's
 
 ## Licensing
 
-The content of the project before the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) licensed under [MIT](https://github.com/Breaking-Facility/space-station-14/blob/master/LICENSE-MIT.TXT), unless otherwise specified.
+The content of the project before the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) licensed under [MIT](https://github.com/Corvinella-Project/space-station-14/blob/master/LICENSE-MIT.TXT), unless otherwise specified.
 
-The content of the project after the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) is licensed under [AGPL-3.0](https://github.com/Breaking-Facility/space-station-14/blob/master/LICENSE-AGPLv3.TXT) unless otherwise specified.
+The content of the project after the commit [d017b1c78e418fab03574c21d761fbd9a522f8ea](https://github.com/Corvinella-Project/space-station-14/commit/d017b1c78e418fab03574c21d761fbd9a522f8ea) is licensed under [AGPL-3.0](https://github.com/Corvinella-Project/space-station-14/blob/master/LICENSE-AGPLv3.TXT) unless otherwise specified.
 
 Some of the assets are distributed under the [CC-BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/), unless otherwise specified.
 
