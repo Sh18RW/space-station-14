@@ -13,7 +13,7 @@ $scriptDir = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 $engine = & "$PSScriptRoot\dump_commits_since.ps1" -repo space-wizards/RobustToolbox -since $since -until $until
 $content = & "$PSScriptRoot\dump_commits_since.ps1" -repo space-wizards/space-station-14 -since $since -until $until
-$contentBF = & "$PSScriptRoot\dump_commits_since.ps1" -repo Breaking-Facility/space-station-14 -since $since -until $until
+$contentBF = & "$PSScriptRoot\dump_commits_since.ps1" -repo Corvinella-Project/space-station-14 -since $since -until $until
 
 $contribs = ($content + $engine + $contentBF) `
     | Select-Object -ExpandProperty author `
