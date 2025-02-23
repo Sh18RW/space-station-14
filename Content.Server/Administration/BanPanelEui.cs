@@ -1,11 +1,9 @@
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.EUI;
-using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Eui;
@@ -21,8 +19,6 @@ public sealed class BanPanelEui : BaseEui
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    private readonly GameTicker _ticker = default!;
 
     private readonly ISawmill _sawmill;
 
@@ -36,8 +32,6 @@ public sealed class BanPanelEui : BaseEui
     public BanPanelEui()
     {
         IoCManager.InjectDependencies(this);
-
-        _ticker = _entityManager.System<GameTicker>();
 
         _sawmill = _log.GetSawmill("admin.bans_eui");
     }
@@ -127,17 +121,9 @@ public sealed class BanPanelEui : BaseEui
             var now = DateTimeOffset.UtcNow;
             foreach (var role in roles)
             {
-                _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now, false);
+                _banManager.CreateRoleBan(targetUid, target, Player.UserId, addressRange, targetHWid, role, minutes, severity, reason, now);
             }
 
-
-
-            _ = _banManager.SendJobBansRoles(target ?? "unknown",
-                Player.Name,
-                roles.ToArray(),
-                reason,
-                DateTimeOffset.Now + TimeSpan.FromMinutes(minutes),
-                _ticker.RoundId);
             Close();
             return;
         }

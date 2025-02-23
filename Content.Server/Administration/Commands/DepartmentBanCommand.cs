@@ -1,5 +1,4 @@
 using Content.Server.Administration.Managers;
-using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
@@ -17,7 +16,6 @@ public sealed class DepartmentBanCommand : IConsoleCommand
     [Dependency] private readonly IPlayerLocator _locator = default!;
     [Dependency] private readonly IBanManager _banManager = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     public string Command => "departmentban";
     public string Description => Loc.GetString("cmd-departmentban-desc");
@@ -99,23 +97,8 @@ public sealed class DepartmentBanCommand : IConsoleCommand
         var now = DateTimeOffset.UtcNow;
         foreach (var job in departmentProto.Roles)
         {
-            _banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now, false);
+            _banManager.CreateRoleBan(targetUid, located.Username, shell.Player?.UserId, null, targetHWid, job, minutes, severity, reason, now);
         }
-
-
-        var ticker = _entityManager.System<GameTicker>();
-        var administrator = "unknown";
-        if (shell.Player != null)
-        {
-            administrator = shell.Player.Name;
-        }
-
-        _ = _banManager.SendJobBanDepartment(target,
-            administrator,
-            Loc.GetString(departmentProto.Name),
-            reason,
-            DateTimeOffset.Now + TimeSpan.FromMinutes(minutes),
-            ticker.RoundId);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

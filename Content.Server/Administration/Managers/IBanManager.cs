@@ -37,8 +37,7 @@ public interface IBanManager
     /// <param name="reason">Reason for the ban</param>
     /// <param name="minutes">Number of minutes to ban for. 0 and null mean permanent</param>
     /// <param name="timeOfBan">Time when the ban was applied, used for grouping role bans</param>
-    /// <param name="sendDiscordNotification">Sends discord ban notification.</param>
-    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan, bool sendDiscordNotification=true);
+    public void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan);
 
     /// <summary>
     /// Pardons a role ban for the specified target, username or GUID
@@ -53,18 +52,4 @@ public interface IBanManager
     /// </summary>
     /// <param name="pSession">Player's session</param>
     public void SendRoleBans(ICommonSession pSession);
-
-    public Task SendJobBansRoles(string bannedUser,
-        string administrator,
-        string[] roles,
-        string reason,
-        DateTimeOffset? duration,
-        int? round);
-
-    public Task SendJobBanDepartment(string bannedUser,
-        string administrator,
-        string departments,
-        string reason,
-        DateTimeOffset? duration,
-        int? round);
 }
