@@ -66,7 +66,7 @@ namespace Content.Client.Lobby
             Lobby.RightSide.SetWidth = width;
 
             // CP-Changelog-Start
-            var changelogs = await _changelog.LoadChangelog([ "CorvinellaProject" ]);
+            var changelogs = _changelog.LoadChangelog([ "CorvinellaProject" ]);
             Lobby.LobbyChangelogBody.PopulateChangelog(changelogs.First());
             // CP-Changelog-End
 
