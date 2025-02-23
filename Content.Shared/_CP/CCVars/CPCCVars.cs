@@ -1,12 +1,12 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared._BF.CCVars;
+namespace Content.Shared._CP.CCVars;
 
 /// <summary>
-/// BF CCVars.
+/// CP CCVars.
 /// </summary>
 [CVarDefs]
 // ReSharper disable once InconsistentNaming
-public sealed partial class BFCCVars
+public sealed partial class CPCCVars
 {
 }

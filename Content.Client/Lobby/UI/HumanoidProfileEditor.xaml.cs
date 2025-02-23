@@ -9,7 +9,7 @@ using Content.Client.Players.PlayTimeTracking;
 using Content.Client.Sprite;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Systems.Guidebook;
-using Content.Shared._BF.CCVars;
+using Content.Shared._CP.CCVars;
 using Content.Shared.CCVar;
 using Content.Shared.Clothing;
 using Content.Shared.Corvax.CCCVars;
@@ -212,17 +212,17 @@ namespace Content.Client.Lobby.UI
 
             #endregion Gender
 
-            // BF-TTS-start
+            // CP-TTS-start
             #region Voice
 
-            if (configurationManager.GetCVar(BFCCVars.TTSEnabled))
+            if (configurationManager.GetCVar(CPCCVars.TTSEnabled))
             {
                 TTSContainer.Visible = true;
                 InitializeVoice();
             }
 
             #endregion
-            // BF-TTS-end.
+            // CP-TTS-end.
 
             RefreshSpecies();
 
@@ -767,7 +767,7 @@ namespace Content.Client.Lobby.UI
             UpdateEyePickers();
             UpdateSaveButton();
             UpdateMarkings();
-            UpdateTTSVoicesControls(); // BF-TTS
+            UpdateTTSVoicesControls(); // CP-TTS
             UpdateHairPickers();
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
@@ -1193,7 +1193,7 @@ namespace Content.Client.Lobby.UI
             }
 
             UpdateGenderControls();
-            UpdateTTSVoicesControls(); // BF-TTS
+            UpdateTTSVoicesControls(); // CP-TTS
             Markings.SetSex(newSex);
             ReloadPreview();
         }
@@ -1204,13 +1204,13 @@ namespace Content.Client.Lobby.UI
             ReloadPreview();
         }
 
-        // BF-TTS-start
+        // CP-TTS-start
         private void SetVoice(string newVoice)
         {
             Profile = Profile?.WithVoice(newVoice);
             IsDirty = true;
         }
-        // BF-TTS-end.
+        // CP-TTS-end.
 
         private void SetSpecies(string newSpecies)
         {

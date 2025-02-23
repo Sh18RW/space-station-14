@@ -1,4 +1,4 @@
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 
@@ -73,12 +73,12 @@ public sealed partial class AlertLevelDetail
     /// </summary>
     [DataField("shuttleTime")] public TimeSpan ShuttleTime { get; private set; } = TimeSpan.FromMinutes(5);
 
-    // BF-start
+    // CP-start
     [DataField]
     public string? Sender { get; private set; }  = null;
 
     [DataField("announcerVoice")]
     public ProtoId<TTSVoicePrototype> AnnouncerVoice { get; private set; } = "Announcer";
-    // BF-end.
+    // CP-end.
 }
 

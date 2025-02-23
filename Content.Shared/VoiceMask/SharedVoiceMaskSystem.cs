@@ -5,43 +5,28 @@ namespace Content.Shared.VoiceMask;
 [Serializable, NetSerializable]
 public enum VoiceMaskUIKey : byte
 {
-    Key
+    Key,
 }
 
 [Serializable, NetSerializable]
-public sealed class VoiceMaskBuiState : BoundUserInterfaceState
+public sealed class VoiceMaskBuiState(string name, string voice, string? verb) : BoundUserInterfaceState
 {
-    public readonly string Name;
-    public readonly string? Verb;
-
-    public VoiceMaskBuiState(string name, string? verb)
-    {
-        Name = name;
-        Verb = verb;
-    }
+    public readonly string Name = name;
+    public readonly string? Verb = verb;
+    public readonly string Voice = voice; // CP-TTS
 }
 
 [Serializable, NetSerializable]
-public sealed class VoiceMaskChangeNameMessage : BoundUserInterfaceMessage
+public sealed class VoiceMaskChangeNameMessage(string name) : BoundUserInterfaceMessage
 {
-    public readonly string Name;
-
-    public VoiceMaskChangeNameMessage(string name)
-    {
-        Name = name;
-    }
+    public readonly string Name = name;
 }
 
 /// <summary>
 /// Change the speech verb prototype to override, or null to use the user's verb.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class VoiceMaskChangeVerbMessage : BoundUserInterfaceMessage
+public sealed class VoiceMaskChangeVerbMessage(string? verb) : BoundUserInterfaceMessage
 {
-    public readonly string? Verb;
-
-    public VoiceMaskChangeVerbMessage(string? verb)
-    {
-        Verb = verb;
-    }
+    public readonly string? Verb = verb;
 }

@@ -1,5 +1,5 @@
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Events;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Hypospray.Events;
@@ -68,9 +68,9 @@ public partial class InventorySystem
 
         SubscribeLocalEvent<InventoryComponent, GetVerbsEvent<EquipmentVerb>>(OnGetEquipmentVerbs);
 
-        // BF-start
+        // CP-start
         SubscribeLocalEvent<InventoryComponent, TransformSpeakerVoiceEvent>(RelayTransformSpeakerVoiceEvent);
-        // BF-end.
+        // CP-end.
     }
 
     protected void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
@@ -126,12 +126,12 @@ public partial class InventorySystem
     }
 
 
-    // BF-start
+    // CP-start
     private void RelayTransformSpeakerVoiceEvent(Entity<InventoryComponent> ent, ref TransformSpeakerVoiceEvent args)
     {
         RelayEvent((ent.Owner, ent.Comp), args);
     }
-    // BF-end.
+    // CP-end.
 }
 
 /// <summary>

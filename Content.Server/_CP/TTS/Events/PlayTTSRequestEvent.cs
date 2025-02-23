@@ -1,8 +1,8 @@
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._CP.TTS.Events;
 
 // ReSharper disable once InconsistentNaming
 public sealed class PlayTTSRequestEvent(string message, ProtoId<TTSVoicePrototype> voice, Filter receiversFilter, TTSEffects effects = TTSEffects.Default, EntityUid? source = null, string? cache = null) : EntityEventArgs

@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
@@ -133,7 +133,7 @@ namespace Content.Shared.Preferences
             string name,
             string flavortext,
             string species,
-            string voice, // BF-TTS
+            string voice, // CP-TTS
             int age,
             Sex sex,
             Gender gender,
@@ -148,7 +148,7 @@ namespace Content.Shared.Preferences
             Name = name;
             FlavorText = flavortext;
             Species = species;
-            Voice = voice; // BF-TTS
+            Voice = voice; // CP-TTS
             Age = age;
             Sex = sex;
             Gender = gender;
@@ -244,12 +244,12 @@ namespace Content.Shared.Preferences
                 age = random.Next(speciesPrototype.MinAge, speciesPrototype.OldAge); // people don't look and keep making 119 year old characters with zero rp, cap it at middle aged
             }
 
-            // BF-TTS-start
+            // CP-TTS-start
             var voiceId = random.Pick(prototypeManager
                 .EnumeratePrototypes<TTSVoicePrototype>()
                 .Where(o => CanHaveVoice(o, sex)).ToArray()
             ).ID;
-            // BF-TTS-end.
+            // CP-TTS-end.
 
             var gender = Gender.Epicene;
 
@@ -272,7 +272,7 @@ namespace Content.Shared.Preferences
                 Age = age,
                 Gender = gender,
                 Species = species,
-                Voice = voiceId, // BF-TTS
+                Voice = voiceId, // CP-TTS
                 Appearance = HumanoidCharacterAppearance.Random(species, sex),
             };
         }
@@ -307,12 +307,12 @@ namespace Content.Shared.Preferences
             return new(this) { Species = species };
         }
 
-        // BF-TTS-start
+        // CP-TTS-start
         public HumanoidCharacterProfile WithVoice(string voice)
         {
             return new(this) { Voice = voice };
         }
-        // BF-TTS-end.
+        // CP-TTS-end.
 
         public HumanoidCharacterProfile WithCharacterAppearance(HumanoidCharacterAppearance appearance)
         {
@@ -638,11 +638,11 @@ namespace Content.Shared.Preferences
             _traitPreferences.Clear();
             _traitPreferences.UnionWith(GetValidTraits(traits, prototypeManager));
 
-            // BF-TTS-start
+            // CP-TTS-start
             prototypeManager.TryIndex<TTSVoicePrototype>(Voice, out var voice);
             if (voice is null || !CanHaveVoice(voice, Sex))
                 Voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
-            // BF-TTS-end.
+            // CP-TTS-end.
 
             // Checks prototypes exist for all loadouts and dump / set to default if not.
             var toRemove = new ValueList<string>();
@@ -703,12 +703,12 @@ namespace Content.Shared.Preferences
             return result;
         }
 
-        // BF-TTS-start
+        // CP-TTS-start
         public static bool CanHaveVoice(TTSVoicePrototype voice, Sex sex)
         {
             return voice.RoundStart && sex == Sex.Unsexed || (voice.Sex == sex || voice.Sex == Sex.Unsexed);
         }
-        // BF-TTS-end.
+        // CP-TTS-end.
 
         public ICharacterProfile Validated(ICommonSession session, IDependencyCollection collection)
         {

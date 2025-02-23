@@ -1,4 +1,4 @@
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.Eui;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;

@@ -1,4 +1,4 @@
-using Content.Server._BF.TTS;
+using Content.Server._CP.TTS;
 using Content.Server.Acz;
 using Content.Server.Administration;
 using Content.Server.Administration.Logs;
@@ -118,9 +118,9 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<JobWhitelistManager>().Initialize();
                 IoCManager.Resolve<PlayerRateLimitManager>().Initialize();
 
-                // BF-start
+                // CP-start
                 IoCManager.Resolve<TTSManager>().Initialize();
-                // BF-end.
+                // CP-end.
             }
         }
 

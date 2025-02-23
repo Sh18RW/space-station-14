@@ -1,6 +1,6 @@
 using Content.Shared.Inventory;
 
-namespace Content.Shared._BF.TTS.Events;
+namespace Content.Shared._CP.TTS.Events;
 
 public sealed class TransformSpeakerVoiceEvent(string? voiceId, TTSEffects effects) : EntityEventArgs, IInventoryRelayEvent
 {

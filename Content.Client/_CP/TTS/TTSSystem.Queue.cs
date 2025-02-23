@@ -1,10 +1,10 @@
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Components;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Components;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 
-namespace Content.Client._BF.TTS;
+namespace Content.Client._CP.TTS;
 
 // ReSharper disable once InconsistentNaming
 public partial class TTSSystem

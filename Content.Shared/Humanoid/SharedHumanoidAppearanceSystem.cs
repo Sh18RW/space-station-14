@@ -1,7 +1,7 @@
 using System.IO;
 using System.Linq;
 using Content.Corvax.Interfaces.Shared;
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.CCVar;
 using Content.Shared.Decals;
 using Content.Shared.Examine;
@@ -19,7 +19,7 @@ using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
-using Content.Shared._BF.TTS.Components;
+using Content.Shared._CP.TTS.Components;
 
 namespace Content.Shared.Humanoid;
 
@@ -42,7 +42,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
 
     [ValidatePrototypeId<SpeciesPrototype>]
     public const string DefaultSpecies = "Human";
-    // BF-TTS-start
+    // CP-TTS-start
     public const string DefaultVoice = "Jenya";
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
@@ -50,7 +50,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         {Sex.Female, "Olivia"},
         {Sex.Unsexed, "Jenya"},
     };
-    // BF-TTS-end.
+    // CP-TTS-end.
 
     public override void Initialize()
     {
@@ -390,7 +390,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         EnsureDefaultMarkings(uid, humanoid);
-        SetTTSVoice(uid, profile.Voice, humanoid); // BF-TTS
+        SetTTSVoice(uid, profile.Voice, humanoid); // CP-TTS
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(uid, out var grammar))
@@ -470,7 +470,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             Dirty(uid, humanoid);
     }
 
-    // BF-TTS-start
+    // CP-TTS-start
     // ReSharper disable once InconsistentNaming
     public void SetTTSVoice(EntityUid uid, string voiceId, HumanoidAppearanceComponent humanoid)
     {
@@ -480,7 +480,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         humanoid.Voice = voiceId;
         comp.VoicePrototypeId = voiceId;
     }
-    // BF-TTS-end.
+    // CP-TTS-end.
 
     /// <summary>
     /// Takes ID of the species prototype, returns UI-friendly name of the species.

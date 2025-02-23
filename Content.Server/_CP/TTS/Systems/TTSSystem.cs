@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Content.Server._CP.TTS.Events;
 using Content.Server.Chat.Systems;
-using Content.Shared._BF.CCVars;
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Components;
-using Content.Shared._BF.TTS.Events;
+using Content.Shared._CP.CCVars;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Components;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Players.RateLimiting;
@@ -12,7 +13,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server._BF.TTS.Systems;
+namespace Content.Server._CP.TTS.Systems;
 
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem : EntitySystem
@@ -55,8 +56,8 @@ public sealed partial class TTSSystem : EntitySystem
 
     public override void Initialize()
     {
-        _cfg.OnValueChanged(BFCCVars.TTSEnabled, v => _isEnabled = v, true);
-        _cfg.OnValueChanged(BFCCVars.TTSMessageMaxLength, v => _maxMessageLength = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSEnabled, v => _isEnabled = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSMessageMaxLength, v => _maxMessageLength = v, true);
 
         SubscribeLocalEvent<TransformSpeechEvent>(OnTransformSpeech);
         SubscribeLocalEvent<TTSComponent, EntitySpokeEvent>(OnEntitySpoke);
@@ -240,11 +241,11 @@ public sealed partial class TTSSystem : EntitySystem
             textSanitized += ".";
         }
 
-        var ssmlTraits = TTSSystem.SoundTraits.RateFast;
+        var ssmlTraits = _CP.TTS.Systems.TTSSystem.SoundTraits.RateFast;
 
         if (effects.HasFlag(TTSEffects.Whisper))
         {
-            ssmlTraits = TTSSystem.SoundTraits.PitchVeryLow;
+            ssmlTraits = _CP.TTS.Systems.TTSSystem.SoundTraits.PitchVeryLow;
         }
 
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);

@@ -1,6 +1,6 @@
-using Content.Server._BF.TTS.Components;
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Systems;
+using Content.Server._CP.TTS.Components;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chat;
@@ -13,6 +13,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Speech;
 using Content.Shared.VoiceMask;
 using Robust.Shared.Prototypes;
+using TransformsSpeakerVoiceComponent = Content.Server._CP.TTS.Components.TransformsSpeakerVoiceComponent;
 
 namespace Content.Server.VoiceMask;
 
@@ -33,9 +34,9 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         SubscribeLocalEvent<VoiceMaskComponent, ClothingGotEquippedEvent>(OnEquip);
         SubscribeLocalEvent<VoiceMaskSetNameEvent>(OpenUI);
 
-        // BF-TTS-start
+        // CP-TTS-start
         SubscribeLocalEvent<VoiceMaskComponent, VoiceMaskChangeVoiceMessage>(OnChangeVoice);
-        // BF-TTS-end.
+        // CP-TTS-end.
     }
 
     private void OnTransformSpeakerName(Entity<VoiceMaskComponent> entity, ref InventoryRelayedEvent<TransformSpeakerNameEvent> args)

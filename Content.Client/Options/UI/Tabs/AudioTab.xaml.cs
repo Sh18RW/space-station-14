@@ -1,5 +1,5 @@
 using Content.Client.Audio;
-using Content.Shared._BF.CCVars;
+using Content.Shared._CP.CCVars;
 using Content.Shared.CCVar;
 using Content.Shared.Corvax.CCCVars;
 using Robust.Client.Audio;
@@ -28,12 +28,12 @@ public sealed partial class AudioTab : Control
             scale: ContentAudioSystem.MasterVolumeMultiplier);
         masterVolume.ImmediateValueChanged += OnMasterVolumeSliderChanged;
 
-        // BF-TTS-start
+        // CP-TTS-start
         Control.AddOptionPercentSlider(
-            BFCCVars.TTSVolume,
+            CPCCVars.TTSVolume,
             SliderVolumeTTS,
             scale: ContentAudioSystem.TTSMultiplier);
-        // BF-TTS-end.
+        // CP-TTS-end.
 
         Control.AddOptionPercentSlider(
             CVars.MidiVolume,
@@ -66,9 +66,9 @@ public sealed partial class AudioTab : Control
             _cfg.GetCVar(CCVars.MinMaxAmbientSourcesConfigured),
             _cfg.GetCVar(CCVars.MaxMaxAmbientSourcesConfigured));
 
-        // BF-TTS-start
-        Control.AddOptionCheckBox(BFCCVars.TTSClientEnabled, TTSEnabledCheckBox);
-        // BF-TTS-end.
+        // CP-TTS-start
+        Control.AddOptionCheckBox(CPCCVars.TTSClientEnabled, TTSEnabledCheckBox);
+        // CP-TTS-end.
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);

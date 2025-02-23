@@ -1,10 +1,10 @@
 ﻿using Content.Server.Chat.Managers;
 using Content.Server.Players.RateLimiting;
-using Content.Shared._BF.CCVars;
+using Content.Shared._CP.CCVars;
 using Content.Shared.Players.RateLimiting;
 using Robust.Shared.Player;
 
-namespace Content.Server._BF.TTS.Systems;
+namespace Content.Server._CP.TTS.Systems;
 // ReSharper disable once InconsistentNaming
 public sealed partial class TTSSystem
 {
@@ -17,8 +17,8 @@ public sealed partial class TTSSystem
     {
         _rateLimitManager.Register(RateLimitKey,
             new RateLimitRegistration(
-                BFCCVars.TTSRateLimitPeriod,
-                BFCCVars.TTSRateLimitCount,
+                CPCCVars.TTSRateLimitPeriod,
+                CPCCVars.TTSRateLimitCount,
                 RateLimitPlayerLimited)
             );
     }
