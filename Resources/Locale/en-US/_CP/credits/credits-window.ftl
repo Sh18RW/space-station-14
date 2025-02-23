@@ -1,1 +1,1 @@
-credits-window-bf-contributors-section-title = Breaking Facility build
+credits-window-bf-contributors-section-title = Corvinella Project build
