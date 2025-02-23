@@ -1,7 +1,8 @@
 ﻿using System.Linq;
-using Content.Client._BF.TTS;
-using Content.Shared._BF.TTS;
+using Content.Client._CP.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.Preferences;
+using TTSSystem = Content.Client._CP.TTS.TTSSystem;
 
 namespace Content.Client.Lobby.UI;
 

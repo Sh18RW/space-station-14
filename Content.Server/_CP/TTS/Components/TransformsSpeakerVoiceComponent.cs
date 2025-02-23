@@ -1,8 +1,7 @@
-using Content.Shared._BF.TTS;
-using Content.Shared.Humanoid;
+using Content.Shared._CP.TTS;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server._BF.TTS.Components;
+namespace Content.Server._CP.TTS.Components;
 
 [RegisterComponent]
 public sealed partial class TransformsSpeakerVoiceComponent : Component

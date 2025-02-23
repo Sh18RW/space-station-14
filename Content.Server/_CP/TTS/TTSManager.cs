@@ -6,12 +6,12 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Shared._BF.CCVars;
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.CCVars;
+using Content.Shared._CP.TTS;
 using Prometheus;
 using Robust.Shared.Configuration;
 
-namespace Content.Server._BF.TTS;
+namespace Content.Server._CP.TTS;
 // ReSharper disable once InconsistentNaming
 public sealed class TTSManager
 {
@@ -50,10 +50,10 @@ public sealed class TTSManager
     {
         _sawmill = Logger.GetSawmill("TTS");
 
-        _cfg.OnValueChanged(BFCCVars.TTSApiUrl, v => _apiUrl = v, true);
-        _cfg.OnValueChanged(BFCCVars.TTSApiToken, v => _apiToken = v, true);
-        _cfg.OnValueChanged(BFCCVars.TTSMaxCacheCount, v => _maxCachedCount = v, true);
-        _cfg.OnValueChanged(BFCCVars.TTSTimeout, v => _timeout = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSApiUrl, v => _apiUrl = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSApiToken, v => _apiToken = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSMaxCacheCount, v => _maxCachedCount = v, true);
+        _cfg.OnValueChanged(CPCCVars.TTSTimeout, v => _timeout = v, true);
     }
 
     public bool TryGetAudio(string cacheKey, out byte[]? audio)

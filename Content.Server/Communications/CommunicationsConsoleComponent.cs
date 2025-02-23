@@ -1,6 +1,6 @@
 using Content.Server.Chat.Systems;
 using Content.Server.UserInterface;
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.Communications;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

@@ -1,4 +1,4 @@
-using Content.Shared._BF.TTS.Systems;
+using Content.Shared._CP.TTS.Systems;
 using Content.Shared.VoiceMask;
 using Robust.Client.UserInterface;
 using Robust.Shared.Prototypes;
@@ -22,7 +22,7 @@ public sealed class VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : B
 
         _window.OnNameChange += OnNameSelected;
         _window.OnVerbChange += verb => SendMessage(new VoiceMaskChangeVerbMessage(verb));
-        _window.OnVoiceChange += voice => SendMessage(new VoiceMaskChangeVoiceMessage(voice)); // BF-TTS
+        _window.OnVoiceChange += voice => SendMessage(new VoiceMaskChangeVoiceMessage(voice)); // CP-TTS
     }
 
     private void OnNameSelected(string name)
@@ -37,7 +37,7 @@ public sealed class VoiceMaskBoundUserInterface(EntityUid owner, Enum uiKey) : B
             return;
         }
 
-        _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // BF-TTS
+        _window.UpdateState(cast.Name, cast.Voice, cast.Verb); // CP-TTS
     }
 
     protected override void Dispose(bool disposing)

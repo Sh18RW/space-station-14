@@ -1,9 +1,10 @@
-using Content.Server._BF.TTS.Components;
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Events;
+using Content.Server._CP.TTS.Components;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.Inventory;
+using TransformsSpeakerVoiceComponent = Content.Server._CP.TTS.Components.TransformsSpeakerVoiceComponent;
 
-namespace Content.Server._BF.TTS.Systems;
+namespace Content.Server._CP.TTS.Systems;
 
 /// <summary>
 ///

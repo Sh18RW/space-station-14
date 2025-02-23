@@ -1,17 +1,16 @@
-﻿using Content.Shared._BF.CCVars;
-using Content.Shared._BF.TTS;
-using Content.Shared._BF.TTS.Components;
-using Content.Shared._BF.TTS.Events;
+﻿using Content.Shared._CP.CCVars;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Components;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.Chat;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Utility;
 
-namespace Content.Client._BF.TTS;
+namespace Content.Client._CP.TTS;
 
 /// <summary>
 /// Plays TTS audio in world
@@ -46,8 +45,8 @@ public sealed partial class TTSSystem : EntitySystem
         _sawmill = Logger.GetSawmill("tts");
         _res.AddRoot(Prefix, _contentRoot);
 
-        _cfg.OnValueChanged(BFCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
-        _cfg.OnValueChanged(BFCCVars.TTSVolume, OnTTSVolumeChanged, true);
+        _cfg.OnValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
+        _cfg.OnValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged, true);
 
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }
@@ -56,8 +55,8 @@ public sealed partial class TTSSystem : EntitySystem
     {
         base.Shutdown();
 
-        _cfg.UnsubValueChanged(BFCCVars.TTSClientEnabled, OnTTSEnabledChanged);
-        _cfg.UnsubValueChanged(BFCCVars.TTSVolume, OnTTSVolumeChanged);
+        _cfg.UnsubValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged);
+        _cfg.UnsubValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged);
 
         _contentRoot.Dispose();
     }

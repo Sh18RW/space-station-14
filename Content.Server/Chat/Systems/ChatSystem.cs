@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Content.Server._BF.TTS;
+using Content.Server._CP.TTS;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -10,7 +10,7 @@ using Content.Server.Speech.Components;
 using Content.Server.Speech.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
-using Content.Shared._BF.TTS;
+using Content.Shared._CP.TTS;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
@@ -331,7 +331,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
-        SendAnnounceTTS(message, Filter.Broadcast(), announcerVoice); // BF-TTS
+        SendAnnounceTTS(message, Filter.Broadcast(), announcerVoice); // CP-TTS
         if (playSound)
         {
             _audio.PlayGlobal(announcementSound == null ? DefaultAnnouncementSound : _audio.GetSound(announcementSound), Filter.Broadcast(), true, AudioParams.Default.WithVolume(-2f));
@@ -364,7 +364,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
-        SendAnnounceTTS(message, filter, announcerVoice); // BF-TTS
+        SendAnnounceTTS(message, filter, announcerVoice); // CP-TTS
         if (playSound)
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
@@ -407,7 +407,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var filter = _stationSystem.GetInStation(stationDataComp);
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
-        SendAnnounceTTS(message, filter, announcerVoice); // BF-TTS
+        SendAnnounceTTS(message, filter, announcerVoice); // CP-TTS
 
         if (playDefaultSound)
         {

@@ -1,12 +1,12 @@
 using Robust.Shared.Configuration;
 
-namespace Content.Shared._BF.CCVars;
+namespace Content.Shared._CP.CCVars;
 
 /// <summary>
-/// Everything about BF TTS.
+/// Everything about CP TTS.
 /// </summary>
 // ReSharper disable once InconsistentNaming
-public sealed partial class BFCCVars
+public sealed partial class CPCCVars
 {
     #region Server
     /// <summary>

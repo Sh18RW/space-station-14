@@ -155,12 +155,12 @@ namespace Content.Client.Credits
                 ss14ContributorsContainer.AddChild(label);
             }
 
-            // BF Start
-            AddSection(Loc.GetString("credits-window-bf-contributors-section-title"), "BreakingFacility.txt");
-            // BF End
+            // CP Start
+            AddSection(Loc.GetString("credits-window-cp-contributors-section-title"), "BreakingFacility.txt");
+            // CP End
             AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
             AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
-            AddSection(Loc.GetString("credits-window-tts-title"), "TTS.txt"); // BF-TTS
+            AddSection(Loc.GetString("credits-window-tts-title"), "TTS.txt"); // CP-TTS
             AddSection(Loc.GetString("credits-window-original-remake-team-section-title"), "OriginalRemake.txt");
             AddSection(Loc.GetString("credits-window-special-thanks-section-title"), "SpecialThanks.txt", true);
 

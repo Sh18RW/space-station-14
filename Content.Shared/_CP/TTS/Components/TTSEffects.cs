@@ -1,4 +1,4 @@
-namespace Content.Shared._BF.TTS;
+namespace Content.Shared._CP.TTS;
 
 [Flags]
 // ReSharper disable once InconsistentNaming

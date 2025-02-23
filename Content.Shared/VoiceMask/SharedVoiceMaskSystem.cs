@@ -13,7 +13,7 @@ public sealed class VoiceMaskBuiState(string name, string voice, string? verb) :
 {
     public readonly string Name = name;
     public readonly string? Verb = verb;
-    public readonly string Voice = voice; // BF-TTS
+    public readonly string Voice = voice; // CP-TTS
 }
 
 [Serializable, NetSerializable]
