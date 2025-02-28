@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseFlag
+  id: BaseCPFlag
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: _CP/Structures/Wallmounts/flags.rsi
+
+- type: entity
+  parent: BaseCPFlag
+  id: StarWarkFlag
+  name: StarWark company flag
+  description: The great flag of the biggest company in the United Federation.
+  components:
+  - type: Sprite
+    state: sw_flag
+
+- type: entity
+  parent: BaseCPFlag
+  id: UnitedFederationFlag
+  name: the United Federation flag
+  description: It's country's flag. The colours means truth and purity.
+  components:
+  - type: Sprite
+    state: uf_flag

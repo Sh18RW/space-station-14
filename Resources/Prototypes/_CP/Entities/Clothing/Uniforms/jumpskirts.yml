@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOldSovietOfficer
+  name: old officer's uniform
+  description: A memory of the beautiful far away.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/old_soviet_officer.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/old_soviet_officer.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtOldFieldDoctor
+  name: old field doctor's uniform
+  description: At the end of the battle, this uniform became dirty, but the doctor saved many lives.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/old_field_doctor.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/old_field_doctor.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtIrishBartender
+  name: irish skirt
+  description: It smells of Irish beer and a beautiful woman.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/irish_bartender.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/irish_bartender.rsi

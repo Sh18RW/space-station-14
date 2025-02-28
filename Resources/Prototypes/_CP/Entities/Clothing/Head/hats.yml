@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatFieldDoctorBeret
+  name: field doctor beret
+  description: We were saved by the grace of God and the man who wore this beret.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Hats/field_doctor_beret.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Hats/field_doctor_beret.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatOldSovietOfficerCap
+  name: old soviet officer's cap
+  description: I am in charge here!
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Hats/old_soviet_officer_cap.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Hats/old_soviet_officer_cap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatWhiteUshanka
+  name: white ushanka
+  description: Break the glasses! Drink vodka! Tovarish!
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Hats/white_ushanka.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Hats/white_ushanka.rsi

@@ -1,0 +1,27 @@
+- type: entity
+  id: BaseCPBanner
+  parent: BannerBase
+  name: base banner
+  description: It's the concept of a banner, you shouldn't be seeing this.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: _CP/Structures/Decoration/banner.rsi
+
+- type: entity
+  id: BannerStarWark
+  parent: BaseCPBanner
+  name: StarWark banner
+  description: A banner displaying the Star War logo. It is decorated with gold threads and a deep dark colour.
+  components:
+  - type: Sprite
+    state: banner
+
+- type: entity
+  id: BannerUnitedFederation
+  parent: BaseCPBanner
+  name: the United Federation banner
+  description: The great banner of the United Federation. Perhaps we have a reason to love this country...
+  components:
+  - type: Sprite
+    state: uf-banner
