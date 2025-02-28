@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTiePioner
+  name: pioneer's tie
+  description: The trumpet is calling you! Wake up, comrade!
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Neck/Ties/pioneer_tie.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Neck/Ties/pioneer_tie.rsi

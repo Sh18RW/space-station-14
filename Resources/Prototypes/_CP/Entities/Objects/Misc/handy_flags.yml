@@ -1,0 +1,23 @@
+- type: entity
+  parent: BaseItem
+  id: SWHandyFlag
+  name: StarWark handheld flag
+  description: This flag decorated with golden threads.
+  components:
+  - type: Sprite
+    sprite: _CP/Objects/Misc/Handy_Flags/sw_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _CP/Objects/Misc/Handy_Flags/sw_flag.rsi
+
+- type: entity
+  parent: BaseItem
+  id: UFHandyFlag
+  name: the United Federation handheld flag
+  description: Someone is rolling him in the mud, and someone is proudly holding him over his head.
+  components:
+  - type: Sprite
+    sprite: _CP/Objects/Misc/Handy_Flags/uf_flag.rsi
+    state: icon
+  - type: Item
+    sprite: _CP/Objects/Misc/Handy_Flags/uf_flag.rsi
