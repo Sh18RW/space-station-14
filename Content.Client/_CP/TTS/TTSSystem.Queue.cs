@@ -114,6 +114,7 @@ public partial class TTSSystem
         if (args.Component.CurrentState == MobState.Alive)
             return;
 
-        _audio.Stop(uid, component.AudioComponent);
+        _audio.Stop(null, component.AudioComponent);
+        component.Queue.Clear();
     }
 }
