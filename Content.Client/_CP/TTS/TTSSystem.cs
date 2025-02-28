@@ -50,7 +50,7 @@ public sealed partial class TTSSystem : EntitySystem
         _cfg.OnValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
         _cfg.OnValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged, true);
 
-        SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
+        SubscribeLocalEvent<TTSComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }

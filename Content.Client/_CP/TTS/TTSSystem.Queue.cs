@@ -109,14 +109,11 @@ public partial class TTSSystem
         _contentRoot.RemoveFile(data.Path);
     }
 
-    private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
+    private void OnMobStateChanged(EntityUid uid, TTSComponent component, MobStateChangedEvent args)
     {
         if (args.Component.CurrentState == MobState.Alive)
             return;
 
-        if (TryComp<TTSComponent>(uid, out var ttsComponent) && ttsComponent.AudioComponent != null)
-        {
-            _audio.Stop(uid, ttsComponent.AudioComponent);
-        }
+        _audio.Stop(uid, component.AudioComponent);
     }
 }
