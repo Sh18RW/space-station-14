@@ -3,6 +3,8 @@ using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
 using Content.Shared._CP.TTS.Events;
 using Content.Shared.Chat;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio.Systems;
@@ -47,6 +49,8 @@ public sealed partial class TTSSystem : EntitySystem
 
         _cfg.OnValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
         _cfg.OnValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged, true);
+
+        SubscribeLocalEvent<MobStateComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
     }

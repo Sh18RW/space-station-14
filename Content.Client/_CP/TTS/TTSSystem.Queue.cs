@@ -1,5 +1,7 @@
 using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
@@ -65,6 +67,14 @@ public partial class TTSSystem
     // ReSharper disable once InconsistentNaming
     private void PlayTTSAudio(EntityUid source, TTSComponent component, PlayTTSAudioData data)
     {
+        if (TryComp<MobStateComponent>(source, out var mobStateComponent))
+        {
+            if (mobStateComponent.CurrentState != MobState.Alive)
+            {
+                return;
+            }
+        }
+
         var audioResource = new AudioResource();
         audioResource.Load(IoCManager.Instance!, Prefix / data.Path);
 
@@ -73,7 +83,12 @@ public partial class TTSSystem
             .WithMaxDistance(AdjustDistance(data.Effects.HasFlag(TTSEffects.Whisper)));
 
         component.EndTime = _timing.CurTime + audioResource.AudioStream.Length;
-        _audio.PlayEntity(audioResource.AudioStream, source, audioParams);
+        var audioEntry = _audio.PlayEntity(audioResource.AudioStream, source, audioParams);
+
+        if (audioEntry != null)
+        {
+            component.AudioComponent = audioEntry.Value.Component;
+        }
 
         _contentRoot.RemoveFile(data.Path);
     }
@@ -92,5 +107,16 @@ public partial class TTSSystem
         _audio.PlayGlobal(audioResource.AudioStream, audioParams);
 
         _contentRoot.RemoveFile(data.Path);
+    }
+
+    private void OnMobStateChanged(EntityUid uid, MobStateComponent component, MobStateChangedEvent args)
+    {
+        if (args.Component.CurrentState == MobState.Alive)
+            return;
+
+        if (TryComp<TTSComponent>(uid, out var ttsComponent) && ttsComponent.AudioComponent != null)
+        {
+            _audio.Stop(uid, ttsComponent.AudioComponent);
+        }
     }
 }
