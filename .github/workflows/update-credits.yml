@@ -17,10 +17,6 @@ jobs:
         with:
           ref: master
 
-      - name: Get current date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
       - name: Get this week's Contributors
         shell: pwsh
         env:
@@ -38,11 +34,11 @@ jobs:
       # Uncomment this and comment the other line if you do this.
       # https://github.com/stefanzweifel/git-auto-commit-action#push-to-protected-branches
 
-      - name: Commit new credit files
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update Credits
-          commit_author: CorvinellaBot <corvinella-project@yandex.ru>
+#      - name: Commit new credit files
+#        uses: stefanzweifel/git-auto-commit-action@v4
+#        with:
+#          commit_message: Update Credits
+#          commit_author: CorvinellaBot <corvinella-project@yandex.ru>
 
       # This will make a PR
       - name: Set current date as env variable
@@ -55,5 +51,5 @@ jobs:
           title: Update Credits
           body: This is an automated Pull Request. This PR updates the github contributors in the credits section.
           author: CorvinellaBot <corvinella-project@yandex.ru>
-          branch: automated/credits-${{ steps.date.outputs.date }}
+          branch: automated/credits-${{env.NOW}}
           labels: "S: Credits"
