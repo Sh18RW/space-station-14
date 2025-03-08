@@ -56,6 +56,8 @@ function load_contribs([string] $repo)
         }
     }
 
+    $contributors += "Sh18RW"
+
     $uniqueContributors = $contributors | Sort-Object -Unique
 
     return $uniqueContributors
