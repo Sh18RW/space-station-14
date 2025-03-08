@@ -1,4 +1,4 @@
-name: Update Contrib and Patreons in credits
+name: Update Contributors
 
 on:
   workflow_dispatch:
@@ -25,7 +25,7 @@ jobs:
         shell: pwsh
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: Tools/dump_github_contributors.ps1 > Resources/Credits/GitHub.txt
+        run: Tools/dump_github_contributors.ps1 > Resources/Credits/CorvinellaProject.txt
 
       # TODO
       #- name: Get this week's Patreons
