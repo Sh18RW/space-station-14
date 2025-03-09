@@ -36,5 +36,5 @@ public sealed partial class TTSComponent : Component
     public Queue<PlayTTSAudioData> Queue { get; set; } = new();
 
     [DataField]
-    public AudioComponent? AudioComponent { get; set; }
+    public (EntityUid entity, AudioComponent component)? Audio { get; set; }
 }

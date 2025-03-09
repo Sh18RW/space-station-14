@@ -2,8 +2,8 @@ using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Client._CP.TTS;
@@ -75,19 +75,20 @@ public partial class TTSSystem
             }
         }
 
-        var audioResource = new AudioResource();
-        audioResource.Load(IoCManager.Instance!, Prefix / data.Path);
+        var soundPath = new SoundPathSpecifier(Prefix / data.Path);
+        var resolvedAudio = _audio.ResolveSound(soundPath);
 
         var audioParams = AudioParams.Default
             .WithVolume(AdjustVolume(data.Effects.HasFlag(TTSEffects.Whisper)))
             .WithMaxDistance(AdjustDistance(data.Effects.HasFlag(TTSEffects.Whisper)));
 
-        component.EndTime = _timing.CurTime + audioResource.AudioStream.Length;
-        var audioEntry = _audio.PlayEntity(audioResource.AudioStream, source, audioParams);
+        component.EndTime = _timing.CurTime + _audio.GetAudioLength(resolvedAudio);
+        var audioEntry =
+            _audio.PlayEntity(resolvedAudio, Filter.Local(), source, true, audioParams);
 
         if (audioEntry != null)
         {
-            component.AudioComponent = audioEntry.Value.Component;
+            component.Audio = (audioEntry.Value.Entity, audioEntry.Value.Component);
         }
 
         _contentRoot.RemoveFile(data.Path);
@@ -96,15 +97,15 @@ public partial class TTSSystem
     // ReSharper disable once InconsistentNaming
     private void PlayGlobalTTSAudio(PlayTTSAudioData data)
     {
-        var audioResource = new AudioResource();
-        audioResource.Load(IoCManager.Instance!, Prefix / data.Path);
+        var soundPath = new SoundPathSpecifier(Prefix / data.Path);
+        var resolvedAudio = _audio.ResolveSound(soundPath);
 
         var audioParams = AudioParams.Default
             .WithVolume(AdjustVolume(data.Effects.HasFlag(TTSEffects.Whisper)))
             .WithMaxDistance(AdjustDistance(data.Effects.HasFlag(TTSEffects.Whisper)));
 
-        _endTime = _timing.CurTime + audioResource.AudioStream.Length;
-        _audio.PlayGlobal(audioResource.AudioStream, audioParams);
+        _endTime = _timing.CurTime + _audio.GetAudioLength(resolvedAudio);
+        _audio.PlayGlobal(resolvedAudio, Filter.Local(), true, audioParams);
 
         _contentRoot.RemoveFile(data.Path);
     }
@@ -114,7 +115,7 @@ public partial class TTSSystem
         if (args.Component.CurrentState == MobState.Alive)
             return;
 
-        _audio.Stop(null, component.AudioComponent);
+        _audio.Stop(null, component.Audio?.component);
         component.Queue.Clear();
     }
 }
