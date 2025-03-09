@@ -53,6 +53,7 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeLocalEvent<TTSComponent, MobStateChangedEvent>(OnMobStateChanged);
 
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
+        SubscribeNetworkEvent<ClearTTSQueueEvent>(OnClearTTSQueue);
     }
 
     public override void Shutdown()

@@ -1,5 +1,6 @@
 using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Robust.Shared.Audio;
@@ -117,5 +118,30 @@ public partial class TTSSystem
 
         _audio.Stop(null, component.Audio?.component);
         component.Queue.Clear();
+    }
+
+    private void OnClearTTSQueue(ClearTTSQueueEvent ev)
+    {
+        if (ev.Sources.Count != 0)
+        {
+            foreach (var entity in ev.Sources)
+            {
+                if (!TryComp<TTSComponent>(entity, out var component))
+                    continue;
+
+                _audio.Stop(null, component.Audio?.component);
+                component.Queue.Clear();
+            }
+
+            return;
+        }
+
+        var queue = EntityQueryEnumerator<TTSComponent>();
+
+        while (queue.MoveNext(out _, out var component))
+        {
+            _audio.Stop(null, component.Audio?.component);
+            component.Queue.Clear();
+        }
     }
 }
