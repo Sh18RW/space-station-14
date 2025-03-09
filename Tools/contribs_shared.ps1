@@ -18,4 +18,4 @@ $ignore = @{
     "UristMcContributor" = $true # this was an account used to demonstrate how to create a valid PR, and is in actuality Willhelm53, who is already credited.
 }
 
-$add = @("RamZ")
+$add = @("Sh18RW")
