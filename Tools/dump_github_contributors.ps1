@@ -56,7 +56,9 @@ function load_contribs([string] $repo)
         }
     }
 
-    $uniqueContributors = $contributors | Sort-Object -Unique
+    $uniqueContributors = $contributors `
+        | Where-Object { -not $ignore[$_] }`
+        | Sort-Object -Unique
 
     return $uniqueContributors
 }
