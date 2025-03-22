@@ -16,16 +16,16 @@ public sealed class ClearTTSQueueCommand : IConsoleCommand
     public string Help => Loc.GetString("clear-tts-queue-command-help");
     public void Execute(IConsoleShell shell, string argStr, string[] args)
     {
-        var entities = new List<EntityUid>();
+        var entities = new List<NetEntity>();
         foreach (var uidString in args)
         {
-            if (!(NetEntity.TryParse(uidString, out var netEntity) && _entManager.TryGetEntity(netEntity, out var entity)))
+            if (!NetEntity.TryParse(uidString, out var netEntity))
             {
                 shell.WriteError(Loc.GetString("clear-tts-queue-command-entity-not-found", ("ent", uidString)));
                 continue;
             }
 
-            entities.Add(entity.Value);
+            entities.Add(netEntity);
         }
 
         _entManager.System<TTSSystem>().ClearQueue(entities);

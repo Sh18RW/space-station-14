@@ -1,3 +1,4 @@
+using System.Linq;
 using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
 using Content.Shared._CP.TTS.Events;
@@ -13,6 +14,7 @@ namespace Content.Client._CP.TTS;
 public partial class TTSSystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     // TODO: make it with normal station announcement system.
     private readonly Queue<PlayTTSAudioData> _publicAudioQueue = [];
@@ -124,9 +126,9 @@ public partial class TTSSystem
     {
         if (ev.Sources.Count != 0)
         {
-            foreach (var entity in ev.Sources)
+            foreach (var entityUid in ev.Sources.Select(netEntity => _entityManager.GetEntity(netEntity)))
             {
-                if (!TryComp<TTSComponent>(entity, out var component))
+                if (!TryComp<TTSComponent>(entityUid, out var component))
                     continue;
 
                 _audio.Stop(null, component.Audio?.component);

@@ -4,7 +4,7 @@ namespace Content.Shared._CP.TTS.Events;
 
 [Serializable, NetSerializable]
 // ReSharper disable InconsistentNaming
-public sealed class ClearTTSQueueEvent(List<EntityUid> sources) : EntityEventArgs
+public sealed class ClearTTSQueueEvent(List<NetEntity> sources) : EntityEventArgs
 {
-    public readonly List<EntityUid> Sources = sources;
+    public readonly List<NetEntity> Sources = sources;
 }
