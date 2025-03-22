@@ -11,6 +11,7 @@ namespace Content.Server._CP.TTS.Commands;
 public sealed class ClearTTSQueueCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+
     public string Command => "clearttsqueue";
     public string Description => Loc.GetString("clear-tts-queue-command-description");
     public string Help => Loc.GetString("clear-tts-queue-command-help");
@@ -33,7 +34,8 @@ public sealed class ClearTTSQueueCommand : IConsoleCommand
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
-        var entities = _entManager.GetEntities().Select(c => c.ToString());
+        var entities = _entManager.GetEntities()
+            .Select(c => new CompletionOption(c.ToString(), _entManager.EnsureComponent<MetaDataComponent>(c).EntityName));
         return CompletionResult.FromHintOptions(entities, Loc.GetString("clear-tts-queue-command-arg-entityn", ("entity", args.Length)));
     }
 }
