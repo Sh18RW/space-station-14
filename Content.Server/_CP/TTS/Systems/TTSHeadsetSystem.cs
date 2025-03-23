@@ -42,7 +42,7 @@ public sealed class TTSHeadsetSystem : EntitySystem
                     continue;
                 }
 
-                RaiseLocalEvent(new PlayTTSRequestEvent(ev.Message, ev.Voice, Filter.Pvs(receiver), effects, receiver, cache));
+                RaiseLocalEvent(new PlayTTSRequestEvent(ev.Message, ev.Voice, Filter.Pvs(receiver), effects, [receiver], cache));
 
                 continue;
             }

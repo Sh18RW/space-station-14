@@ -1,4 +1,3 @@
-using Content.Server._CP.TTS;
 using Content.Server._CP.TTS.Events;
 using Content.Shared._CP.TTS;
 using Robust.Shared.Player;

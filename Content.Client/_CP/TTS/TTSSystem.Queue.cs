@@ -59,6 +59,7 @@ public partial class TTSSystem
         if (!TryComp<TTSComponent>(source, out var ttsComponent))
         {
             _sawmill.Warning($"Ignore TTS on {source} because it doesn't have TTS component!");
+            _contentRoot.RemoveFile(data.Path);
             return;
         }
         _sawmill.Verbose($"Add to queue TTS audio from {source} entity.");

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server._CP.TTS.Events;
 using Content.Server.Chat.Systems;
 using Content.Shared._CP.CCVars;
@@ -8,6 +9,7 @@ using Content.Shared._CP.TTS.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Players.RateLimiting;
+using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
@@ -24,6 +26,7 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private readonly List<string> _sampleText =
     [
@@ -147,7 +150,7 @@ public sealed partial class TTSSystem : EntitySystem
         HandleSay(uid, args.Message, protoVoice, effects);
     }
 
-    private async void OnPlayTTSRequest(PlayTTSRequestEvent ev)
+    public async void OnPlayTTSRequest(PlayTTSRequestEvent ev)
     {
         if (!_isEnabled)
         {
@@ -173,15 +176,26 @@ public sealed partial class TTSSystem : EntitySystem
             audio = (await GenerateTTS(ev.Message, speaker, effects)).audio;
         }
 
-        if (audio != null)
+        if (audio == null)
         {
-            RaiseNetworkEvent(new PlayTTSEvent(audio, effects, GetNetEntity(ev.Source)), ev.ReceiversFilter);
+            return;
+        }
+
+        if (ev.Sources == null)
+        {
+            RaiseNetworkEvent(new PlayTTSEvent(audio, effects, null), ev.ReceiversFilter ?? Filter.Empty().AddAllPlayers());
+            return;
+        }
+
+        foreach (var ent in ev.Sources.Where(ent => _entityManager.EntityExists(ent)))
+        {
+            RaiseNetworkEvent(new PlayTTSEvent(audio, effects, GetNetEntity(ent)), ev.ReceiversFilter ?? Filter.Pvs(ent));
         }
     }
 
     private async void HandleSay(EntityUid uid, string message, ProtoId<TTSVoicePrototype> voice, TTSEffects effects)
     {
-        RaiseLocalEvent(new PlayTTSRequestEvent(message, voice, Filter.Pvs(uid), effects, uid));
+        RaiseLocalEvent(new PlayTTSRequestEvent(message, voice, Filter.Pvs(uid), effects, [uid]));
     }
 
     private async void HandleWhisper(EntityUid uid, string message, string obfMessage, ProtoId<TTSVoicePrototype> speaker, TTSEffects effects)
@@ -189,9 +203,9 @@ public sealed partial class TTSSystem : EntitySystem
         effects |= TTSEffects.Whisper;
 
         // ReSharper disable once InconsistentNaming
-        var fullTTSEventRequest = new PlayTTSRequestEvent(message, speaker, Filter.Empty(), effects, uid);
+        var fullTTSEventRequest = new PlayTTSRequestEvent(message, speaker, Filter.Empty(), effects, [uid]);
         // ReSharper disable once InconsistentNaming
-        var obfTTSEventRequest = new PlayTTSRequestEvent(obfMessage, speaker, Filter.Empty(), effects, uid);
+        var obfTTSEventRequest = new PlayTTSRequestEvent(obfMessage, speaker, Filter.Empty(), effects, [uid]);
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourcePos = _xforms.GetWorldPosition(xformQuery.GetComponent(uid), xformQuery);
