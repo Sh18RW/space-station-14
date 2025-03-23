@@ -27,3 +27,4 @@ tts-voice-name-announcer = Announcer
 tts-voice-name-jandarma-announcer = Jandarma Announcer
 tts-voice-name-announcer-security-announcer = Security System Announcer
 tts-voice-name-vending-machine = Vending Machine
+tts-voice-name-pray = Pray

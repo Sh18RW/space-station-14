@@ -168,3 +168,12 @@
   speaker: en_17
   effects:
   - Robotic
+
+- type: ttsVoice
+  id: Pray
+  name: tts-voice-name-pray
+  roundStart: false
+  sex: Male
+  speaker: en_100
+  effects:
+  - Whisper
