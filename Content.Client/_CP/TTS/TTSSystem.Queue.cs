@@ -16,7 +16,7 @@ public partial class TTSSystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
-    // TODO: make it with normal station announcement system.
+    // TODO: make it with a station announcement system.
     private readonly Queue<PlayTTSAudioData> _publicAudioQueue = [];
     private TimeSpan _endTime = TimeSpan.Zero;
 
