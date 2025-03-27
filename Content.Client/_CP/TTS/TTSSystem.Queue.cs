@@ -56,6 +56,14 @@ public partial class TTSSystem
             _publicAudioQueue.Enqueue(data);
             return;
         }
+
+        if (!_entityManager.EntityExists(source))
+        {
+            _sawmill.Verbose($"Ignore TTS because {source} entity doesn't exist.");
+            _contentRoot.RemoveFile(data.Path);
+            return;
+        }
+
         if (!TryComp<TTSComponent>(source, out var ttsComponent))
         {
             _sawmill.Warning($"Ignore TTS on {source} because it doesn't have TTS component!");
