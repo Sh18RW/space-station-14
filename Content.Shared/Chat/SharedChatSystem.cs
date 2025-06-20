@@ -40,6 +40,8 @@ public abstract class SharedChatSystem : EntitySystem
     /// </summary>
     private FrozenDictionary<char, RadioChannelPrototype> _keyCodes = default!;
 
+    private static readonly Regex _emotesParseRegex = new(@"\[Emote\](.*?)\[/Emote\]");
+
     public override void Initialize()
     {
         base.Initialize();
@@ -279,14 +281,69 @@ public abstract class SharedChatSystem : EntitySystem
         return rawmsg;
     }
 
-    public static string GetStringInsideTag(ChatMessage message, string tag)
+    public static string InjectStringAroundTag(ChatMessage message, string tag, string injection)
     {
         var rawmsg = message.WrappedMessage;
-        var tagStart = rawmsg.IndexOf($"[{tag}]");
-        var tagEnd = rawmsg.IndexOf($"[/{tag}]");
+        rawmsg = Regex.Replace(rawmsg, $@"(?i)\[{tag}", $"{injection}[{tag}");
+        rawmsg = Regex.Replace(rawmsg, $@"(?i)\/{tag}\]", $"/{tag}]{injection}");
+        return rawmsg;
+    }
+
+    public static string GetStringInsideTag(string message, string tag)
+    {
+        var rawmsg = message;
+        var tagStart = rawmsg.IndexOf($"[{tag}]", StringComparison.Ordinal);
+        var tagEnd = rawmsg.IndexOf($"[/{tag}]", StringComparison.Ordinal);
         if (tagStart < 0 || tagEnd < 0)
+        {
             return "";
+        }
+
         tagStart += tag.Length + 2;
         return rawmsg.Substring(tagStart, tagEnd - tagStart);
+    }
+
+    public static List<(bool isEmote, string content)> ExtractEmotes(string content)
+    {
+        var matches = _emotesParseRegex.Matches(content);
+        var results = new List<(bool, string)>();
+
+        if (matches.Count == 0)
+        {
+            results.Add((false, content));
+            return results;
+        }
+
+        var startIndex = 0;
+        foreach (Match match in matches)
+        {
+            var tempContent = ExtractPhrase(content, startIndex, match.Index);
+            if (tempContent.result.Length != 0)
+            {
+                results.Add((false, tempContent.result));
+            }
+
+            var emote = GetStringInsideTag(match.Value, "Emote");
+            if (emote.Length != 0)
+            {
+                results.Add((true, GetStringInsideTag(match.Value, "Emote")));
+            }
+
+            startIndex += match.Length + tempContent.length;
+        }
+
+        var endContent = ExtractPhrase(content, startIndex, content.Length);
+        if (endContent.result.Length != 0)
+        {
+            results.Add((false, endContent.result));
+        }
+
+        return results;
+    }
+
+    private static (int length, string result) ExtractPhrase(string content, int startIndex, int index)
+    {
+        var sub = content.Substring(startIndex, index - startIndex);
+        return (sub.Length, sub.Trim());
     }
 }

@@ -64,7 +64,12 @@ public partial class ChatBox : UIWidget
 
         var color = msg.MessageColorOverride ?? msg.Channel.TextColor();
 
-        AddLine(msg.WrappedMessage, color);
+        AddLine(FormatMessage(msg), color);
+    }
+
+    private string FormatMessage(ChatMessage message)
+    {
+        return SharedChatSystem.InjectStringAroundTag(message, "Emote", "*");
     }
 
     private void OnChannelSelect(ChatSelectChannel channel)

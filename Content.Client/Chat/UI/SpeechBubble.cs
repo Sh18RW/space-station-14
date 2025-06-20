@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Client.Chat.Managers;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Speech;
@@ -60,28 +59,53 @@ namespace Content.Client.Chat.UI
         // man down
         public event Action<EntityUid, SpeechBubble>? OnDied;
 
-        public static SpeechBubble CreateSpeechBubble(SpeechType type, ChatMessage message, EntityUid senderEntity)
+        public static List<SpeechBubble> CreateSpeechBubbles(SpeechType type, string message, EntityUid senderEntity)
         {
-            switch (type)
+            var bubbles = new List<SpeechBubble>();
+            var bubblesData = new List<(string[] message, SpeechType type)>();
+            var bubbleContent = ExtractAndFormatSpeechSubstring(message, "BubbleContent");
+            if (type is SpeechType.Say or SpeechType.Whisper)
             {
-                case SpeechType.Emote:
-                    return new TextSpeechBubble(message, senderEntity, "emoteBox");
+                var bubbleHeader = ExtractAndFormatSpeechSubstring(message, "BubbleHeader");
+                foreach (var data in SharedChatSystem.ExtractEmotes(bubbleContent))
+                {
+                    bubblesData.Add(data.isEmote ? ([data.content], SpeechType.Emote) : ([bubbleHeader, data.content], type));
+                }
 
-                case SpeechType.Say:
-                    return new FancyTextSpeechBubble(message, senderEntity, "sayBox");
-
-                case SpeechType.Whisper:
-                    return new FancyTextSpeechBubble(message, senderEntity, "whisperBox");
-
-                case SpeechType.Looc:
-                    return new TextSpeechBubble(message, senderEntity, "emoteBox", Color.FromHex("#48d1cc"));
-
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
+            else
+            {
+                bubblesData.Add(([bubbleContent], type));
+            }
+
+            var hideName = false;
+            foreach (var bubbleData in bubblesData)
+            {
+                switch (bubbleData.type)
+                {
+                    case SpeechType.Emote:
+                        bubbles.Add(new TextSpeechBubble(bubbleData.message[0], senderEntity, "emoteBox"));
+                        break;
+                    case SpeechType.Say:
+                        bubbles.Add(new FancyTextSpeechBubble(bubbleData.message[0], bubbleData.message[1], senderEntity, "sayBox", hideHeader: hideName));
+                        hideName = true;
+                        break;
+                    case SpeechType.Whisper:
+                        bubbles.Add(new FancyTextSpeechBubble(bubbleData.message[0], bubbleData.message[1], senderEntity, "whisperBox", hideHeader: hideName));
+                        hideName = true;
+                        break;
+                    case SpeechType.Looc:
+                        bubbles.Add(new TextSpeechBubble(bubbleData.message[0], senderEntity, "emoteBox", Color.FromHex("#48d1cc")));
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+
+            return bubbles;
         }
 
-        public SpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
+        protected SpeechBubble(string[] message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null, bool hideHeader = false)
         {
             IoCManager.InjectDependencies(this);
             _senderEntity = senderEntity;
@@ -90,7 +114,7 @@ namespace Content.Client.Chat.UI
             // Use text clipping so new messages don't overlap old ones being pushed up.
             RectClipContent = true;
 
-            var bubble = BuildBubble(message, speechStyleClass, fontColor);
+            var bubble = BuildBubble(message, speechStyleClass, fontColor, hideHeader);
 
             AddChild(bubble);
 
@@ -101,7 +125,7 @@ namespace Content.Client.Chat.UI
             _verticalOffsetAchieved = -ContentSize.Y;
         }
 
-        protected abstract Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null);
+        protected abstract Control BuildBubble(string[] message, string speechStyleClass, Color? fontColor = null, bool hideHeader = false);
 
         protected override void FrameUpdate(FrameEventArgs args)
         {
@@ -181,7 +205,7 @@ namespace Content.Client.Chat.UI
             }
         }
 
-        protected FormattedMessage FormatSpeech(string message, Color? fontColor = null)
+        protected static FormattedMessage FormatSpeech(string message, Color? fontColor = null)
         {
             var msg = new FormattedMessage();
             if (fontColor != null)
@@ -190,28 +214,28 @@ namespace Content.Client.Chat.UI
             return msg;
         }
 
-        protected FormattedMessage ExtractAndFormatSpeechSubstring(ChatMessage message, string tag, Color? fontColor = null)
+        private static string ExtractAndFormatSpeechSubstring(string message, string tag)
         {
-            return FormatSpeech(SharedChatSystem.GetStringInsideTag(message, tag), fontColor);
+            return SharedChatSystem.GetStringInsideTag(message, tag);
         }
 
     }
 
-    public sealed class TextSpeechBubble : SpeechBubble
+    public sealed class TextSpeechBubble(
+        string message,
+        EntityUid senderEntity,
+        string speechStyleClass,
+        Color? fontColor = null)
+        : SpeechBubble([message], senderEntity, speechStyleClass, fontColor)
     {
-        public TextSpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
-            : base(message, senderEntity, speechStyleClass, fontColor)
-        {
-        }
-
-        protected override Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null)
+        protected override Control BuildBubble(string[] message, string speechStyleClass, Color? fontColor = null, bool hideHeader = false)
         {
             var label = new RichTextLabel
             {
                 MaxWidth = SpeechMaxWidth,
             };
 
-            label.SetMessage(FormatSpeech(message.WrappedMessage, fontColor));
+            label.SetMessage(FormatSpeech(message[0], fontColor));
 
             var panel = new PanelContainer
             {
@@ -226,22 +250,21 @@ namespace Content.Client.Chat.UI
 
     public sealed class FancyTextSpeechBubble : SpeechBubble
     {
-
-        public FancyTextSpeechBubble(ChatMessage message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null)
-            : base(message, senderEntity, speechStyleClass, fontColor)
+        public FancyTextSpeechBubble(string header, string message, EntityUid senderEntity, string speechStyleClass, Color? fontColor = null, bool hideHeader = false)
+            : base([header, message], senderEntity, speechStyleClass, fontColor, hideHeader)
         {
         }
 
-        protected override Control BuildBubble(ChatMessage message, string speechStyleClass, Color? fontColor = null)
+        protected override Control BuildBubble(string[] message, string speechStyleClass, Color? fontColor = null, bool hideHeader = false)
         {
-            if (!ConfigManager.GetCVar(CCVars.ChatEnableFancyBubbles))
+            if (!ConfigManager.GetCVar(CCVars.ChatEnableFancyBubbles) || hideHeader)
             {
                 var label = new RichTextLabel
                 {
                     MaxWidth = SpeechMaxWidth
                 };
 
-                label.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
+                label.SetMessage(FormatSpeech(message[1], fontColor));
 
                 var unfanciedPanel = new PanelContainer
                 {
@@ -265,8 +288,8 @@ namespace Content.Client.Chat.UI
             };
 
             //We'll be honest. *Yes* this is hacky. Doing this in a cleaner way would require a bottom-up refactor of how saycode handles sending chat messages. -Myr
-            bubbleHeader.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleHeader", fontColor));
-            bubbleContent.SetMessage(ExtractAndFormatSpeechSubstring(message, "BubbleContent", fontColor));
+            bubbleHeader.SetMessage(FormatSpeech(message[0], fontColor));
+            bubbleContent.SetMessage(FormatSpeech(message[1], fontColor));
 
             //As for below: Some day this could probably be converted to xaml. But that is not today. -Myr
             var mainPanel = new PanelContainer

@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Chat.Managers;
@@ -216,10 +217,10 @@ public sealed partial class ChatSystem : SharedChatSystem
             message = message[1..];
         }
 
-        bool shouldCapitalize = (desiredType != InGameICChatType.Emote);
-        bool shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
+        var shouldCapitalize = (desiredType != InGameICChatType.Emote);
+        var shouldPunctuate = _configurationManager.GetCVar(CCVars.ChatPunctuation);
         // Capitalizing the word I only happens in English, so we check language here
-        bool shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
+        var shouldCapitalizeTheWordI = (!CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Parent.Name == "en")
             || (CultureInfo.CurrentCulture.IsNeutralCulture && CultureInfo.CurrentCulture.Name == "en");
 
         message = SanitizeInGameICMessage(source, message, out var emoteStr, shouldCapitalize, shouldPunctuate, shouldCapitalizeTheWordI);
@@ -232,7 +233,9 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         // This can happen if the entire string is sanitized out.
         if (string.IsNullOrEmpty(message))
+        {
             return;
+        }
 
         // This message may have a radio prefix, and should then be whispered to the resolved radio channel
         if (checkRadioPrefix)
@@ -452,7 +455,7 @@ public sealed partial class ChatSystem : SharedChatSystem
             ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
             ("fontType", speech.FontId),
             ("fontSize", speech.FontSize),
-            ("message", FormattedMessage.EscapeText(message)));
+            ("message", BuildPhrase(message, source, true).message));
 
         SendInVoiceRange(ChatChannel.Local, message, wrappedMessage, source, range);
 
@@ -501,6 +504,8 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var obfuscatedMessage = ObfuscateMessageReadability(message, 0.2f);
 
+        var phrase = BuildPhrase(message, source, true);
+
         // get the entity's name by visual identity (if no override provided).
         string nameIdentity = FormattedMessage.EscapeText(nameOverride ?? Identity.Name(source, EntityManager));
         // get the entity's name by voice (if no override provided).
@@ -518,13 +523,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         name = FormattedMessage.EscapeText(name);
 
         var wrappedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", name), ("message", FormattedMessage.EscapeText(message)));
+            ("entityName", name), ("message", phrase.message));
 
         var wrappedobfuscatedMessage = Loc.GetString("chat-manager-entity-whisper-wrap-message",
-            ("entityName", nameIdentity), ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+            ("entityName", nameIdentity), ("message", phrase.obfuscatedMessage));
 
         var wrappedUnknownMessage = Loc.GetString("chat-manager-entity-whisper-unknown-wrap-message",
-            ("message", FormattedMessage.EscapeText(obfuscatedMessage)));
+            ("message", phrase.obfuscatedMessage));
 
 
         foreach (var (session, data) in GetRecipients(source, WhisperMuffledRange))
@@ -587,10 +592,10 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         // get the entity's apparent name (if no override provided).
         var ent = Identity.Entity(source, EntityManager);
-        string name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
+        var name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
 
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
-        var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
+        var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message-extended",
             ("entityName", name),
             ("entity", ent),
             ("message", FormattedMessage.RemoveMarkupOrThrow(action)));
@@ -605,6 +610,53 @@ public sealed partial class ChatSystem : SharedChatSystem
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Emote from {ToPrettyString(source):user}: {action}");
     }
 
+    // Corvinella-Extended-Emotes start
+    private (string message, string obfuscatedMessage) BuildPhrase(string text, EntityUid sender, bool processShorthands)
+    {
+        var builder = new StringBuilder();
+        var builderObfuscated = new StringBuilder();
+        var matches = Regex.Split(text.Count(c => c == '*') % 2 != 0 ? text + '*' : text, @"(\*.*?\*)");
+        foreach (var match in matches)
+        {
+            var trimmedMatch = match.Trim();
+            if (trimmedMatch.StartsWith('*'))
+            {
+                _sanitizer.SanitizeEmoteShorthands(trimmedMatch, sender, out trimmedMatch);
+                var offset = 1;
+                if (trimmedMatch.EndsWith('*'))
+                {
+                    offset = 2;
+                }
+                var message = trimmedMatch.Substring(1, trimmedMatch.Length - offset);
+                var formatedMessage = $" {Loc.GetString("chat-manager-emote-extended", ("message", FormattedMessage.EscapeText(message)))} ";
+                builder.Append(formatedMessage);
+                builderObfuscated.Append(formatedMessage);
+            }
+            else
+            {
+                _sanitizer.SanitizeEmoteShorthands(trimmedMatch, sender, out trimmedMatch, true);
+                if (processShorthands)
+                {
+                    var phrase = BuildPhrase(trimmedMatch, sender, false);
+                    builder.Append(phrase.message);
+                    builderObfuscated.Append(phrase.obfuscatedMessage);
+
+                }
+                else
+                {
+                    var phrase = FormattedMessage.EscapeText(trimmedMatch);
+                    var obfuscated = ObfuscateMessageReadability(phrase, 0.2f);
+
+                    builder.Append(phrase);
+                    builderObfuscated.Append(obfuscated);
+                }
+            }
+        }
+
+        return (builder.ToString().Trim(), builderObfuscated.ToString().Trim());
+    }
+    // Corvinella-Extended-Emotes end.
+
     // ReSharper disable once InconsistentNaming
     private void SendLOOC(EntityUid source, ICommonSession player, string message, bool hideChat)
     {
@@ -612,9 +664,15 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         if (_adminManager.IsAdmin(player))
         {
-            if (!_adminLoocEnabled) return;
+            if (!_adminLoocEnabled)
+            {
+                return;
+            }
         }
-        else if (!_loocEnabled) return;
+        else if (!_loocEnabled)
+        {
+            return;
+        }
 
         // If crit player LOOC is disabled, don't send the message at all.
         if (!_critLoocEnabled && _mobStateSystem.IsCritical(source))

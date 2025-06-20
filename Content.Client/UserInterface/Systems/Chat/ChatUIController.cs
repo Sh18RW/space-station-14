@@ -118,7 +118,7 @@ public sealed class ChatUIController : UIController
     /// <summary>
     ///     The max amount of speech bubbles over a single entity at once.
     /// </summary>
-    private const int SpeechBubbleCap = 4;
+    private const int SpeechBubbleCap = 8;
 
     private LayoutContainer _speechBubbleRoot = default!;
 
@@ -441,35 +441,38 @@ public sealed class ChatUIController : UIController
         EnqueueSpeechBubble(ent, msg, speechType);
     }
 
-    private void CreateSpeechBubble(EntityUid entity, SpeechBubbleData speechData)
+    private void CreateSpeechBubble(EntityUid entity, SpeechBubble.SpeechType type, string message)
     {
-        var bubble =
-            SpeechBubble.CreateSpeechBubble(speechData.Type, speechData.Message, entity);
+        var bubbles =
+            SpeechBubble.CreateSpeechBubbles(type, message, entity);
 
-        bubble.OnDied += SpeechBubbleDied;
-
-        if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
+        foreach (var bubble in bubbles)
         {
-            // Push up existing bubbles above the mob's head.
-            foreach (var existingBubble in existing)
+            bubble.OnDied += SpeechBubbleDied;
+
+            if (_activeSpeechBubbles.TryGetValue(entity, out var existing))
             {
-                existingBubble.VerticalOffset += bubble.ContentSize.Y;
+                // Push up existing bubbles above the mob's head.
+                foreach (var existingBubble in existing)
+                {
+                    existingBubble.VerticalOffset += bubble.ContentSize.Y;
+                }
             }
-        }
-        else
-        {
-            existing = new List<SpeechBubble>();
-            _activeSpeechBubbles.Add(entity, existing);
-        }
+            else
+            {
+                existing = new List<SpeechBubble>();
+                _activeSpeechBubbles.Add(entity, existing);
+            }
 
-        existing.Add(bubble);
-        _speechBubbleRoot.AddChild(bubble);
+            existing.Add(bubble);
+            _speechBubbleRoot.AddChild(bubble);
 
-        if (existing.Count > SpeechBubbleCap)
-        {
-            // Get the oldest to start fading fast.
-            var last = existing[0];
-            last.FadeNow();
+            if (existing.Count > SpeechBubbleCap)
+            {
+                // Get the oldest to start fading fast.
+                var last = existing[0];
+                last.FadeNow();
+            }
         }
     }
 
@@ -623,7 +626,7 @@ public sealed class ChatUIController : UIController
 
             // We keep the queue around while it has 0 items. This allows us to keep the timer.
             // When the timer hits 0 and there's no messages left, THEN we can clear it up.
-            CreateSpeechBubble(entity, msg);
+            CreateSpeechBubble(entity, msg.Type, msg.Message.WrappedMessage);
         }
 
         var player = _player.LocalEntity;
@@ -820,8 +823,13 @@ public sealed class ChatUIController : UIController
         if ((msg.Channel == ChatChannel.Local || msg.Channel == ChatChannel.Whisper) && _chatNameColorsEnabled)
         {
             var grammar = _ent.GetComponentOrNull<GrammarComponent>(_ent.GetEntity(msg.SenderEntity));
-            if (grammar != null && grammar.ProperNoun == true)
-                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg, "Name", "color", GetNameColor(SharedChatSystem.GetStringInsideTag(msg, "Name")));
+            if (grammar is { ProperNoun: true })
+            {
+                msg.WrappedMessage = SharedChatSystem.InjectTagInsideTag(msg,
+                    "Name",
+                    "color",
+                    GetNameColor(SharedChatSystem.GetStringInsideTag(msg.WrappedMessage, "Name")));
+            }
         }
 
         // Color any codewords for minds that have roles that use them
@@ -831,8 +839,10 @@ public sealed class ChatUIController : UIController
             {
                 foreach (var (_, codewordData) in codewordComp.RoleCodewords)
                 {
-                    foreach (string codeword in codewordData.Codewords)
+                    foreach (var codeword in codewordData.Codewords)
+                    {
                         msg.WrappedMessage = SharedChatSystem.InjectTagAroundString(msg, codeword, "color", codewordData.Color.ToHex());
+                    }
                 }
             }
         }
@@ -846,8 +856,7 @@ public sealed class ChatUIController : UIController
             if (!msg.Read)
             {
                 _sawmill.Debug($"Message filtered: {msg.Channel}: {msg.Message}");
-                if (!_unreadMessages.TryGetValue(msg.Channel, out var count))
-                    count = 0;
+                var count = _unreadMessages.GetValueOrDefault(msg.Channel, 0);
 
                 count += 1;
                 _unreadMessages[msg.Channel] = count;
