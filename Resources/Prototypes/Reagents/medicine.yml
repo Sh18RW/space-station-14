@@ -83,8 +83,9 @@
         key: Jitter
         time: 3.0
         type: Remove
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 1.5
         type: Add
         refresh: false
@@ -922,8 +923,8 @@
       - !type:GenericStatusEffect
         key: Stutter
         component: StutteringAccent
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -947,8 +948,8 @@
   metabolisms:
     Medicine:
       effects:
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:ResetNarcolepsy
@@ -1389,8 +1390,9 @@
         emote: Yawn
         showInChat: true
         probability: 0.1
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectDrowsiness
+      - !type:GenericStatusEffect
+        key: Drowsiness
+        component: Drowsiness
         time: 4
         type: Add
         refresh: false

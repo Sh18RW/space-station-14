@@ -142,10 +142,6 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: output
-  - type: GuideHelp
-    guides:
-    - VoltageNetworks
-    - Power
 
 # Compact Wall Substation Base
 - type: entity
@@ -220,10 +216,6 @@
     intensitySlope: 2
     totalIntensity: 100
   - type: WallMount
-  - type: GuideHelp
-    guides:
-    - VoltageNetworks
-    - Power
 
 # Substations in use
 

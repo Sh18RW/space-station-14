@@ -360,7 +360,7 @@
           shouldHave: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: NitrousOxide
@@ -368,7 +368,8 @@
         - !type:OrganType
           type: Slime
           shouldHave: false
-        effectProto: StatusEffectForcedSleeping
+        key: ForcedSleep
+        component: ForcedSleeping
         time: 3
         type: Add
       - !type:HealthChange

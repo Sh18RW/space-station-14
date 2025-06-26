@@ -40,12 +40,12 @@
         key: KnockedDown
         time: 3
         type: Remove
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        effectProto: StatusEffectDrowsiness
+        key: Drowsiness
         time: 10
         type: Remove
     Medicine:
@@ -88,12 +88,12 @@
         key: KnockedDown
         time: 1
         type: Remove
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        effectProto: StatusEffectDrowsiness
+        key: Drowsiness
         time: 10
         type: Remove
       - !type:PopupMessage
@@ -152,16 +152,16 @@
         component: StaminaModifier
         time: 3
         type: Add
-      - !type:ModifyStatusEffect
-        effectProto: StatusEffectForcedSleeping
+      - !type:GenericStatusEffect
+        key: ForcedSleep
         time: 3
         type: Remove
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Haloperidol
           max: 0.01
-        effectProto: StatusEffectDrowsiness
+        key: Drowsiness
         time: 10
         type: Remove
     Medicine:
@@ -296,13 +296,14 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:ModifyStatusEffect
+      - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold
           reagent: Nocturine
           min: 8
-        effectProto: StatusEffectForcedSleeping
-        time: 3
+        key: ForcedSleep
+        component: ForcedSleeping
+        refresh: false
         type: Add
 
 - type: reagent

@@ -231,17 +231,6 @@
     subtype: role-subtype-survivor
   - type: SurvivorRole
 
-# Survivors (Wizard)
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleSurvivor
-  name: Survivor Role
-  components:
-  - type: MindRole
-    antagPrototype: Survivor
-    roleType: FreeAgent
-  - type: SurvivorRole
-
 # Thief
 - type: entity
   parent: BaseMindRoleAntag
@@ -293,19 +282,6 @@
     antagPrototype: Wizard
     exclusiveAntag: true
     subtype: role-subtype-wizard
-  - type: WizardRole
-
-# Wizards
-- type: entity
-  parent: BaseMindRoleAntag
-  id: MindRoleWizard
-  name: Wizard Role
-  #  description: these are all commented out
-  components:
-  - type: MindRole
-    antagPrototype: Wizard
-    exclusiveAntag: true
-    roleType: SoloAntagonist
   - type: WizardRole
 
 # Zombie Squad
