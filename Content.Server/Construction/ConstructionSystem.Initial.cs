@@ -471,7 +471,7 @@ namespace Content.Server.Construction
             }
 
             if (!_actionBlocker.CanInteract(user, null)
-                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || _handsSystem.GetActiveItem((user, hands)) == null)
+                || !EntityManager.TryGetComponent(user, out HandsComponent? hands) || hands.ActiveHandEntity == null)
             {
                 Cleanup();
                 return;
@@ -496,7 +496,7 @@ namespace Content.Server.Construction
 
             var valid = false;
 
-            if (_handsSystem.GetActiveItem((user, hands)) is not {Valid: true} holding)
+            if (hands.ActiveHandEntity is not {Valid: true} holding)
             {
                 Cleanup();
                 return;

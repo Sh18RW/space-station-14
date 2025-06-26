@@ -947,7 +947,12 @@ public abstract partial class SharedSolutionContainerSystem : EntitySystem
         if (!entity.Comp.HeldOnly)
             return true;
 
-        return Hands.IsHolding(examiner, entity, out _);
+        if (TryComp(examiner, out HandsComponent? handsComp))
+        {
+            return Hands.IsHolding(examiner, entity, out _, handsComp);
+        }
+
+        return true;
     }
 
     private void OnMapInit(Entity<SolutionContainerManagerComponent> entity, ref MapInitEvent args)

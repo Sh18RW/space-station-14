@@ -1,6 +1,5 @@
 ﻿using Content.Shared.Bed.Sleep;
 using Content.Shared.CCVar;
-using Content.Shared.StatusEffectNew;
 using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -14,7 +13,6 @@ public sealed class SSDIndicatorSystem : EntitySystem
 {
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedStatusEffectsSystem _statusEffects = default!;
 
     private bool _icSsdSleep;
     private float _icSsdSleepTime;
@@ -39,11 +37,10 @@ public sealed class SSDIndicatorSystem : EntitySystem
             component.FallAsleepTime = TimeSpan.Zero;
             if (component.ForcedSleepAdded) // Remove component only if it has been added by this system
             {
-                _statusEffects.TryRemoveStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping);
+                EntityManager.RemoveComponent<ForcedSleepingComponent>(uid);
                 component.ForcedSleepAdded = false;
             }
         }
-
         Dirty(uid, component);
     }
 
@@ -56,7 +53,6 @@ public sealed class SSDIndicatorSystem : EntitySystem
         {
             component.FallAsleepTime = _timing.CurTime + TimeSpan.FromSeconds(_icSsdSleepTime);
         }
-
         Dirty(uid, component);
     }
 
@@ -83,11 +79,12 @@ public sealed class SSDIndicatorSystem : EntitySystem
         while (query.MoveNext(out var uid, out var ssd))
         {
             // Forces the entity to sleep when the time has come
-            if (ssd.IsSSD &&
+            if(ssd.IsSSD &&
                 ssd.FallAsleepTime <= _timing.CurTime &&
-                !TerminatingOrDeleted(uid))
+                !TerminatingOrDeleted(uid) &&
+                !HasComp<ForcedSleepingComponent>(uid)) // Don't add the component if the entity has it from another sources
             {
-                _statusEffects.TryAddStatusEffect(uid, SleepingSystem.StatusEffectForcedSleeping);
+                EnsureComp<ForcedSleepingComponent>(uid);
                 ssd.ForcedSleepAdded = true;
             }
         }
