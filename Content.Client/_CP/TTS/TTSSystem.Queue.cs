@@ -157,5 +157,6 @@ public partial class TTSSystem
             _audio.Stop(null, component.Audio?.component);
             component.Queue.Clear();
         }
+        _publicAudioQueue.Clear();
     }
 }
