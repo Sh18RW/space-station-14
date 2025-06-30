@@ -19,7 +19,6 @@ public sealed partial class MarkingPicker : Control
 {
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    private ISharedSponsorsManager? _sponsorsManager; // Corvax-Sponsors
 
     public Action<MarkingSet>? OnMarkingAdded;
     public Action<MarkingSet>? OnMarkingRemoved;
@@ -125,7 +124,6 @@ public sealed partial class MarkingPicker : Control
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
-        IoCManager.Instance!.TryResolveType(out _sponsorsManager); // Corvax-Sponsors
 
         CMarkingCategoryButton.OnItemSelected +=  OnCategoryChange;
         CMarkingsUnused.OnItemSelected += item =>
@@ -227,10 +225,6 @@ public sealed partial class MarkingPicker : Control
 
             var item = CMarkingsUnused.AddItem($"{GetMarkingName(marking)}", marking.Sprites[0].Frame0());
             item.Metadata = marking;
-            // Corvax-Sponsors-Start
-            if (marking.SponsorOnly && _sponsorsManager != null)
-                item.Disabled = !_sponsorsManager.GetClientPrototypes().Contains(marking.ID);
-            // Corvax-Sponsors-End
         }
 
         CMarkingPoints.Visible = _currentMarkings.PointsLeft(_selectedMarkingCategory) != -1;

@@ -66,7 +66,6 @@ namespace Content.Server.Connection
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IHttpClientHolder _http = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        private ISharedSponsorsManager? _sponsorsMgr; // Corvax-Sponsors
         private IServerVPNGuardManager? _vpnGuardMgr; // Corvax-VPNGuard
 
         private ISawmill _sawmill = default!;
@@ -84,7 +83,6 @@ namespace Content.Server.Connection
 
             _ipintel = new IPIntel.IPIntel(new IPIntelApi(_http, _cfg), _db, _cfg, _logManager, _chatManager, _gameTiming);
 
-            IoCManager.Instance!.TryResolveType(out _sponsorsMgr); // Corvax-Sponsors
             _netMgr.Connecting += NetMgrOnConnecting;
             _netMgr.AssignUserIdCallback = AssignUserIdCallback;
             _plyMgr.PlayerStatusChanged += PlayerStatusChanged;
@@ -398,12 +396,10 @@ namespace Content.Server.Connection
         public async Task<bool> HavePrivilegedJoin(NetUserId userId)
         {
             var adminBypass = _cfg.GetCVar(CCVars.AdminBypassMaxPlayers) && await _db.GetAdminDataForAsync(userId) != null;
-            var havePriorityJoin = _sponsorsMgr != null && _sponsorsMgr.HaveServerPriorityJoin(userId); // Corvax-Sponsors
             var wasInGame = EntitySystem.TryGet<GameTicker>(out var ticker) &&
                             ticker.PlayerGameStatuses.TryGetValue(userId, out var status) &&
                             status == PlayerGameStatus.JoinedGame;
             return adminBypass ||
-                   havePriorityJoin || // Corvax-Sponsors
                    wasInGame;
         }
         // Corvax-Queue-End

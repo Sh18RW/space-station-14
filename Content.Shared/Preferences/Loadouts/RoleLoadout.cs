@@ -268,7 +268,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
 
         foreach (var effect in loadoutProto.Effects)
         {
-            valid = valid && effect.Validate(profile, this, loadoutProto, session, collection, out reason);
+            valid = valid && effect.Validate(profile, this, session, collection, out reason);
         }
 
         return valid;

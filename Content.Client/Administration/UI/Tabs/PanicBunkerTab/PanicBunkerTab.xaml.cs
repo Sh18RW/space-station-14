@@ -29,14 +29,6 @@ public sealed partial class PanicBunkerTab : Control
         MinOverallMinutes.OnTextEntered += args => SendMinOverallMinutes(args.Text);
         MinOverallMinutes.OnFocusExit += args => SendMinOverallMinutes(args.Text);
         _minOverallMinutes = MinOverallMinutes.Text;
-        // Corvax-VPNGuard-Start
-        var haveSecrets = IoCManager.Instance!.TryResolveType<ISharedSponsorsManager>(out _); // TODO: Probably need better way to detect Secrets module
-        if (haveSecrets)
-        {
-            VPNContainer.Visible = true;
-            DenyVPN.OnPressed += _ => SendDenyVpn(DenyVPN.Pressed);
-        }
-        // Corvax-VPNGuard-End
     }
 
     private void SendMinAccountAge(string text)
