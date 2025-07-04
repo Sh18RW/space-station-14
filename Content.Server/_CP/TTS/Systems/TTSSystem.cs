@@ -67,6 +67,7 @@ public sealed partial class TTSSystem : EntitySystem
         SubscribeNetworkEvent<RequestPreviewTTSEvent>(OnRequestPreviewTTS);
 
         RegisterRateLimits();
+        InitializeSanitizer();
 
         _sawmill = _logManager.GetSawmill("TTS System");
     }
