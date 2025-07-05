@@ -75,7 +75,7 @@
     whitelist:
       components:
         - SecretStash
-  - type: TTS
+  - type: TTS # CP-TTS
     voice: PAI
 
 - type: entity
