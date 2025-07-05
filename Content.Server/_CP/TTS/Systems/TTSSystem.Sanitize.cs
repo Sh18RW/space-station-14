@@ -49,7 +49,6 @@ public sealed partial class TTSSystem
         text = _numberTextFormatRegex.Replace(text, " целых ");
         text = _numbersFilterRegex.Replace(text, ReplaceWord2Num);
 
-
         text = text.Trim();
         return text;
     }
