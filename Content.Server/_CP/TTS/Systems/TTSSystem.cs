@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Content.Server._CP.TTS.Events;
 using Content.Server.Chat.Systems;
 using Content.Shared._CP.CCVars;
@@ -24,30 +25,32 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _xforms = default!;
     [Dependency] private readonly IRobustRandom _rng = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private readonly List<string> _sampleText =
     [
-        "Eat this delicious piece of cake and enjoy a warm cup of tea!",
-        "What a breathtaking sunset! The sky is painted in hues of orange and pink.",
-        "That’s an interesting question. Let me take a moment to think about it.",
-        "Help me! There’s a strange clown telling the funniest joke, and I can’t stop laughing!",
-        "The weather today is perfect for a walk in the park.",
-        "I can’t believe how fast time flies when you’re having fun.",
-        "Could you please pass me the salt?",
-        "The sound of the ocean waves is so calming and peaceful.",
-        "I’m really looking forward to the weekend. Any plans?",
-        "This book is absolutely fascinating! I can’t put it down.",
-        "The aroma of freshly baked bread fills the air.",
-        "I’m so grateful for all the support I’ve received.",
-        "The stars tonight are incredibly bright and beautiful.",
-        "I think we should take a different approach to solve this problem.",
-        "The laughter of children playing is such a joyful sound.",
-        "I’m feeling a bit tired today. Maybe I should get some rest.",
-        "The city lights at night are truly mesmerizing.",
-        "I’ve never seen such a stunning view before!",
-        "Let’s make the most of this wonderful day.",
-        "The smell of coffee in the morning is the best way to start the day.",
+        "Съешьте этот вкусный кусок торта и насладитесь чашкой горячего чая!",
+        "Какой потрясающий закат! Небо раскрашено в оттенки оранжевого и розового.",
+        "Это интересный вопрос. Дайте мне немного времени подумать над ним.",
+        "Помогите мне! Тут какой-то странный клоун рассказывает самый смешной анекдот, и я не могу перестать смеяться!",
+        "Сегодня погода идеально подходит для прогулки в парке.",
+        "Я не могу поверить, как быстро летит время, когда тебе весело.",
+        "Можете ли вы, пожалуйста, передать мне соль?",
+        "Звук волн на море так спокоен и умиротворяет.",
+        "Я очень жду выходных. У вас есть планы?",
+        "Эта книга невероятно увлекательна! Я не могу её бросить.",
+        "Аромат свежеиспеченного хлеба наполняет воздух.",
+        "Я благодарен за всю поддержку, которую получил.",
+        "Звёзды сегодня невероятно яркие и красивые.",
+        "Я думаю, нам стоит принять другой подход, чтобы решить эту проблему.",
+        "Смех детей, играющих, — это такой радостный звук.",
+        "Сегодня я чувствую себя немного уставшим. Возможно, мне стоит отдохнуть.",
+        "Городские огни ночью действительно завораживают.",
+        "Я никогда раньше не видел такой потрясающий вид!",
+        "Давайте максимально используем этот прекрасный день.",
+        "Запах кофе утром — это лучший способ начать день.",
     ];
+
 
     private int _maxMessageLength;
     private bool _isEnabled;
@@ -148,7 +151,7 @@ public sealed partial class TTSSystem : EntitySystem
         HandleSay(uid, args.Message, protoVoice, effects);
     }
 
-    private async void OnPlayTTSRequest(PlayTTSRequestEvent ev)
+    public async void OnPlayTTSRequest(PlayTTSRequestEvent ev)
     {
         if (!_isEnabled)
         {
@@ -174,15 +177,26 @@ public sealed partial class TTSSystem : EntitySystem
             audio = (await GenerateTTS(ev.Message, speaker, effects)).audio;
         }
 
-        if (audio != null)
+        if (audio == null)
         {
-            RaiseNetworkEvent(new PlayTTSEvent(audio, effects, GetNetEntity(ev.Source)), ev.ReceiversFilter);
+            return;
+        }
+
+        if (ev.Sources == null)
+        {
+            RaiseNetworkEvent(new PlayTTSEvent(audio, effects), ev.ReceiversFilter ?? Filter.Empty().AddAllPlayers());
+            return;
+        }
+
+        foreach (var ent in ev.Sources.Where(ent => _entityManager.EntityExists(ent)))
+        {
+            RaiseNetworkEvent(new PlayTTSEvent(audio, effects, GetNetEntity(ent)), ev.ReceiversFilter ?? Filter.Pvs(ent));
         }
     }
 
     private async void HandleSay(EntityUid uid, string message, ProtoId<TTSVoicePrototype> voice, TTSEffects effects)
     {
-        RaiseLocalEvent(new PlayTTSRequestEvent(message, voice, Filter.Pvs(uid), effects, uid));
+        RaiseLocalEvent(new PlayTTSRequestEvent(message, voice, Filter.Pvs(uid), effects, [uid]));
     }
 
     private async void HandleWhisper(EntityUid uid, string message, string obfMessage, ProtoId<TTSVoicePrototype> speaker, TTSEffects effects)
@@ -190,9 +204,9 @@ public sealed partial class TTSSystem : EntitySystem
         effects |= TTSEffects.Whisper;
 
         // ReSharper disable once InconsistentNaming
-        var fullTTSEventRequest = new PlayTTSRequestEvent(message, speaker, Filter.Empty(), effects, uid);
+        var fullTTSEventRequest = new PlayTTSRequestEvent(message, speaker, Filter.Empty(), effects, [uid]);
         // ReSharper disable once InconsistentNaming
-        var obfTTSEventRequest = new PlayTTSRequestEvent(obfMessage, speaker, Filter.Empty(), effects, uid);
+        var obfTTSEventRequest = new PlayTTSRequestEvent(obfMessage, speaker, Filter.Empty(), effects, [uid]);
 
         var xformQuery = GetEntityQuery<TransformComponent>();
         var sourcePos = _xforms.GetWorldPosition(xformQuery.GetComponent(uid), xformQuery);
@@ -223,6 +237,7 @@ public sealed partial class TTSSystem : EntitySystem
         }
     }
 
+    // ReSharper disable once InconsistentNaming
     public async Task<string?> GenerateCachedTTS(string message, ProtoId<TTSVoicePrototype> voiceId, TTSEffects effects)
     {
         return !_prototypeManager.TryIndex(voiceId, out var voiceProto) ? null : (await GenerateTTS(message, voiceProto.Speaker, effects)).cacheKey;
@@ -242,11 +257,11 @@ public sealed partial class TTSSystem : EntitySystem
             textSanitized += ".";
         }
 
-        var ssmlTraits = _CP.TTS.Systems.TTSSystem.SoundTraits.RateFast;
+        var ssmlTraits = SoundTraits.RateFast;
 
         if (effects.HasFlag(TTSEffects.Whisper))
         {
-            ssmlTraits = _CP.TTS.Systems.TTSSystem.SoundTraits.PitchVeryLow;
+            ssmlTraits = SoundTraits.PitchVeryLow;
         }
 
         var textSsml = ToSsmlText(textSanitized, ssmlTraits);

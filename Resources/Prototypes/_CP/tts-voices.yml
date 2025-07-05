@@ -83,7 +83,7 @@
   name: tts-voice-name-announcer
   roundStart: false
   sex: Male
-  speaker: eugene
+  speaker: xenia
   effects:
   - Announce
   - Echo
@@ -107,7 +107,7 @@
   name: tts-voice-name-announcer-security-announcer
   roundStart: false
   sex: Male
-  speaker: eugene
+  speaker: garithos
   effects:
   - Announce
   - Echo
