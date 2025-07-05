@@ -1,9 +1,5 @@
 using System.IO;
 using System.Linq;
-using Content.Corvax.Interfaces.Shared;
-using Content.Shared._CP.TTS;
-using Content.Shared.CCVar;
-using Content.Shared.Decals;
 using Content.Shared.Examine;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;
@@ -44,6 +40,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public const string DefaultSpecies = "Human";
     // CP-TTS-start
     public const string DefaultVoice = "Jenya";
+    public const string DefaultPrayVoice = "Pray";
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
         {Sex.Male, "James"},

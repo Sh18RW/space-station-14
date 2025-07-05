@@ -509,7 +509,7 @@ namespace Content.Shared.Preferences
                 Sex.Male => Sex.Male,
                 Sex.Female => Sex.Female,
                 Sex.Unsexed => Sex.Unsexed,
-                _ => Sex.Male // Invalid enum values.
+                _ => Sex.Male, // Invalid enum values.
             };
 
             // ensure the species can be that sex and their age fits the founds

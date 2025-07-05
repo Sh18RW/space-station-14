@@ -155,9 +155,6 @@ namespace Content.Client.Credits
                 ss14ContributorsContainer.AddChild(label);
             }
 
-            // CP Start
-            AddSection(Loc.GetString("credits-window-cp-contributors-section-title"), "BreakingFacility.txt");
-            // CP End
             AddSection(Loc.GetString("credits-window-contributors-section-title"), "GitHub.txt");
             AddSection(Loc.GetString("credits-window-codebases-section-title"), "SpaceStation13.txt");
             AddSection(Loc.GetString("credits-window-tts-title"), "TTS.txt"); // CP-TTS

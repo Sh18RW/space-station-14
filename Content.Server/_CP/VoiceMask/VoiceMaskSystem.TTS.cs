@@ -1,9 +1,5 @@
-﻿using Content.Server._CP.TTS;
-using Content.Server._CP.TTS.Components;
-using Content.Shared._CP.TTS;
+﻿using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Systems;
-using Content.Shared.Inventory;
-using Content.Shared.VoiceMask;
 using TransformsSpeakerVoiceComponent = Content.Server._CP.TTS.Components.TransformsSpeakerVoiceComponent;
 
 namespace Content.Server.VoiceMask;

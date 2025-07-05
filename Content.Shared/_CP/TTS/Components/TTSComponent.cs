@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Robust.Shared.Audio.Components;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared._CP.TTS.Components;
@@ -33,4 +34,7 @@ public sealed partial class TTSComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField]
     public Queue<PlayTTSAudioData> Queue { get; set; } = new();
+
+    [DataField]
+    public (EntityUid entity, AudioComponent component)? Audio { get; set; }
 }

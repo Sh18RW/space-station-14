@@ -590,12 +590,9 @@ public sealed class HolopadSystem : SharedHolopadSystem
 
         foreach (var linkedHolopad in GetLinkedHolopads(entity))
         {
-            if (linkedHolopad.Comp.Hologram == null)
+            if (linkedHolopad.Comp.Hologram != null)
             {
-                continue;
-            }
-
-            _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.State, false);
+                _appearanceSystem.SetData(linkedHolopad.Comp.Hologram.Value.Owner, TypingIndicatorVisuals.State, false);
 
                 // Send message with no sprite data to the client
                 // This will set the holgram sprite to a generic icon

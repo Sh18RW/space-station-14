@@ -7,10 +7,11 @@ namespace Content.Server._CP.TTS.Components;
 public sealed partial class TransformsSpeakerVoiceComponent : Component
 {
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public ProtoId<TTSVoicePrototype>? Voice { get; set; } = null;
+    public ProtoId<TTSVoicePrototype>? Voice { get; set; }
 
     [DataField]
-    [ViewVariables(VVAccess.ReadWrite)]
     public TTSEffects Effects { get; set; } = TTSEffects.Default;
+
+    [DataField]
+    public bool ReplaceEffects { get; set; }
 }

@@ -27,14 +27,13 @@ public sealed partial class HumanoidProfileEditor
         VoicePlayButton.OnPressed += _ => PlayPreviewTTS();
     }
 
+    // ReSharper disable once InconsistentNaming
     private void UpdateTTSVoicesControls()
     {
         if (Profile is null)
             return;
 
         VoiceButton.Clear();
-
-        var firstVoiceChoiceId = 1;
         for (var i = 0; i < _voiceList.Count; i++)
         {
             var voice = _voiceList[i];
@@ -43,19 +42,16 @@ public sealed partial class HumanoidProfileEditor
 
             var name = Loc.GetString(voice.Name);
             VoiceButton.AddItem(name, i);
-
-            if (firstVoiceChoiceId == 1)
-                firstVoiceChoiceId = i;
         }
 
         var voiceChoiceId = _voiceList.FindIndex(x => x.ID == Profile.Voice);
-        if (!VoiceButton.TrySelectId(voiceChoiceId) &&
-            VoiceButton.TrySelectId(firstVoiceChoiceId))
+        if (!VoiceButton.TrySelectId(voiceChoiceId) && VoiceButton.TrySelectId(0))
         {
-            SetVoice(_voiceList[firstVoiceChoiceId].ID);
+            SetVoice(_voiceList[0].ID);
         }
     }
 
+    // ReSharper disable once InconsistentNaming
     private void PlayPreviewTTS()
     {
         if (Profile is null)

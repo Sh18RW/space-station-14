@@ -14,8 +14,8 @@ namespace Content.Client.Administration.UI
     [GenerateTypedNameReferences]
     public sealed partial class AdminAnnounceWindow : DefaultWindow
     {
-        [Dependency] private readonly ILocalizationManager _localization = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly ILocalizationManager _localization = default!;
 
         private readonly List<TTSVoicePrototype> _voicePrototypes;
 
@@ -34,7 +34,7 @@ namespace Content.Client.Administration.UI
 
             _voicePrototypes = _prototypeManager
                 .EnumeratePrototypes<TTSVoicePrototype>()
-                .Where(o => o.ID.Contains("Announcer"))
+                .Where(o => o.Tags.Contains("AnnouncerVoice"))
                 .OrderBy(o => Loc.GetString(o.Name))
                 .ToList();
 

@@ -24,6 +24,13 @@ public sealed class TransformSpeakerVoiceSystem : EntitySystem
             args.Args.VoiceId = ent.Comp.Voice;
         }
 
-        args.Args.Effects |= ent.Comp.Effects;
+        if (ent.Comp.ReplaceEffects)
+        {
+            args.Args.Effects = ent.Comp.Effects;
+        }
+        else
+        {
+            args.Args.Effects |= ent.Comp.Effects;
+        }
     }
 }

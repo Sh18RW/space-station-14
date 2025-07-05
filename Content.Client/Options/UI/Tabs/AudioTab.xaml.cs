@@ -66,9 +66,6 @@ public sealed partial class AudioTab : Control
             _cfg.GetCVar(CCVars.MinMaxAmbientSourcesConfigured),
             _cfg.GetCVar(CCVars.MaxMaxAmbientSourcesConfigured));
 
-        // CP-TTS-start
-        Control.AddOptionCheckBox(CPCCVars.TTSClientEnabled, TTSEnabledCheckBox);
-        // CP-TTS-end.
         Control.AddOptionCheckBox(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox);
         Control.AddOptionCheckBox(CCVars.RestartSoundsEnabled, RestartSoundsCheckBox);
         Control.AddOptionCheckBox(CCVars.EventMusicEnabled, EventMusicCheckBox);

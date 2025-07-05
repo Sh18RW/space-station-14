@@ -3,6 +3,8 @@ using Content.Shared._CP.TTS;
 using Content.Shared._CP.TTS.Components;
 using Content.Shared._CP.TTS.Events;
 using Content.Shared.Chat;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Robust.Client.Audio;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Audio.Systems;
@@ -37,7 +39,6 @@ public sealed partial class TTSSystem : EntitySystem
     private const float MinimalVolume = -10f;
 
     private float _volume;
-    private bool _isEnabled;
     private int _fileIdx;
 
     public override void Initialize()
@@ -45,17 +46,18 @@ public sealed partial class TTSSystem : EntitySystem
         _sawmill = Logger.GetSawmill("tts");
         _res.AddRoot(Prefix, _contentRoot);
 
-        _cfg.OnValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged, true);
         _cfg.OnValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged, true);
 
+        SubscribeLocalEvent<TTSComponent, MobStateChangedEvent>(OnMobStateChanged);
+
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
+        SubscribeNetworkEvent<ClearTTSQueueEvent>(OnClearTTSQueue);
     }
 
     public override void Shutdown()
     {
         base.Shutdown();
 
-        _cfg.UnsubValueChanged(CPCCVars.TTSClientEnabled, OnTTSEnabledChanged);
         _cfg.UnsubValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged);
 
         _contentRoot.Dispose();
@@ -68,11 +70,6 @@ public sealed partial class TTSSystem : EntitySystem
         RaiseNetworkEvent(new RequestPreviewTTSEvent(voiceId, TTSEffects.Default));
     }
 
-    private void OnTTSEnabledChanged(bool value)
-    {
-        _isEnabled = value;
-    }
-
     private void OnTTSVolumeChanged(float volume)
     {
         _volume = volume;
@@ -80,11 +77,6 @@ public sealed partial class TTSSystem : EntitySystem
 
     private void OnPlayTTS(PlayTTSEvent ev)
     {
-        if (!_isEnabled)
-        {
-            return;
-        }
-
         var filePath = new ResPath($"{_fileIdx++}.ogg");
         _contentRoot.AddOrUpdateFile(filePath, ev.Data);
 

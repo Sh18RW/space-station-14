@@ -203,7 +203,9 @@ namespace Content.Server.Database
             // CP-TTS-start
             var voice = profile.Voice;
             if (voice == string.Empty)
+            {
                 voice = SharedHumanoidAppearanceSystem.DefaultSexVoice[sex];
+            }
             // CP-TTS-end.
 
             // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
@@ -253,8 +255,7 @@ namespace Content.Server.Database
                 profile.Age,
                 sex,
                 gender,
-                new HumanoidCharacterAppearance
-                (
+                new HumanoidCharacterAppearance(
                     profile.HairName,
                     Color.FromHex(profile.HairColor),
                     profile.FacialHairName,
