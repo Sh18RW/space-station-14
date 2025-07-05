@@ -43,9 +43,9 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     public const string DefaultPrayVoice = "Pray";
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
-        {Sex.Male, "James"},
-        {Sex.Female, "Olivia"},
-        {Sex.Unsexed, "Jenya"},
+        {Sex.Male, "Aidar"},
+        {Sex.Female, "Kseniya"},
+        {Sex.Unsexed, "Baya"},
     };
     // CP-TTS-end.
 
