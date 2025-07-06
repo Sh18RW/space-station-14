@@ -39,7 +39,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [ValidatePrototypeId<SpeciesPrototype>]
     public const string DefaultSpecies = "Human";
     // CP-TTS-start
-    public const string DefaultVoice = "Jenya";
+    public const string DefaultVoice = "Eugene";
     public const string DefaultPrayVoice = "Pray";
     public static readonly Dictionary<Sex, string> DefaultSexVoice = new()
     {
