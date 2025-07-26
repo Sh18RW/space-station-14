@@ -5,6 +5,9 @@ namespace Content.Shared._CP.CCVars;
 // ReSharper disable once InconsistentNaming
 public sealed partial class CPCCVars
 {
+    public static readonly CVarDef<bool> DiscordBanNotificationEnabled =
+        CVarDef.Create("discord.ban_notification_enabled", false, CVar.SERVERONLY);
+
     public static readonly CVarDef<string> DiscordBanNotificationWebhook =
         CVarDef.Create("discord.ban_notification_webhook", string.Empty, CVar.SERVERONLY | CVar.CONFIDENTIAL);
 

@@ -59,6 +59,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         _userDbData.AddOnLoadPlayer(CachePlayerData);
         _userDbData.AddOnPlayerDisconnect(ClearPlayerData);
 
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationEnabled, v => _banWebhookEnabled = v, true);
         _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationWebhook, v => _banWebhookUrl = v, true);
         _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationName, v => _banNotificationName = v, true);
         _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationAvatarUrl, v => _banAvatarUrl = v, true);

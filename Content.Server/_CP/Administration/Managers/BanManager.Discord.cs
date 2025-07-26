@@ -11,6 +11,7 @@ public sealed partial class BanManager
 {
     private readonly HttpClient _httpClient = new();
 
+    private bool _banWebhookEnabled;
     private string _banWebhookUrl = string.Empty;
     private string _banNotificationName = string.Empty;
     private string _banAvatarUrl = string.Empty;
@@ -18,6 +19,11 @@ public sealed partial class BanManager
 
     private async Task SendServerBan(string bannedUser, string administrator, string reason, DateTimeOffset? duration, int? round)
     {
+        if (!_banWebhookEnabled)
+        {
+            return;
+        }
+
         var expiration = duration != null
             ? Loc.GetString("ban-notification-time-expires", ("totalSeconds", duration.Value.ToUnixTimeSeconds()))
             : Loc.GetString("ban-notification-never-expires");
@@ -45,6 +51,11 @@ public sealed partial class BanManager
 
     private async Task SendJobBan(string bannedUser, string administrator, string job, string reason, DateTimeOffset? duration, int? round)
     {
+        if (!_banWebhookEnabled)
+        {
+            return;
+        }
+
         var expiration = duration != null
             ? Loc.GetString("ban-notification-time-expires", ("totalSeconds", duration.Value.ToUnixTimeSeconds()))
             : Loc.GetString("ban-notification-never-expires");
@@ -73,6 +84,11 @@ public sealed partial class BanManager
 
     public async Task SendJobBansRoles(string bannedUser, string administrator, string[] roles, string reason, DateTimeOffset? duration, int? round)
     {
+        if (!_banWebhookEnabled)
+        {
+            return;
+        }
+
         var expiration = duration != null
             ? Loc.GetString("ban-notification-time-expires", ("totalSeconds", duration.Value.ToUnixTimeSeconds()))
             : Loc.GetString("ban-notification-never-expires");
@@ -109,6 +125,11 @@ public sealed partial class BanManager
 
     public async Task SendJobBanDepartment(string bannedUser, string administrator, string department, string reason, DateTimeOffset? duration, int? round)
     {
+        if (!_banWebhookEnabled)
+        {
+            return;
+        }
+
         var expiration = duration != null
             ? Loc.GetString("ban-notification-time-expires", ("totalSeconds", duration.Value.ToUnixTimeSeconds()))
             : Loc.GetString("ban-notification-never-expires");
