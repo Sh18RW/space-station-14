@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Content.Server.Chat.Managers;
 using Content.Server.Database;
 using Content.Server.GameTicking;
+using Content.Shared._CP.CCVars;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Players;
@@ -57,6 +58,12 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
 
         _userDbData.AddOnLoadPlayer(CachePlayerData);
         _userDbData.AddOnPlayerDisconnect(ClearPlayerData);
+
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationEnabled, v => _banWebhookEnabled = v, true);
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationWebhook, v => _banWebhookUrl = v, true);
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationName, v => _banNotificationName = v, true);
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationAvatarUrl, v => _banAvatarUrl = v, true);
+        _cfg.OnValueChanged(CPCCVars.DiscordBanNotificationFooterIconUrl, v => _banFooterIconUrl = v, true);
     }
 
     private async Task CachePlayerData(ICommonSession player, CancellationToken cancel)
@@ -170,6 +177,8 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         var hwidString = hwid?.ToString() ?? "null";
         var expiresString = expires == null ? Loc.GetString("server-ban-string-never") : $"{expires}";
 
+        _ = SendServerBan(targetName, adminName, reason, expires, roundId);
+
         var key = _cfg.GetCVar(CCVars.AdminShowPIIOnBan) ? "server-ban-string" : "server-ban-string-no-pii";
 
         var logMessage = Loc.GetString(
@@ -228,7 +237,7 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
     #region Job Bans
     // If you are trying to remove timeOfBan, please don't. It's there because the note system groups role bans by time, reason and banning admin.
     // Removing it will clutter the note list. Please also make sure that department bans are applied to roles with the same DateTimeOffset.
-    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan)
+    public async void CreateRoleBan(NetUserId? target, string? targetUsername, NetUserId? banningAdmin, (IPAddress, int)? addressRange, ImmutableTypedHwid? hwid, string role, uint? minutes, NoteSeverity severity, string reason, DateTimeOffset timeOfBan, bool sendNotification)
     {
         if (!_prototypeManager.TryIndex(role, out JobPrototype? _))
         {
@@ -265,6 +274,16 @@ public sealed partial class BanManager : IBanManager, IPostInjectInit
         {
             _chat.SendAdminAlert(Loc.GetString("cmd-roleban-existing", ("target", targetUsername ?? "null"), ("role", role)));
             return;
+        }
+
+        var adminName = banningAdmin == null
+            ? Loc.GetString("system-user")
+            : (await _db.GetPlayerRecordByUserId(banningAdmin.Value))?.LastSeenUserName ?? Loc.GetString("system-user");
+        var targetName = target is null ? "null" : $"{targetUsername} ({target})";
+
+        if (sendNotification)
+        {
+            _ = SendJobBan(targetName, adminName, role, reason, expires ?? DateTimeOffset.Now, roundId);
         }
 
         var length = expires == null ? Loc.GetString("cmd-roleban-inf") : Loc.GetString("cmd-roleban-until", ("expires", expires));
