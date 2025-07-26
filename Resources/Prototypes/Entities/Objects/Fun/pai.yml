@@ -75,6 +75,8 @@
     whitelist:
       components:
         - SecretStash
+  - type: TTS # CP-TTS
+    voice: PAI
 
 - type: entity
   parent: [ PersonalAI, BaseSyndicateContraband]

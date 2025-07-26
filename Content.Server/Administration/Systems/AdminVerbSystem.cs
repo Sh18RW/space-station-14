@@ -35,6 +35,8 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Utility;
 using System.Linq;
 using Content.Server.Silicons.Laws;
+using Content.Shared._CP.TTS;
+using Content.Shared.Humanoid;
 using Content.Shared.Movement.Components;
 using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.Player;
@@ -128,9 +130,19 @@ namespace Content.Server.Administration.Systems
                     prayerVerb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/pray.svg.png"));
                     prayerVerb.Act = () =>
                     {
-                        _quickDialog.OpenDialog(player, "Subtle Message", "Message", "Popup Message", (string message, string popupMessage) =>
+                        _quickDialog.OpenDialog(player,
+                            "Subtle Message",
+                            "Message",
+                            "Popup Message",
+                            "Voice",
+                            (string message, string popupMessage, string voice) =>
                         {
                             _prayerSystem.SendSubtleMessage(targetActor.PlayerSession, player, message, popupMessage == "" ? Loc.GetString("prayer-popup-subtle-default") : popupMessage);
+                            if (!_prototypeManager.TryIndex<TTSVoicePrototype>(voice, out _))
+                            {
+                                voice = SharedHumanoidAppearanceSystem.DefaultPrayVoice;
+                            }
+                            _console.RemoteExecuteCommand(player, $"playtts {voice} \"{message}\" local {targetActor.PlayerSession.Name}");
                         });
                     };
                     prayerVerb.Impact = LogImpact.Low;

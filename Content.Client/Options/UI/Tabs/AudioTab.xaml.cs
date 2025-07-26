@@ -1,4 +1,5 @@
 using Content.Client.Audio;
+using Content.Shared._CP.CCVars;
 using Content.Shared.CCVar;
 using Content.Shared.Corvax.CCCVars;
 using Robust.Client.Audio;
@@ -26,6 +27,13 @@ public sealed partial class AudioTab : Control
             SliderVolumeMaster,
             scale: ContentAudioSystem.MasterVolumeMultiplier);
         masterVolume.ImmediateValueChanged += OnMasterVolumeSliderChanged;
+
+        // CP-TTS-start
+        Control.AddOptionPercentSlider(
+            CPCCVars.TTSVolume,
+            SliderVolumeTTS,
+            scale: ContentAudioSystem.TTSMultiplier);
+        // CP-TTS-end.
 
         Control.AddOptionPercentSlider(
             CVars.MidiVolume,

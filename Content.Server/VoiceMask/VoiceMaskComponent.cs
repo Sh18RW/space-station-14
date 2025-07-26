@@ -1,3 +1,5 @@
+using Content.Shared._CP.TTS;
+using Content.Shared.Humanoid;
 using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Content.Shared.Humanoid;

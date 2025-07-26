@@ -177,6 +177,9 @@
     - Snout
     - HeadTop
     - HeadSide
+  - type: TransformsSpeakerVoice
+    effects:
+    - Mask
 
 - type: entity
   abstract: true

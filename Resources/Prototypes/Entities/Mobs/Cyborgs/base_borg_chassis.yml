@@ -245,6 +245,8 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
+  - type: TTS # CP-TTS
+    voice: Borg
 
 - type: entity
   abstract: true
@@ -296,6 +298,8 @@
   - type: InteractionPopup
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+  - type: TTS # CP-TTS
+    voice: Borg
 
 - type: entity
   id: BaseBorgChassisSyndicate

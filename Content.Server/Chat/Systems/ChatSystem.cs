@@ -67,6 +67,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     public const string DefaultAnnouncementSound = "/Audio/Corvax/Announcements/announce.ogg"; // Corvax-Announcements
     public const string CentComAnnouncementSound = "/Audio/Corvax/Announcements/centcomm.ogg"; // Corvax-Announcements
 
+    public const string AnnounceVoice = "Announcer";
+    public const string JandarmaAnnouncerVoice = "JandarmaAnnouncer";
+    public const string SecuritySystemAnnouncer = "SecuritySystemAnnouncer";
+
     private bool _loocEnabled = true;
     private bool _deadLoocEnabled;
     private bool _critLoocEnabled;
@@ -320,13 +324,14 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null
-        )
+        Color? colorOverride = null,
+        string announcerVoice = "Announcer")
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToAll(ChatChannel.Radio, message, wrappedMessage, default, false, true, colorOverride);
+        SendAnnounceTTS(message, Filter.Broadcast(), announcerVoice); // CP-TTS
         if (playSound)
         {
             if (sender == Loc.GetString("admin-announce-announcer-default")) announcementSound = new SoundPathSpecifier(CentComAnnouncementSound); // Corvax-Announcements: Support custom alert sound from admin panel
@@ -340,6 +345,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     /// <param name="filter">Filter to select players who will recieve the announcement</param>
     /// <param name="message">The contents of the message</param>
+    /// <param name="announcerVoice"></param>
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
@@ -348,6 +354,7 @@ public sealed partial class ChatSystem : SharedChatSystem
     public void DispatchFilteredAnnouncement(
         Filter filter,
         string message,
+        string announcerVoice = "Announcer",
         EntityUid? source = null,
         string? sender = null,
         bool playSound = true,
@@ -358,6 +365,7 @@ public sealed partial class ChatSystem : SharedChatSystem
 
         var wrappedMessage = Loc.GetString("chat-manager-sender-announcement-wrap-message", ("sender", sender), ("message", FormattedMessage.EscapeText(message)));
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source ?? default, false, true, colorOverride);
+        SendAnnounceTTS(message, filter, announcerVoice); // CP-TTS
         if (playSound)
         {
             _audio.PlayGlobal(announcementSound?.ToString() ?? DefaultAnnouncementSound, filter, true, AudioParams.Default.WithVolume(-2f));
@@ -370,8 +378,10 @@ public sealed partial class ChatSystem : SharedChatSystem
     /// </summary>
     /// <param name="source">The entity making the announcement (used to determine the station)</param>
     /// <param name="message">The contents of the message</param>
+    /// <param name="announcerVoice"></param>
     /// <param name="sender">The sender (Communications Console in Communications Console Announcement)</param>
     /// <param name="playDefaultSound">Play the announcement sound</param>
+    /// <param name="announcementSound"></param>
     /// <param name="colorOverride">Optional color for the announcement message</param>
     public void DispatchStationAnnouncement(
         EntityUid source,
@@ -379,7 +389,8 @@ public sealed partial class ChatSystem : SharedChatSystem
         string? sender = null,
         bool playDefaultSound = true,
         SoundSpecifier? announcementSound = null,
-        Color? colorOverride = null)
+        Color? colorOverride = null,
+        string announcerVoice = "Announcer")
     {
         sender ??= Loc.GetString("chat-manager-sender-announcement");
 
@@ -397,6 +408,7 @@ public sealed partial class ChatSystem : SharedChatSystem
         var filter = _stationSystem.GetInStation(stationDataComp);
 
         _chatManager.ChatMessageToManyFiltered(filter, ChatChannel.Radio, message, wrappedMessage, source, false, true, colorOverride);
+        SendAnnounceTTS(message, filter, announcerVoice); // CP-TTS
 
         if (playDefaultSound)
         {
