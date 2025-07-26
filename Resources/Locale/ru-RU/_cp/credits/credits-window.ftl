@@ -1,1 +1,1 @@
-credits-window-cp-contributors-section-title = Сборка Corvinella Project
+credits-window-corvinella-project-contributors-section-title = Сборка Corvinella Project

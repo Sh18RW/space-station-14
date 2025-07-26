@@ -1,1 +1,1 @@
-credits-window-cp-contributors-section-title = Corvinella Project build
+credits-window-corvinella-project-contributors-section-title = Corvinella Project build

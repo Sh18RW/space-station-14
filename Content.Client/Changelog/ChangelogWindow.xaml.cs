@@ -53,7 +53,7 @@ namespace Content.Client.Changelog
         private async void PopulateChangelog()
         {
             // Changelog is not kept in memory so load it again.
-            var changelogs = await _changelog.LoadChangelog();
+            var changelogs = await _changelog.LoadChangelogAsync();
 
             Tabs.DisposeAllChildren();
 

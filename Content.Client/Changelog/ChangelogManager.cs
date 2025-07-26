@@ -49,7 +49,7 @@ namespace Content.Client.Changelog
         public async void Initialize()
         {
             // Open changelog purely to compare to the last viewed date.
-            var changelogs = await LoadChangelog();
+            var changelogs = await LoadChangelogAsync();
             UpdateChangelogs(changelogs);
         }
 
@@ -91,14 +91,22 @@ namespace Content.Client.Changelog
             NewChangelogEntriesChanged?.Invoke();
         }
 
-        public Task<List<Changelog>> LoadChangelog()
+        public Task<List<Changelog>> LoadChangelogAsync(List<string>? expected = null)
         {
-            return Task.Run(() =>
-            {
+            return Task.Run(() => LoadChangelog());
+        }
+
+        public List<Changelog> LoadChangelog(List<string>? expected = null)
+        {
                 var changelogs = new List<Changelog>();
                 var directory = new ResPath("/Changelog");
                 foreach (var file in _resource.ContentFindFiles(new ResPath("/Changelog/")))
                 {
+                    if (expected != null && !expected.Contains(file.FilenameWithoutExtension))
+                    {
+                        continue;
+                    }
+
                     if (file.Directory != directory || file.Extension != "yml")
                         continue;
 
@@ -117,7 +125,6 @@ namespace Content.Client.Changelog
 
                 changelogs.Sort((a, b) => a.Order.CompareTo(b.Order));
                 return changelogs;
-            });
         }
 
         public void PostInject()
