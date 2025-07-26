@@ -21,11 +21,11 @@ GITHUB_TOKEN      = os.environ["GITHUB_TOKEN"]
 DISCORD_SPLIT_LIMIT = 2000
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL")
 
-CHANGELOG_FILES = ["Resources/Changelog/Changelog.yml", "Resources/Changelog/ChangelogSyndie.yml"] # Corvax-MultiChangelog
+CHANGELOG_FILES = ["Resources/Changelog/Changelog.yml", "Resources/Changelog/CorvinellaProject.yml"]
 
 TYPES_TO_EMOJI = {
     "Fix":    "🐛",
-    "Add":    "✨", # Corvax: Use gitmoji 💥
+    "Add":    "🆕",
     "Remove": "❌",
     "Tweak":  "⚒️"
 }
@@ -45,7 +45,6 @@ def main():
     last_sha = most_recent['head_commit']['id']
     print(f"Last successful publish job was {most_recent['id']}: {last_sha}")
 
-    # Corvax-MultiChangelog-Start
     for changelog_file in CHANGELOG_FILES:
         last_changelog = yaml.safe_load(get_last_changelog(session, last_sha, changelog_file))
         with open(changelog_file, "r") as f:
@@ -53,7 +52,6 @@ def main():
 
         diff = diff_changelog(last_changelog, cur_changelog)
         send_to_discord(diff)
-    # Corvax-MultiChangelog-End
 
 
 def get_most_recent_workflow(sess: requests.Session) -> Any:
@@ -149,7 +147,6 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                 emoji = TYPES_TO_EMOJI.get(change['type'], "❓")
                 message = change['message']
                 url = entry.get("url")
-                # Corvax-Localization-Start
                 TRANSLATION_API_URL = os.environ.get("TRANSLATION_API_URL")
                 if TRANSLATION_API_URL:
                     resp = requests.post(TRANSLATION_API_URL, json={
@@ -158,12 +155,11 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
                         "target_lang": "RU"
                     })
                     message = resp.json()['data']
-                # Corvax-Localization-End
                 if url and url.strip():
-                    group_content.write(f"{emoji} - {message} [PR]({url}) \n")
+                    group_content.write(f"{emoji} [-]({url}) {message}\n")
                 else:
                     group_content.write(f"{emoji} - {message}\n")
-        group_content.write(f"\n") # Corvax: Better formatting
+        group_content.write(f"\n")
 
         group_text = group_content.getvalue()
         message_text = message_content.getvalue()
@@ -185,8 +181,8 @@ def send_to_discord(entries: Iterable[ChangelogEntry]) -> None:
     message_text = message_content.getvalue()
     if len(message_text) > 0:
         print("Sending final changelog to discord")
-        content.seek(0) # Corvax
-        for chunk in iter(lambda: content.read(2000), ''): # Corvax: Split big changelogs messages
+        content.seek(0)
+        for chunk in iter(lambda: content.read(2000), ''):
             send_discord(chunk)
 
 
