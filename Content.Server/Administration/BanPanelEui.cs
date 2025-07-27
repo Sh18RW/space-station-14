@@ -18,13 +18,12 @@ namespace Content.Server.Administration;
 public sealed class BanPanelEui : BaseEui
 {
     [Dependency] private readonly IBanManager _banManager = default!;
-    [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly ILogManager _log = default!;
     [Dependency] private readonly IPlayerLocator _playerLocator = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly IAdminManager _admins = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
     private readonly GameTicker _ticker = default!;
 
     private readonly ISawmill _sawmill;
@@ -157,7 +156,7 @@ public sealed class BanPanelEui : BaseEui
         {
             try
             {
-                if (_entities.TrySystem(out AdminSystem? adminSystem))
+                if (_entityManager.TrySystem(out AdminSystem? adminSystem))
                     adminSystem.Erase(targetUid.Value);
             }
             catch (Exception e)
