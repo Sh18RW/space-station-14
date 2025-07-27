@@ -10,5 +10,5 @@ jobs:
     name: Submodule update in pr found
     runs-on: ubuntu-latest
     steps:
-      - name: Fail
+      - if: !contains(github.event.issue.labels.*.name, 'Upstream')
         run: exit 1

@@ -71,6 +71,13 @@ namespace Content.Server.Communications
         [DataField]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Announcements/announce.ogg");
 
+        /// <summary>
+        /// Hides the sender identity (If they even have one).
+        /// In practise this removes the "Sent by ScugMcWawa (Slugcat Captain)" at the bottom of the announcement.
+        /// </summary>
+        [DataField]
+        public bool AnnounceSentBy = true;
+
         [DataField]
         public ProtoId<TTSVoicePrototype> AnnouncerVoice = ChatSystem.AnnounceVoice;
     }
