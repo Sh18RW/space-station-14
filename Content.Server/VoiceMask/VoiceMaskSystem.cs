@@ -12,6 +12,7 @@ using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.Speech;
 using Content.Shared.VoiceMask;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using TransformsSpeakerVoiceComponent = Content.Server._CP.TTS.Components.TransformsSpeakerVoiceComponent;
 

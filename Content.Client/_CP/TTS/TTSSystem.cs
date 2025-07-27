@@ -25,8 +25,10 @@ public sealed partial class TTSSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audio = default!;
 
     private ISawmill _sawmill = default!;
-    private readonly MemoryContentRoot _contentRoot = new();
+    private static MemoryContentRoot _contentRoot = new();
     private static readonly ResPath Prefix = ResPath.Root / "TTS";
+
+    private static bool _contentRootAdded;
 
     /// <summary>
     /// Reducing the volume of the TTS when whispering. Will be converted to logarithm.
@@ -44,12 +46,15 @@ public sealed partial class TTSSystem : EntitySystem
     public override void Initialize()
     {
         _sawmill = Logger.GetSawmill("tts");
-        _res.AddRoot(Prefix, _contentRoot);
 
+        if (!_contentRootAdded)
+        {
+            _contentRootAdded = true;
+            _res.AddRoot(Prefix, _contentRoot);
+        }
+
+        _sawmill = Logger.GetSawmill("tts");
         _cfg.OnValueChanged(CPCCVars.TTSVolume, OnTTSVolumeChanged, true);
-
-        SubscribeLocalEvent<TTSComponent, MobStateChangedEvent>(OnMobStateChanged);
-
         SubscribeNetworkEvent<PlayTTSEvent>(OnPlayTTS);
         SubscribeNetworkEvent<ClearTTSQueueEvent>(OnClearTTSQueue);
     }
@@ -77,6 +82,8 @@ public sealed partial class TTSSystem : EntitySystem
 
     private void OnPlayTTS(PlayTTSEvent ev)
     {
+        _sawmill.Verbose($"Play TTS audio {ev.Data.Length} bytes from {ev.SourceUid} entity");
+
         var filePath = new ResPath($"{_fileIdx++}.ogg");
         _contentRoot.AddOrUpdateFile(filePath, ev.Data);
 
