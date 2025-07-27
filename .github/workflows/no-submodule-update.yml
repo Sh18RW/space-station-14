@@ -6,6 +6,13 @@ on:
       - 'RobustToolbox'
 
 jobs:
+  check_upstream_label:
+    name: Check Upstream Label
+    runs-on: ubuntu-latest
+    steps:
+      - if: contains(github.event.issue.labels.*.name, '<My first label>')
+        run: exit 0
+
   this_aint_right:
     name: Submodule update in pr found
     runs-on: ubuntu-latest
