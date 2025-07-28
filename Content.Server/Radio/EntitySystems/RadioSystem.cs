@@ -1,7 +1,12 @@
+using Content.Server._CP.TTS;
+using Content.Server._CP.TTS.Systems;
+using Content.Server._CP.TTS.Systems;
 using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Radio.Components;
+using Content.Shared._CP.TTS;
+using Content.Shared._CP.TTS.Events;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Content.Shared.Radio;
@@ -14,6 +19,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Replays;
 using Robust.Shared.Utility;
+using Content.Shared._CP.TTS.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
@@ -110,6 +116,30 @@ public sealed class RadioSystem : EntitySystem
             NetEntity.Invalid,
             null);
         var chatMsg = new MsgChatMessage { Message = chat };
+        // CP-TTS-start
+        // var effects = TTSEffects.Default;
+        // if (TryComp<TTSComponent>(messageSource, out var ttsComponent) && !string.IsNullOrEmpty(ttsComponent.VoicePrototypeId))
+        // {
+        //     voice = ttsComponent.VoicePrototypeId;
+        //     effects = ttsComponent.Effects;
+        // }
+        var receivers = new List<EntityUid>();
+
+        string? voiceId = null;
+        var effects = TTSEffects.Default;
+
+        if (TryComp<TTSComponent>(messageSource, out var ttsComponent) && !string.IsNullOrEmpty(ttsComponent.VoicePrototypeId))
+        {
+            voiceId = ttsComponent.VoicePrototypeId;
+            effects = ttsComponent.Effects;
+        }
+
+        // if something changes voice and effects.
+        var voiceEv = new TransformSpeakerVoiceEvent(voiceId, effects);
+        RaiseLocalEvent(messageSource, voiceEv);
+        voiceId = voiceEv.VoiceId;
+        effects |= voiceEv.Effects;
+        // CP-TTS-End
         var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
@@ -148,6 +178,12 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
+            receivers.Add(receiver); // CP-TTS
+        }
+
+        if (voiceId != null)
+        {
+            RaiseLocalEvent(new TTSHeadsetSystem.PlayRadioTTSEvent(voiceId, message, effects, receivers)); // CP-TTS
         }
 
         if (name != Name(messageSource))
