@@ -9,12 +9,12 @@
 
 - type: entity
   parent: BaseCPFlag
-  id: StarWarkFlag
-  name: StarWark company flag
+  id: StellarExtractionFlag
+  name: Stellar Extraction company flag
   description: The great flag of the biggest company in the United Federation.
   components:
   - type: Sprite
-    state: sw_flag
+    state: se_flag
 
 - type: entity
   parent: BaseCPFlag

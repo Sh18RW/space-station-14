@@ -9,9 +9,9 @@
     sprite: _CP/Structures/Decoration/banner.rsi
 
 - type: entity
-  id: BannerStarWark
+  id: BannerStellarExtraction
   parent: BaseCPBanner
-  name: StarWark banner
+  name: Stellar Extraction banner
   description: A banner displaying the Star War logo. It is decorated with gold threads and a deep dark colour.
   components:
   - type: Sprite
