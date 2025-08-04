@@ -38,6 +38,6 @@
   description: The corporation militia warden's skirt.
   components:
   - type: Sprite
-    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_tactical_warden.rsi
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_warden.rsi
   - type: Clothing
-    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_tactical_warden.rsi
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_warden.rsi
