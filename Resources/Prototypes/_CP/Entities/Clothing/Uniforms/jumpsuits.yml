@@ -44,7 +44,7 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitTacticalWarden
+  id: ClothingUniformJumpsuitMilitiaWarden
   name: warden uniform
   description: The corporation militia warden's uniform.
   components:

@@ -6,5 +6,5 @@ ent-ClothingUniformJumpsuitMilitia = militia uniform
     .desc = The corporation militia uniform.
 ent-ClothingUniformJumpsuitMilitiaGrey = grey militia uniform
     .desc = The corporation militia uniform.
-ent-ClothingUniformJumpsuitTacticalWarden = warden uniform
+ent-ClothingUniformJumpsuitMilitiaWarden = warden uniform
     .desc = The corporation militia warden's uniform.

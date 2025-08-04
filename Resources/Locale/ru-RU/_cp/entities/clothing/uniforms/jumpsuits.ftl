@@ -6,5 +6,5 @@ ent-ClothingUniformJumpsuitMilitia = милицейская форма
     .desc = Форма корпоративной милиции.
 ent-ClothingUniformJumpsuitMilitiaGrey = серая милицейская форма
     .desc = Форма корпоративной милиции.
-ent-ClothingUniformJumpsuitTacticalWarden = форма наздирателя
+ent-ClothingUniformJumpsuitMilitiaWarden = форма наздирателя
     .desc = Пахнет властью и силой!
