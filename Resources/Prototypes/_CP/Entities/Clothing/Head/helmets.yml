@@ -1,0 +1,10 @@
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetMilitiaBasic
+  name: helmet
+  description: Standard militia gear. Protects the head from impacts.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Helmets/militia.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Helmets/militia.rsi

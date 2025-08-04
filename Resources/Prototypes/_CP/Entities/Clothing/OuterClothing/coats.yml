@@ -1,0 +1,10 @@
+- type: entity
+  parent: [ClothingOuterArmorWarden, ClothingOuterStorageBase, BaseSecurityContraband]
+  id: ClothingOuterCoatMilitiaWarden
+  name: warden's armored jacket
+  description: A sturdy, utilitarian jacket designed to protect a warden from any brig-bound threats.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/OuterClothing/Coats/warden.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/OuterClothing/Coats/warden.rsi

@@ -1,0 +1,10 @@
+ent-ClothingUniformJumpsuitOldSovietOfficer = oстарая офицерская форма
+    .desc = Память о великом прошлом.
+ent-ClothingUniformJumpsuitOldFieldDoctor = старая форма полевого врача
+    .desc = Под конец сражения это платье всё пачкается, но врач спасает столько жизней!
+ent-ClothingUniformJumpsuitMilitia = милицейская форма
+    .desc = Форма корпоративной милиции.
+ent-ClothingUniformJumpsuitMilitiaGrey = серая милицейская форма
+    .desc = Форма корпоративной милиции.
+ent-ClothingUniformJumpsuitMilitiaWarden = форма наздирателя
+    .desc = Пахнет властью и силой!

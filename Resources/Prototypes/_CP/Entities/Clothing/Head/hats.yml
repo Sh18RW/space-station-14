@@ -30,3 +30,25 @@
     sprite: _CP/Clothing/Head/Hats/white_ushanka.rsi
   - type: Clothing
     sprite: _CP/Clothing/Head/Hats/white_ushanka.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMilitiaWardenCap
+  name: warden cap
+  description: I am the law here!
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Hats/warden_cap.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Hats/warden_cap.rsi
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatMilitiaWardenBeret
+  name: warden beret
+  description: I am the law here!
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Head/Hats/warden_beret.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Head/Hats/warden_beret.rsi
