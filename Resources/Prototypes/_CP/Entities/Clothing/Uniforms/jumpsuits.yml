@@ -44,17 +44,6 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitMilitiaTacticalWarden
-  name: tactical warden uniform
-  description: The corporation militia warden's tactical uniform.
-  components:
-  - type: Sprite
-    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_tactical_warden.rsi
-  - type: Clothing
-    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_tactical_warden.rsi
-
-- type: entity
-  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitTacticalWarden
   name: warden uniform
   description: The corporation militia warden's uniform.

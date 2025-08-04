@@ -30,3 +30,14 @@
     sprite: _CP/Clothing/Uniforms/Jumpskirt/irish_bartender.rsi
   - type: Clothing
     sprite: _CP/Clothing/Uniforms/Jumpskirt/irish_bartender.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtMilitiaWarden
+  name: warden skirt
+  description: The corporation militia warden's skirt.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_tactical_warden.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpskirt/militia_tactical_warden.rsi
