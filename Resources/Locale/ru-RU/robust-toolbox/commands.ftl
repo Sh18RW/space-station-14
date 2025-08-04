@@ -171,6 +171,7 @@ cmd-hint-savebp-id = <Grid EntityID>
 
 ## 'flushcookies' command
 
+
 # Примечание: команда flushcookies взята из Robust.Client.WebView, её нет в коде основного движка.
 
 cmd-flushcookies-desc = Сброс хранилища CEF-cookie на диск

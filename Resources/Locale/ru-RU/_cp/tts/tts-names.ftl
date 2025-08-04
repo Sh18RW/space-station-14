@@ -50,10 +50,8 @@ tts-voice-name-urios = Уриос
 tts-voice-name-eliza = Элиза
 tts-voice-name-grig = Григорий
 tts-voice-name-varya = Варвара
-
 tts-voice-name-borg = Борг
 tts-voice-name-pai = пИИ
-
 tts-voice-name-announcer = Станционное Объявление
 tts-voice-name-jandarma-announcer = Объявление Комиссариата Жандармерии
 tts-voice-name-announcer-security-announcer = Объявление Системы Безопасности Станции
