@@ -1,5 +1,5 @@
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: ClothingUniformJumpsuitBase
   id: ClothingUniformJumpsuitOldSovietOfficer
   name: old officer's uniform
   description: A memory of the beautiful far away.
@@ -10,7 +10,7 @@
     sprite: _CP/Clothing/Uniforms/Jumpsuit/old_soviet_officer.rsi
 
 - type: entity
-  parent: ClothingUniformSkirtBase
+  parent: ClothingUniformJumpsuitBase
   id: ClothingUniformJumpsuitOldFieldDoctor
   name: old field doctor's uniform
   description: At the end of the battle, this uniform became dirty, but the doctor saved many lives.
@@ -19,3 +19,47 @@
     sprite: _CP/Clothing/Uniforms/Jumpsuit/old_field_doctor.rsi
   - type: Clothing
     sprite: _CP/Clothing/Uniforms/Jumpsuit/old_field_doctor.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBase
+  id: ClothingUniformJumpsuitMilitia
+  name: militia uniform
+  description: The corporation militia uniform.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBase
+  id: ClothingUniformJumpsuitMilitiaGrey
+  name: militia uniform
+  description: The corporation militia uniform.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_grey.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_grey.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBase
+  id: ClothingUniformJumpsuitMilitiaTacticalWarden
+  name: tactical warden uniform
+  description: The corporation militia warden's tactical uniform.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_tactical_warden.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_tactical_warden.rsi
+
+- type: entity
+  parent: ClothingUniformJumpsuitBase
+  id: ClothingUniformJumpsuitTacticalWarden
+  name: warden uniform
+  description: The corporation militia warden's uniform.
+  components:
+  - type: Sprite
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_warden.rsi
+  - type: Clothing
+    sprite: _CP/Clothing/Uniforms/Jumpsuit/militia_warden.rsi
