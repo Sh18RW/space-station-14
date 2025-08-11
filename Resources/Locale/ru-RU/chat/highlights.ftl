@@ -1,16 +1,16 @@
 # Command
 highlights-captain = Капитан, "кеп", "кэп", мостик, командовани
-highlights-head-of-personnel = глава персонала, "гп", сервис, мостик, командовани
+highlights-head-of-personnel = начальник отдела кадров, "нок", сервис, мостик, командовани
 highlights-chief-engineer = старший инженер, "си", инженер, "инж", мостик, командовани
 highlights-chief-medical-officer = главный врач, главврач "гв", медблок, медбей, "мед", мостик, командовани
-highlights-head-of-security = глава службы безопасности, "гсб", служба безопасности, "сб", мостик, командовани
-highlights-quartermaster = квартирмейстер, "км" "кма", карго, снабжени, мостик, командовани
+highlights-head-of-security = начальник милиции, "нм", милиция, "сб", мостик, командовани
+highlights-quartermaster = комиссар снабжения, "кс" "кса", карго, снабжени, мостик, командовани
 highlights-research-director = научный руководитель, научрук, "нр", наука, "рнд", "нио", мостик, командовани
 # Security
-highlights-detective = детектив, "дек", служб, "сб"
-highlights-security-cadet = офицер, кадет, служба безопасности, "сб"
-highlights-security-officer = офицер, служба безопасности, "сб"
-highlights-warden = смотрител, варден, служба безопасности, "сб"
+highlights-detective = следователь, "дек", служб, "сб", милиция
+highlights-security-cadet = милиционер, курсант, служба безопасности, "сб", милиция
+highlights-security-officer = милиционер, служба безопасности, "сб", милиция
+highlights-warden = надзиратель, варден, служба безопасности, "сб", милиция
 # Cargo
 highlights-cargo-technician = грузчик, карго, снабжени
 highlights-salvage-specialist = утилизатор, "утиль", карго, снабжени, шахтёр

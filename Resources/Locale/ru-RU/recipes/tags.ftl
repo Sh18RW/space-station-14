@@ -24,7 +24,7 @@ construction-graph-tag-security-hud = визор охраны
 construction-graph-tag-medical-hud = медицинский визор
 # security
 construction-graph-tag-sun-glasses = солнцезащитные очки
-construction-graph-tag-security-helmet = шлем СБ
+construction-graph-tag-security-helmet = шлем Милиции
 # materials
 construction-graph-tag-manipulator = модульная машинная часть
 construction-graph-tag-voice-trigger = голосовой триггер
