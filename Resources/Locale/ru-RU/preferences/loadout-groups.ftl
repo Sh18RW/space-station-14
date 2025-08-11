@@ -139,7 +139,7 @@ loadout-group-detective-neck = Детектив, шея
 loadout-group-detective-jumpsuit = Детектив, комбинезон
 loadout-group-detective-outerclothing = Детектив, верхняя одежда
 loadout-group-security-cadet-jumpsuit = Курсант Милиции, комбинезон
-loadout-group-security-star = СБ, Звёздочка
+loadout-group-security-star = МИЛ, Звёздочка
 # Medical
 loadout-group-medical-gloves = Медицинский отдел, перчатки
 loadout-group-medical-mask = Медицинский отдел, маска
