@@ -4,7 +4,7 @@ highlights-head-of-personnel = начальник отдела кадров, "н
 highlights-chief-engineer = старший инженер, "си", инженер, "инж", мостик, командовани
 highlights-chief-medical-officer = главный врач, главврач "гв", медблок, медбей, "мед", мостик, командовани
 highlights-head-of-security = начальник милиции, "нм", милиция, "сб", мостик, командовани
-highlights-quartermaster = квартирмейстер, "км" "кма", карго, снабжени, мостик, командовани
+highlights-quartermaster = комиссар снабжения, "кс" "кса", карго, снабжени, мостик, командовани
 highlights-research-director = научный руководитель, научрук, "нр", наука, "рнд", "нио", мостик, командовани
 # Security
 highlights-detective = следователь, "дек", служб, "сб", милиция

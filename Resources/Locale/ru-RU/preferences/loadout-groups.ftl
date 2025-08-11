@@ -74,11 +74,11 @@ loadout-group-mime-belt = Мим, пояс
 loadout-group-musician-jumpsuit = Музыкант, комбинезон
 loadout-group-musician-outerclothing = Музыкант, верхняя одежда
 # Cargo
-loadout-group-quartermaster-head = Квартирмейстер, голова
-loadout-group-quartermaster-jumpsuit = Квартирмейстер, комбинезон
-loadout-group-quartermaster-neck = Квартирмейстер, шея
-loadout-group-quartermaster-outerclothing = Квартирмейстер, верхняя одежда
-loadout-group-quartermaster-shoes = Квартирмейстер, обувь
+loadout-group-quartermaster-head = Комиссар Снабжения, голова
+loadout-group-quartermaster-jumpsuit = Комиссар Снабжения, комбинезон
+loadout-group-quartermaster-neck = Комиссар Снабжения, шея
+loadout-group-quartermaster-outerclothing = Комиссар Снабжения, верхняя одежда
+loadout-group-quartermaster-shoes = Комиссар Снабжения, обувь
 loadout-group-cargo-technician-head = Грузчик, голова
 loadout-group-cargo-technician-jumpsuit = Грузчик, комбинезон
 loadout-group-cargo-technician-backpack = Грузчик, рюкзак
